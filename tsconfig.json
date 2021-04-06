@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "noImplicitAny": true,
+    "outDir": "./build/",
+    "preserveConstEnums": true,
+    "removeComments": true,
+    "alwaysStrict": true,
+    "strictNullChecks": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "baseUrl": "./",
+    "sourceMap": true,
+    "module": "esnext",
+    "target": "esnext",
+    "allowJs": true,
+    "noEmit": true,
+    "noImplicitThis": true,
+    "lib": ["es6", "dom"],
+
+  },
+  "include": [
+    "src/components/index.tsx"
+  ],
+  "exclude": ["node_modules", "**/*.spec.ts", "**/*.test.ts"]
+}
