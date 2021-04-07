@@ -10,4 +10,10 @@ export interface IUser {
     phone: string;
     address: IAddress;
     password: string;
+    service: string;
+}
+
+export enum UserStatus {
+    VERIFIED = 'VERIFIED',
+    NOT_VERIFIED = 'NOT_VERIFIED'
 }
