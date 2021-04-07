@@ -1,12 +1,11 @@
 import * as React from 'react';
-export interface HelloWorldProps {
-  userName: string;
-  lang: string;
-}
+import Registration from './Pages/signup/registration'
+
+
 export const App = () => {
   return(
     <div>
-      hhello
+      <Registration />
     </div>
   )
 };
