@@ -13,7 +13,8 @@ export const {
 } = userSlice.actions;
 
 export const {
-    createNewUser
+    createNewUser,
+	signInUser
 } = thunks;
 
 export default userSlice.reducer;

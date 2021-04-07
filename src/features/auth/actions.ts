@@ -5,14 +5,26 @@ import firebase from "../../firebase/firebase";
 export const createNewUser = (user: IUser) : AppThunk => async dispatch =>{
     const auth = firebase.auth();
     const db = firebase.firestore();
-    const userPassword = `${user.name}@123`
-    auth.createUserWithEmailAndPassword(user.email, userPassword).then(
+    auth.createUserWithEmailAndPassword(user.email, user.password)
+		.then(
 		(_) => {
 			console.log(_.user)
-		},
+		},	
 		(err) => {
 			console.log('error', err.t, err.message);
 		}
 	);
+}
 
+export const signInUser = (user: IUser) : AppThunk => async dispatch =>{
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+    auth.signInWithEmailAndPassword(user.email, user.password).then(
+		(_) => {
+			console.log(_.user)
+		},	
+		(err) => {
+			console.log('error', err.t, err.message);
+		}
+	);
 }
