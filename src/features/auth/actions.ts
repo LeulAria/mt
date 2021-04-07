@@ -2,11 +2,13 @@ import { AppThunk } from "../../app/store";
 import { IUser } from "./types/index";
 import firebase from "../../firebase/firebase";
 import {UserStatus} from './types'
+import {setLoadingProgress} from '.'
 
 // create new user
 export const createNewUser = (user: IUser): AppThunk => async dispatch => {
 	const auth = firebase.auth();
 	const db = firebase.firestore();
+	dispatch(setLoadingProgress(true))
 	auth.createUserWithEmailAndPassword(user.email, user.password)
 		.then(
 			(_) => {
@@ -23,9 +25,10 @@ export const createNewUser = (user: IUser): AppThunk => async dispatch => {
 					uid: _.user.uid,
 					service: user.service,
 					business: user.business
-				}).then((user)=> console.log(user))
+				}).then((user)=> dispatch(setLoadingProgress(false)))
 			},
 			(err) => {
+				dispatch(setLoadingProgress(false))
 				console.log('error', err.t, err.message);
 			}
 		);

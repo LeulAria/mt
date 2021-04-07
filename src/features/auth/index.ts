@@ -10,6 +10,7 @@ const userSlice = createSlice({
 });
 
 export const {
+	setLoadingProgress
 } = userSlice.actions;
 
 export const {

@@ -18,3 +18,8 @@ export enum UserStatus {
     VERIFIED = 'VERIFIED',
     NOT_VERIFIED = 'NOT_VERIFIED'
 }
+
+export interface IInitState {
+    isLoading: boolean;
+    isFaliure: boolean;
+}

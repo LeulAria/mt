@@ -1,9 +1,23 @@
 import React, { useState } from 'react'
-import { Container, Box, TextField, Grid, Typography, Button, FormControl, Paper, RadioGroup, FormControlLabel, Radio, Divider } from '@material-ui/core'
+import { 
+  Container, 
+  Box, 
+  TextField, 
+  Grid, 
+  Typography, 
+  Button, 
+  FormControl, 
+  Paper, 
+  RadioGroup, 
+  FormControlLabel, 
+  Radio, 
+  Divider, 
+  CircularProgress } from '@material-ui/core'
 import { useStyles } from './style'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createNewUser } from "../../features/auth";
 import { IUser } from "../../features/auth/types";
+import { RootState } from '../../app/store';
 
 
 const Registration = () => {
@@ -20,6 +34,7 @@ const Registration = () => {
   const [business, setBusinessName] = useState('')
   const [service, setService] = useState('')
   const dispatch = useDispatch();
+  const auth = useSelector((state: RootState) => state.auth)
 
 
   const handleSubmit = (e) => {
@@ -30,7 +45,7 @@ const Registration = () => {
       email,
       phone,
       password,
-      address:{
+      address: {
         country,
         city,
         subCity
@@ -57,13 +72,13 @@ const Registration = () => {
       <Container maxWidth="md">
         <main>
           <Paper className={classes.paper}>
-
             <form noValidate onSubmit={handleSubmit}>
               <Grid container direction={'row'} justify={'center'} alignItems={"center"} spacing={5} >
 
                 <Grid xs={12}>
 
-                  <Box textAlign={"center"}>
+                  <Box textAlign={"center"}>  
+                    {auth.isLoading && <CircularProgress/> }
                     <Typography variant={"h4"} className={classes.title}>Registration</Typography>
                   </Box>
                   <Divider className={classes.divider} />
@@ -125,20 +140,20 @@ const Registration = () => {
                     />
                   </Box>
                   <Box my={4}>
-                      {" "}
-                      <TextField
-                        required
-                        id="password"
-                        label="Password"
-                        name="password"
-                        value={password}
-                        type="password"
-                        // variant="outlined"
-                        fullWidth
-                        onChange={(e) => setPassword(e.target.value)}
-                        color="secondary"
-                      />
-                    </Box>
+                    {" "}
+                    <TextField
+                      required
+                      id="password"
+                      label="Password"
+                      name="password"
+                      value={password}
+                      type="password"
+                      // variant="outlined"
+                      fullWidth
+                      onChange={(e) => setPassword(e.target.value)}
+                      color="secondary"
+                    />
+                  </Box>
                   {/* </Grid>
           <Grid item xs={12} md={4} spacing={2}> */}
                   {/* <Typography variant={"h4"}>&nbsp;</Typography> */}
@@ -188,20 +203,20 @@ const Registration = () => {
                       color="secondary"
                     />
                   </Box>
-                    <Box my={4}>
-                      {" "}
-                      <TextField
-                        required
-                        id="subcity"
-                        label="Subcity"
-                        name="subcity"
-                        value={subCity}
-                        // variant="outlined"
-                        fullWidth
-                        onChange={(e) => setSubCity(e.target.value)}
-                        color="secondary"
-                      />
-                    </Box>
+                  <Box my={4}>
+                    {" "}
+                    <TextField
+                      required
+                      id="subcity"
+                      label="Subcity"
+                      name="subcity"
+                      value={subCity}
+                      // variant="outlined"
+                      fullWidth
+                      onChange={(e) => setSubCity(e.target.value)}
+                      color="secondary"
+                    />
+                  </Box>
                   <Typography>Provided Service Type</Typography>
                   <FormControl>
                     <RadioGroup row aria-label="position" name="position" onChange={(e) => setService(e.target.value)} defaultValue="top" >
@@ -226,14 +241,13 @@ const Registration = () => {
                       type="submit"
                       variant="contained"
                       color="secondary"
+                      disabled={auth.isLoading ? true: false}
                     >
                       Register
                     </Button>
                   </Box>
                 </Grid>
               </Grid>
-
-
             </form>
           </Paper>
         </main>
