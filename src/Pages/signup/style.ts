@@ -19,9 +19,9 @@ export const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(3),
       marginBottom: theme.spacing(3),
       padding: theme.spacing(5),
-      minWidth: "100vh",
+      // minWidth: "100vh",
       [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
-        marginTop: theme.spacing(6),
+        marginTop: theme.spacing(0),
         marginBottom: theme.spacing(6),
         padding: theme.spacing(3),
       },
