@@ -1,11 +1,56 @@
 import * as React from 'react';
+import AppBar from "./layouts/applayout/appbar";
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
-export interface HelloWorldProps {
-  userName: string;
-  lang: string;
-}
-export const App = (props: HelloWorldProps) => (
-  <h1>
-    Hello {props.userName} from React! Welcome to {props.lang}!
-  </h1>
+const drawerWidth = 240;
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      display: 'flex',
+    },
+    drawer: {
+      [theme.breakpoints.up('sm')]: {
+        width: drawerWidth,
+        flexShrink: 0,
+      },
+    },
+    appBar: {
+      [theme.breakpoints.up('sm')]: {
+        width: `calc(100% - ${drawerWidth}px)`,
+        marginLeft: drawerWidth,
+      },
+    },
+    menuButton: {
+      marginRight: theme.spacing(2),
+      [theme.breakpoints.up('sm')]: {
+        display: 'none',
+      },
+    },
+    // necessary for content to be below app bar
+    toolbar: theme.mixins.toolbar,
+    drawerPaper: {
+      width: drawerWidth,
+    },
+    content: {
+      flexGrow: 1,
+      padding: theme.spacing(3),
+    },
+  }),
 );
+
+export const App = () => {
+  const classes = useStyles();
+  return (
+    <div className={classes.root}>
+      <AppBar/>
+      <main className={classes.content}>
+        <div className={classes.toolbar} />
+        <h1>
+          usermanagment
+        </h1>
+      </main>
+    </div>
+  );
+}
+
