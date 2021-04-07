@@ -41,6 +41,7 @@
     "@types/react-dom": "^17.0.3",
     "@types/react-redux": "^7.1.16",
     "chai": "^4.3.4",
+    "firebase": "^8.3.2",
     "nyc": "^15.1.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
