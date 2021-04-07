@@ -1,5 +1,6 @@
 import * as React from 'react';
 import AppBar from "./layouts/applayout/appbar";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
 const drawerWidth = 240;
@@ -43,13 +44,14 @@ export const App = () => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
+      <BrowserRouter>
       <AppBar/>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <h1>
-          usermanagment
-        </h1>
+          <Switch>
+          </Switch>
       </main>
+      </BrowserRouter>
     </div>
   );
 }
