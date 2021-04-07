@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import { Container, Box, TextField, Grid, Typography, Button, FormControl, Paper, RadioGroup, FormControlLabel, Radio, Divider } from '@material-ui/core'
 import { useStyles } from './style'
+import { useDispatch } from 'react-redux';
+import { createNewUser } from "../../features/auth";
+import { IUser } from "../../features/auth/types";
 
 
 const Registration = () => {
@@ -15,24 +18,37 @@ const Registration = () => {
   const [country, setCountry] = useState("");
   const [city, setCity] = useState("");
   const [business, setBusinessName] = useState('')
-  const [service, setSevice] = useState('')
+  const [service, setService] = useState('')
+  const dispatch = useDispatch();
 
 
   const handleSubmit = (e) => {
     e.preventDefault()
     const name = `${firstName} ${lastName}`
-    const data = {
+    const data: IUser = {
       name,
       email,
       phone,
+      password,
       address:{
         country,
         city,
         subCity
-      } ,
-      business: business,
-      Service: service
+      },
+      service: service,
+      business: business
     };
+    dispatch(createNewUser(data))
+    setFirstName("")
+    setLastName("")
+    setEmail("")
+    setPassword("")
+    setPhone("")
+    setCountry("")
+    setCity("")
+    setSubCity("")
+    setBusinessName("")
+    setService("")
   }
 
   return (
@@ -100,6 +116,7 @@ const Registration = () => {
                       id="email"
                       label="Email"
                       name="email"
+                      type="email"
                       // variant="outlined"
                       fullWidth
                       value={email}
@@ -111,10 +128,11 @@ const Registration = () => {
                       {" "}
                       <TextField
                         required
-                        id="email"
+                        id="password"
                         label="Password"
                         name="password"
                         value={password}
+                        type="password"
                         // variant="outlined"
                         fullWidth
                         onChange={(e) => setPassword(e.target.value)}
@@ -174,7 +192,7 @@ const Registration = () => {
                       {" "}
                       <TextField
                         required
-                        id="email"
+                        id="subcity"
                         label="Subcity"
                         name="subcity"
                         value={subCity}
@@ -186,7 +204,7 @@ const Registration = () => {
                     </Box>
                   <Typography>Provided Service Type</Typography>
                   <FormControl>
-                    <RadioGroup row aria-label="position" name="position" onChange={(e) => setSevice(e.target.value)} defaultValue="top" >
+                    <RadioGroup row aria-label="position" name="position" onChange={(e) => setService(e.target.value)} defaultValue="top" >
                       <FormControlLabel
                         value="API"
                         control={<Radio />}

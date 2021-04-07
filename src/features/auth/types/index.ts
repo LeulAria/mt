@@ -1,6 +1,6 @@
 interface IAddress {
-    city: string;
     country: string;
+    city: string;
     subCity: string;
 }
 
