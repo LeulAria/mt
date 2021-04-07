@@ -20,7 +20,9 @@ export const createNewUser = (user: IUser): AppThunk => async dispatch => {
 						sub_city: user.address.subCity
 					},
 					verification_status: UserStatus.NOT_VERIFIED,
-					uid: _.user.uid
+					uid: _.user.uid,
+					service: user.service,
+					business: user.business
 				}).then((user)=> console.log(user))
 			},
 			(err) => {

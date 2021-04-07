@@ -11,6 +11,7 @@ export interface IUser {
     address: IAddress;
     password: string;
     service: string;
+    business: string;
 }
 
 export enum UserStatus {
