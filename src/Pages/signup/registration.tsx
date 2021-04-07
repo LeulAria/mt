@@ -38,8 +38,8 @@ const Registration = () => {
   return (
     <div>
 
-      <Container>
-        <main className={classes.layout}>
+      <Container maxWidth="md">
+        <main>
           <Paper className={classes.paper}>
 
             <form noValidate onSubmit={handleSubmit}>
