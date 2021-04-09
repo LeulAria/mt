@@ -24,11 +24,18 @@ export enum UserStatus {
 
 export enum UserRole {
     ADMIN = 'ADMIN',
+    SALES_PERSON = 'SALES_PERSON',
     TECH_SUPPORT = 'TECH_SUPPORT',
-    USER = 'USER'
+    USER = 'USER',
+    DEFAULT = 'DEFAULT'
 }
 
 export interface IInitState {
     isLoading: boolean;
     isFaliure: boolean;
+    user_name: string;
+    email: string;
+    uid: string;
+    role: UserRole;
+    profile?: string;
 }
