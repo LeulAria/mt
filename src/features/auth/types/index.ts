@@ -5,18 +5,27 @@ interface IAddress {
 }
 
 export interface IUser {
-    name: string;
+    companyName: string;
+    companyUrl: string;
     email: string;
     phone: string;
-    address: IAddress;
-    password: string;
     service: string;
-    business: string;
+    address?: IAddress;
+    password?: string;
+    business?: string;
+    tinNumber?: string;
+    role?: string;
 }
 
 export enum UserStatus {
     VERIFIED = 'VERIFIED',
     NOT_VERIFIED = 'NOT_VERIFIED'
+}
+
+export enum UserRole {
+    ADMIN = 'ADMIN',
+    TECH_SUPPORT = 'TECH_SUPPORT',
+    USER = 'USER'
 }
 
 export interface IInitState {
