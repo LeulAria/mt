@@ -10,12 +10,14 @@ const userSlice = createSlice({
 });
 
 export const {
-	setLoadingProgress
+	setLoadingProgress,
+	setClients
 } = userSlice.actions;
 
 export const {
     createNewUser,
-	signInUser
+	signInUser,
+	getUser
 } = thunks;
 
 export default userSlice.reducer;

@@ -38,4 +38,6 @@ export interface IInitState {
     uid: string;
     role: UserRole;
     profile?: string;
+    client: IUser;
+	clients: IUser[];
 }

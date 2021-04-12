@@ -1,8 +1,9 @@
-import { AppThunk } from "../../app/store";
+import { AppThunk, RootState } from "../../app/store";
 import { IUser, UserRole } from "./types/index";
 import firebase from "../../firebase/firebase";
 import {UserStatus} from './types'
-import {setLoadingProgress} from '.'
+import {setLoadingProgress, setClients} from '.'
+import { query } from "express";
 
 // create new user
 export const createNewUser = (user: IUser): AppThunk => async dispatch => {
@@ -42,3 +43,24 @@ export const signInUser = (user: IUser): AppThunk => async dispatch => {
 		}
 	);
 }
+
+export const getUser = (): AppThunk => async dispatch => {
+	const db = firebase.firestore()	
+	try {
+		firebase.firestore()
+			.collection('clients')
+			.get()
+			.then((querySnapshot) => {
+				let allData: IUser[] = [];
+				querySnapshot.forEach((doc) => {
+					allData.push(({...doc.data(), id: doc.id} as unknown) as IUser);
+					console.log(doc.data())
+				});
+				dispatch(setClients(allData));
+			})
+	} catch (err) {
+		throw(err)
+
+	}
+}
+

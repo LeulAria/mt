@@ -8,6 +8,8 @@ import { theme } from "./app/theme"
 
 
 const RegisterUser = lazy(() => import("./Pages/signup/registration"))
+const User = lazy(() => import("./Pages/user/index"))
+
 
 const drawerWidth = 240;
 
@@ -57,7 +59,7 @@ export const App = () => {
             <main className={classes.content}>
               <div className={classes.toolbar} />
               <Switch>
-                <Route path="/" component={RegisterUser} exact />
+                <Route path="/" component={User} exact />
               </Switch>
             </main>
           </BrowserRouter>

@@ -6,5 +6,19 @@ export const initialState: IInitState = {
     email: "",
     role: UserRole.DEFAULT,
     uid: "",
-    profile: ""
+    profile: "",
+    client:{
+        companyName: '',
+        companyUrl:'',
+        phone: '',
+        email: '',
+        tinNumber: '',
+        service:'',
+        // address1?: {},
+        business: '',
+        password:'',
+        role: ''
+        },
+    clients : [],
 }
+

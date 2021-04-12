@@ -46,7 +46,7 @@ const Registration = () => {
       phone,
       password,
       address: {
-        country,
+        country, 
         city,
         subCity
       },
