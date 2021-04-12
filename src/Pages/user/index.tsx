@@ -4,6 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import EditIcon from '@material-ui/icons/Edit';
 import { useDispatch, useSelector } from 'react-redux';
+import firebase from '../../firebase/firebase';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -97,6 +98,14 @@ export default function User() {
               }
         },
         {
+            label: 'Service',
+            name: 'uid',
+            options: {
+                filter: true,
+                display:false
+              }
+        },
+        {
             label: 'Verification Status',
             name: 'verification_status',
             options: {
@@ -147,26 +156,36 @@ export default function User() {
         }
     };
 
-    const state = useSelector((state: RootState) => state.auth)
-    console.log(state.clients, '--cli');
+    const stateClient = useSelector((state: RootState) => state.auth)
+    console.log(stateClient.clients, '--cli');
 
 
     useEffect(() => {
         dispatch(getUser())
     },[])
   
-    
     const onSubmit = (data) => {
         alert(JSON.stringify(data));
+        const updatedUser = {
+            ...data
+        }
+            const db =  firebase.firestore();
+            console.log('uuuuu', updatedUser, rowData[6], stateClient);
+            
+            db.collection('clients').doc(rowData[6]).update(updatedUser).then((_)=>{
+               console.log(_, 'i--i');
+                
+            })
+        stateClient.clients
         console.log(data);
       };
 
-      
+
     return (
         <div >
             <MUIDataTable 
                 title={"Added Client List"} 
-                data={state.clients} 
+                data={stateClient.clients} 
                 columns={columns} 
                 options={options} 
             />
@@ -188,10 +207,10 @@ export default function User() {
             <DialogContent>
             <form  noValidate onSubmit={handleSubmit(onSubmit)} >
 
-            <Grid container spacing={3}>
+            <Grid container spacing={6} >
            
-            <Grid item xs={12}>
-                <label>Company Name: </label><br />
+            <Grid item xs={12} sm={6}>
+                <label>Company Name: </label>
                     
                     <TextField
                     required
@@ -204,8 +223,8 @@ export default function User() {
    
             </Grid>
             
-            <Grid item xs={12}>
-            <label>Email: </label><br />
+            <Grid item xs={12} sm={6}>
+            <label>Email: </label>
 
                 <TextField
                 required
@@ -217,6 +236,57 @@ export default function User() {
                 placeholder="Email"
                 fullWidth
                 />
+            </Grid>
+            <Grid container direction='row' spacing={1}>
+
+                <Grid item xs={12} sm={4}>
+                    <Controller render={({field}) => (
+                        <TextField
+                        required
+                        id="country"
+                        {...field}
+                        placeholder="Country"  
+                        variant='outlined'
+                        // fullWidth
+                        />
+
+                    )}
+                    name="country"
+                    control={control}
+                    />
+                </Grid>
+                <Grid item xs={12} sm={4}>
+                    <Controller render={({field}) => (
+                        <TextField
+                        required
+                        id="city"
+                        {...field}
+                        placeholder="City"  
+                        variant='outlined'
+                        // fullWidth
+                        />
+
+                    )}
+                    name="city"
+                    control={control}
+                    />
+                </Grid>
+                <Grid item xs={12} sm={4}>
+                    <Controller render={({field}) => (
+                        <TextField
+                        required
+                        id="subCity"
+                        {...field}
+                        placeholder="Sub-City"  
+                        variant='outlined'
+                        // fullWidth
+                        />
+
+                    )}
+                    name="subCity"
+                    control={control}
+                    />
+                </Grid>
             </Grid>
             
             <Grid item xs={12} sm={6}>
@@ -259,7 +329,7 @@ export default function User() {
                     </Select>
                   </FormControl>
                 )}
-                name='Verification Status' 
+                name='verification_status' 
                 control={control}
                 defaultValue="NOT_VERIFIED"
                 />
