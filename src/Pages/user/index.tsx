@@ -98,7 +98,7 @@ export default function User() {
               }
         },
         {
-            label: 'Service',
+            label: 'UID',
             name: 'uid',
             options: {
                 filter: true,
