@@ -68,7 +68,7 @@ export const getUser = (): AppThunk => async dispatch => {
 export const sendVerification = (user: IUser): AppThunk => async dispatch => {
 	const auth = firebase.auth;
 	var actionCodeSettings = {
-		url: 'http://enanye.com/',
+		url: 'https://user-management-ee9c6.web.app/',
 		handleCodeInApp: true,
 	  };
 	firebase.firestore()
