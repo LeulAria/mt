@@ -11,13 +11,14 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import { TransitionProps } from '@material-ui/core/transitions';
-import { FormControl, IconButton, InputLabel, MenuItem, Select } from '@material-ui/core';
+import { Divider, FormControl, IconButton, InputAdornment, InputLabel, MenuItem, OutlinedInput, Select } from '@material-ui/core';
 import { getUser, sendVerification } from '../../features/auth/actions';
 import { AppThunk, RootState } from '../../app/store';
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { Chip } from '@material-ui/core';
 import { useForm, Controller } from 'react-hook-form'
-import { IUser } from '../../features/auth/types';
+import PersonAddDisabledIcon from '@material-ui/icons/PersonAddDisabled';
+
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -130,6 +131,27 @@ export default function User() {
               }
         },
         {
+            label: 'Payment Status',
+            name: 'paymentStat',
+            options: {
+                filter: true,
+                sort: false,
+                customBodyRenderLite: (dataIndex: any, rowIndex: any) => {
+                    console.log(dataIndex);
+                    
+                  return (
+                    <Chip
+                        variant="outlined"
+                        size="small"
+                        label={stat ? stat : "pending"}
+                        color="secondary"
+                        // onClick={handleClick}
+                  />
+                  );
+                }          
+              }
+        },
+        {
             name: 'Edit',
             options: {
                 filter: false,
@@ -146,8 +168,26 @@ export default function User() {
                 }
               }
         },
-       
+        {
+            label: 'Suspend User',
+            name: 'suspend',
+            options: {
+                filter: false,
+                sort: false,
+                empty: true,
+                customBodyRenderLite: (dataIndex: any, rowIndex: any) => {
+                    console.log(dataIndex);
+                    
+                  return (
+                      <IconButton >
+                          <PersonAddDisabledIcon />
+                      </IconButton>
+                  );
+                }
+              }
+        },   
     ]
+
     const options = {
       filter: true,
       onRowClick: (event: any, rowData: any) => {
@@ -169,8 +209,6 @@ export default function User() {
     
     const onSubmit = (data) => {
         data.email = rowData[2]
-
-        console.log(data, '---33--22--11');
         
         dispatch(sendVerification(data))
 
@@ -182,7 +220,9 @@ export default function User() {
             db.collection('clients').doc(rowData[6]).update(updatedUser).then((_)=>{
             })
         stateClient.clients
-        getStatus(data)
+        getStatus(data.verification_status)
+        console.log(getStatus, stat, '0000');
+        
     };
 
 
@@ -204,10 +244,12 @@ export default function User() {
                 aria-describedby="alert-dialog-slide-description"
             >
             <DialogTitle id="alert-dialog-slide-title">{"Edit Client Information"}</DialogTitle>
+            <Divider />
+            <Divider />
             <DialogContent>
-            <form  noValidate onSubmit={handleSubmit(onSubmit)} >
+            
 
-            <Grid container spacing={6} >
+            <Grid container spacing={2} >
            
             <Grid item xs={12} sm={6}>
                 <label>Company Name: </label>
@@ -237,9 +279,17 @@ export default function User() {
                 fullWidth
                 />
             </Grid>
-            <Grid container direction='row' spacing={1}>
-
-                <Grid item xs={12} sm={4}>
+            </Grid>
+            <br />
+            <Divider />
+            <Divider />
+            <br />
+            <form  noValidate onSubmit={handleSubmit(onSubmit)} >
+            <Grid container spacing={2} >
+            
+            {/* <Grid container direction='row' spacing={1}> */}
+         
+                <Grid item xs={12} sm={6}>
                     <Controller render={({field}) => (
                         <TextField
                         required
@@ -247,6 +297,7 @@ export default function User() {
                         {...field}
                         placeholder="Country"  
                         variant='outlined'
+                        fullWidth
                         />
 
                     )}
@@ -254,7 +305,7 @@ export default function User() {
                     control={control}
                     />
                 </Grid>
-                <Grid item xs={12} sm={4}>
+                <Grid item xs={12} sm={6}>
                     <Controller render={({field}) => (
                         <TextField
                         required
@@ -262,13 +313,15 @@ export default function User() {
                         {...field}
                         placeholder="City"  
                         variant='outlined'
+                        fullWidth
+
                         />
                     )}
                     name="city"
                     control={control}
                     />
                 </Grid>
-                <Grid item xs={12} sm={4}>
+                <Grid item xs={12} sm={6}>
                     <Controller render={({field}) => (
                         <TextField
                         required
@@ -276,6 +329,8 @@ export default function User() {
                         {...field}
                         placeholder="Sub-City"  
                         variant='outlined'
+                        fullWidth
+
                         />
 
                     )}
@@ -283,7 +338,72 @@ export default function User() {
                     control={control}
                     />
                 </Grid>
-            </Grid>
+            {/* </Grid> */}
+            
+            {/* <label>Payment</label> */}
+                <Grid item xs={12} sm={6}>
+                    <Controller render={({field}) => (
+                        <TextField
+                        required
+                        id="paymentStat"
+                        {...field}
+                        placeholder="Payment Status"  
+                        variant='outlined'
+                        fullWidth
+
+                        />
+
+                    )}
+                    name="paymentStat"
+                    control={control}
+                    />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+
+              
+
+                    <Controller render={({field}) => (
+                    <FormControl fullWidth variant="outlined">
+                        <InputLabel htmlFor="outlined-adornment-amount">Amount Payed</InputLabel>
+                            <OutlinedInput
+                                id="outlined-adornment-amount"
+                                {...field}
+                                startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                                labelWidth={60}
+                                fullWidth
+                            />
+                    </FormControl>
+
+                        // <TextField
+                        // required
+                        // id="amount"
+                        // placeholder="Amount Payed"  
+                        // variant='outlined'
+
+                        // />
+
+                    )}
+                    name="amount"
+                    control={control}
+                    />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                    <Controller render={({field}) => (
+                        <TextField
+                        required
+                        id="subscription"
+                        {...field}
+                        placeholder="Subscription"  
+                        variant='outlined'
+                        fullWidth
+
+                        />
+
+                    )}
+                    name="subscription"
+                    control={control}
+                    />
+                </Grid>
             
             <Grid item xs={12} sm={6}>
                 <Controller render={({field}) => (
