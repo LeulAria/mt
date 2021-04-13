@@ -9,4 +9,7 @@ export default {
     setClients : (state: IInitState  , action: PayloadAction<IUser[]>) => {
 		state.clients = action.payload
 	},
+    getClient : (state: IInitState  , action: PayloadAction<string>) => {
+		state.email = action.payload
+	},
 }

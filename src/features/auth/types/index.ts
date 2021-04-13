@@ -15,6 +15,7 @@ export interface IUser {
     business?: string;
     tinNumber?: string;
     role?: string;
+    country?: string;
 }
 
 export enum UserStatus {

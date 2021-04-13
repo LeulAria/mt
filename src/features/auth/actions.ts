@@ -64,3 +64,30 @@ export const getUser = (): AppThunk => async dispatch => {
 	}
 }
 
+
+export const sendVerification = (user: IUser): AppThunk => async dispatch => {
+	const auth = firebase.auth;
+	var actionCodeSettings = {
+		url: 'http://enanye.com/',
+		handleCodeInApp: true,
+	  };
+	firebase.firestore()
+			.collection('clients')
+			.get().then((querySnapshot) => {
+				let allData: IUser[] = [];
+				querySnapshot.forEach((doc) => {
+					allData.push(({...doc.data(), id: doc.id} as unknown) as IUser);			
+				});
+				const selectedUser = allData.filter(u => {
+					return u.email == user.email
+				})	
+				console.log(selectedUser[0].email, 'user selected', firebase.auth);
+
+				firebase.auth().sendSignInLinkToEmail(selectedUser[0].email, actionCodeSettings).then((hello)=> {
+				
+				})
+				
+			
+				
+			})
+}

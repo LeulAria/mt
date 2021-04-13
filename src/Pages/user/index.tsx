@@ -12,11 +12,12 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import { TransitionProps } from '@material-ui/core/transitions';
 import { FormControl, IconButton, InputLabel, MenuItem, Select } from '@material-ui/core';
-import { getUser } from '../../features/auth/actions';
-import { RootState } from '../../app/store';
+import { getUser, sendVerification } from '../../features/auth/actions';
+import { AppThunk, RootState } from '../../app/store';
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { Chip } from '@material-ui/core';
 import { useForm, Controller } from 'react-hook-form'
+import { IUser } from '../../features/auth/types';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -36,7 +37,7 @@ const Transition = React.forwardRef(function Transition(
 
 export default function User() {
     const { control, handleSubmit } = useForm();
-    
+    const [ stat, getStatus] = useState('')
     const classes = useStyles()
     const [rowData, getRowData] = useState([])
     const [open, setOpen] = React.useState(false);
@@ -118,7 +119,7 @@ export default function User() {
                     <Chip
                         variant="outlined"
                         size="small"
-                        label="Not Verified"
+                        label={stat ? stat : "loading"}
                         color="secondary"
                         // onClick={handleClick}
                   />
@@ -150,7 +151,7 @@ export default function User() {
     const options = {
       filter: true,
       onRowClick: (event: any, rowData: any) => {
-          console.log('eventtts', event, rowData);
+          console.log('eventtts', event, rowData, typeof rowData);
           getRowData(rowData = event)
           
         }
@@ -163,33 +164,37 @@ export default function User() {
     useEffect(() => {
         dispatch(getUser())
     },[])
-  
+
+
+    
     const onSubmit = (data) => {
+        data.email = rowData[2]
+
+        console.log(data, '---33--22--11');
+        
+        dispatch(sendVerification(data))
+
         alert(JSON.stringify(data));
         const updatedUser = {
             ...data
         }
             const db =  firebase.firestore();
-            console.log('uuuuu', updatedUser, rowData[6], stateClient);
-            
             db.collection('clients').doc(rowData[6]).update(updatedUser).then((_)=>{
-               console.log(_, 'i--i');
-                
             })
         stateClient.clients
-        console.log(data);
-      };
+        getStatus(data)
+    };
 
 
     return (
         <div >
             <MUIDataTable 
-                title={"Added Client List"} 
+                title={"Client List"} 
                 data={stateClient.clients} 
                 columns={columns} 
                 options={options} 
             />
-
+            
             <Dialog
                 open={open}
                 TransitionComponent={Transition}
@@ -198,11 +203,6 @@ export default function User() {
                 aria-labelledby="alert-dialog-slide-title"
                 aria-describedby="alert-dialog-slide-description"
             >
-             {
-                 console.log(rowData, '0000')
-                 
-             }
-            
             <DialogTitle id="alert-dialog-slide-title">{"Edit Client Information"}</DialogTitle>
             <DialogContent>
             <form  noValidate onSubmit={handleSubmit(onSubmit)} >
@@ -247,7 +247,6 @@ export default function User() {
                         {...field}
                         placeholder="Country"  
                         variant='outlined'
-                        // fullWidth
                         />
 
                     )}
@@ -263,9 +262,7 @@ export default function User() {
                         {...field}
                         placeholder="City"  
                         variant='outlined'
-                        // fullWidth
                         />
-
                     )}
                     name="city"
                     control={control}
@@ -279,7 +276,6 @@ export default function User() {
                         {...field}
                         placeholder="Sub-City"  
                         variant='outlined'
-                        // fullWidth
                         />
 
                     )}
@@ -339,8 +335,8 @@ export default function User() {
             <Button
                 type="submit"
                 fullWidth
-                variant="contained"
-                color="primary"
+                variant="contained" 
+                color="secondary"
                 className={classes.submit}
                 >
                 Update

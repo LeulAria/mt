@@ -14,7 +14,7 @@ export const initialState: IInitState = {
         email: '',
         tinNumber: '',
         service:'',
-        // address1?: {},
+        address : {country: "", city: "", subCity: ""},
         business: '',
         password:'',
         role: ''
