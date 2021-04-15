@@ -1,5 +1,5 @@
 import React from 'react';
-import ABar2 from '../layouts/applayout/appbar';
+import Dashboard from '../layouts/applayout/appbar';
 import { lazy } from 'react';
 import { UserRole } from '../features/auth/types';
 
@@ -12,7 +12,7 @@ export const routes = [
     {
         path: '/home',
         component: lazy(()=> import('../Pages/user/index')),
-        bars: ()=> <ABar2/>,
+        bars: <Dashboard/>,
         isPrivate: true,
         permission: [UserRole.ADMIN],
         routes:[

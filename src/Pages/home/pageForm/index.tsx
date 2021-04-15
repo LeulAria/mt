@@ -87,7 +87,7 @@ export default function PageForm() {
     return (
         <div id="back-to-top-anchor">
                 <Box className={classes.imageBox}>
-                    <svg viewBox="0 0 600 360"><path fill="#007CD9" fill-opacity="1" d="M0,240L1100,32L1440,9920L-10,320Z" className={classes.imageHolder}></path></svg>
+                    <svg viewBox="0 0 600 360"><path fill="#007CD9" d="M0,240L1100,32L1440,9920L-10,320Z" className={classes.imageHolder}></path></svg>
                     <Grid container className={classes.comp} justify="center">
                         <Grid item lg={5} xs={10}>
                             <Box

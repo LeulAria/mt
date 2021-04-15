@@ -1,3 +1,4 @@
+import React from 'react'
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { makeStyles, Theme, createStyles, ThemeProvider } from '@material-ui/core/styles';
 import { routes } from "./configRoute/configs";
@@ -53,8 +54,9 @@ export const App = () => {
                 <Route
                   key={i}
                   path={v.path}
-                  children={v.bars}
-                />
+                >
+                  {v.bars}  
+                </Route>
               ))
             }
           </Switch>

@@ -93,7 +93,7 @@ export default function Sms() {
                 <Grid container spacing={10} justify="center">
                     {
                         items.map((content, index) => {
-                            return <Grid item lg={4} xs={10}>
+                            return <Grid item lg={4} xs={10} key={index}>
                                 <Box width="100%" px={2}>
                                     <PaperCards title={content.title} Svgs={content.icon} />
                                 </Box>
