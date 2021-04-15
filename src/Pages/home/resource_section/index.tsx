@@ -1,7 +1,6 @@
 import React from 'react'
 import {  Grid, Box, Container } from '@material-ui/core'
 import InfoCard from './informationCards';
-import DashboardImg from '../../../assets/images/dashboard.png'
 import {ReactComponent as Automatemarketing} from "../../../assets/icons/research/Automatemarketing.svg";
 import {ReactComponent as ViewDeliveryReport} from "../../../assets/icons/research/ViewDeliveryReport.svg";
 import {ReactComponent as Segment} from "../../../assets/icons/research/Segment.svg";
@@ -79,13 +78,6 @@ export default function Api() {
                     </Grid>
                 </Container>
             </Box>
-            <Container>
-                <Grid item xs={12}>
-                    <Box my={10}>
-                        <img src={DashboardImg} width={'100%'} />
-                    </Box>
-                </Grid>
-            </Container>
         </div>
     )
 }

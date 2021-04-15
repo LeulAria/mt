@@ -11,7 +11,7 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
-        marginTop: '4rem',
+        marginTop: '10rem',
         marginBottom: '10rem',
     },
     contain: {
@@ -60,8 +60,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     cardTitle: {
         color: '#364F91',
-        fontWeight: 800,
-        fontSize: '32px',
+        fontWeight: 700,
+        fontSize: '34px',
         marginBottom: '3rem'
     },
 }));

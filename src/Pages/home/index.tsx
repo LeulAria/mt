@@ -1,24 +1,17 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import Box from '@material-ui/core/Box';
 import Slide from '@material-ui/core/Slide';
-// import {ReactComponent as Logo} from '../../assets/logos/LOGO2svg.svg'
-// import {ReactComponent as EthLogo} from '../../assets/logos/Ethiotelecom.svg'
 import Logo from '../../assets/logos/LOGOMAIN.svg'
 import EthLogo from '../../assets/logos/Ethiotelecom.svg'
 import { createStyles, makeStyles, Theme, ThemeProvider } from '@material-ui/core/styles';
 import { Button} from '@material-ui/core';
-// import AboutUs from './aboutUs';
 import Sms from './sms';
-// import Api from './api';
 import Res from './resource_section';
-import Res2 from './resource_section/index_2';
 import Form from './pageForm';
-// import Dev from './developers'
 import { Gallery } from './headerSlider/index'
 import SMSMADE from './sms_made_simple/index'
 import Ease from './ease_use/index'
@@ -114,13 +107,9 @@ export default function HideAppBar(props: Props) {
                 <div>
                     <Gallery />
                     <SMSMADE />
-                    {/* <AboutUs /> */}
                     <Sms />
-                    {/* <Dev/> */}
                     <Res />
                     <Ease />
-                    <Res2 />
-                    {/* <Api /> */}
                     <Form />
                 </div>
             </ThemeProvider>

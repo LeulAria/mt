@@ -16,11 +16,11 @@ const useStyles = makeStyles((theme: Theme) => ({
 
     },
     contain: {
-        marginTop: '4rem',
-        marginBottom: '4rem'
+        marginTop: '6rem',
+        marginBottom: '6rem'
     },
     container: {
-        paddingTop: '2%'
+        paddingTop: '10%'
     },
     topography: {
         color: '#28287D',
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     topography2: {
         // color: '#28287D',
-        fontWeight: 700
+        fontWeight: 600
     },
     listItem: {
         // display: 'inline'
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     cardTitle: {
         color: '#364F91',
         fontWeight: 800,
-        fontSize: '32px',
+        fontSize: '34px',
         marginBottom: '1rem'
     },
 
@@ -52,29 +52,24 @@ export default function Sms() {
                     spacing={3}
                     direction="row-reverse"
                     justify="center"
-                    alignItems="center"
+                    alignItems="flex-start"
                 >
                     <Grid item xs={12} md={6}>
                         <SMSManager />
                     </Grid>
                     <Grid item xs={12} md={6}>
                         <Container className={classes.container}>
-                            <Typography variant={'h5'} className={classes.cardTitle} >
+                            <Typography className={classes.cardTitle} >
                                 Easy to Use <br />
                                 SMS Marketing Platform
                             </Typography>
-                            <br />
+                            {/* <br /> */}
                             <Typography align={'center'} variant='h6' display='inline' className={classes.topography2} >
                                 Empower your business with easy to use  <br />  
                                 SMS customer engagement platform
                             </Typography>
                         </Container>
                     </Grid>
-                    {/* <Grid item xs={12}>
-                        <Box my={7}>
-                            <img src={DashboardImg} width={'100%'} />
-                        </Box>
-                    </Grid> */}
                 </Grid>
             </Container>
         </div>
