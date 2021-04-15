@@ -176,7 +176,7 @@ export default function User() {
                 sort: false,
                 empty: true,
                 customBodyRenderLite: (dataIndex: any, rowIndex: any) => {
-                    console.log(dataIndex);
+                    console.log(dataIndex, 'index');
                     
                   return (
                       <IconButton >
@@ -212,7 +212,7 @@ export default function User() {
         
         dispatch(sendVerification(data))
 
-        alert(JSON.stringify(data));
+        // alert(JSON.stringify(data));
         const updatedUser = {
             ...data
         }
@@ -338,9 +338,6 @@ export default function User() {
                     control={control}
                     />
                 </Grid>
-            {/* </Grid> */}
-            
-            {/* <label>Payment</label> */}
                 <Grid item xs={12} sm={6}>
                     <Controller render={({field}) => (
                         <TextField
@@ -352,59 +349,11 @@ export default function User() {
                         fullWidth
 
                         />
-
                     )}
                     name="paymentStat"
                     control={control}
                     />
                 </Grid>
-                <Grid item xs={12} sm={6}>
-
-              
-
-                    <Controller render={({field}) => (
-                    <FormControl fullWidth variant="outlined">
-                        <InputLabel htmlFor="outlined-adornment-amount">Amount Payed</InputLabel>
-                            <OutlinedInput
-                                id="outlined-adornment-amount"
-                                {...field}
-                                startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                                labelWidth={60}
-                                fullWidth
-                            />
-                    </FormControl>
-
-                        // <TextField
-                        // required
-                        // id="amount"
-                        // placeholder="Amount Payed"  
-                        // variant='outlined'
-
-                        // />
-
-                    )}
-                    name="amount"
-                    control={control}
-                    />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                    <Controller render={({field}) => (
-                        <TextField
-                        required
-                        id="subscription"
-                        {...field}
-                        placeholder="Subscription"  
-                        variant='outlined'
-                        fullWidth
-
-                        />
-
-                    )}
-                    name="subscription"
-                    control={control}
-                    />
-                </Grid>
-            
             <Grid item xs={12} sm={6}>
                 <Controller render={({field}) => (
                     <TextField
@@ -468,7 +417,5 @@ export default function User() {
             </DialogContent>
           </Dialog>
         </div>
-
     )
-
 }
