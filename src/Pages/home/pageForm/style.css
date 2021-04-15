@@ -1,0 +1,8 @@
+  .title {
+    font-size: 21px;
+    background: -webkit-linear-gradient(#2D4C91, #00CDB8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 1000 !important;
+    letter-spacing: 2px;
+  }

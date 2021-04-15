@@ -1,46 +1,64 @@
 {
-  "name": "usermanagement",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "webpack-dev-server --mode development --open --hot",
-    "build": "webpack --mode production",
-    "test": "jest"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git@gitlab.com:2ftimeplc/2fReactTeam/usermanagement.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@babel/core": "^7.13.14",
-    "@babel/plugin-transform-runtime": "^7.13.10",
-    "@babel/preset-env": "^7.13.12",
-    "@babel/preset-react": "^7.13.13",
-    "@babel/preset-typescript": "^7.13.0",
-    "@babel/runtime": "^7.13.10",
-    "@types/jest": "^26.0.22",
-    "@types/webpack": "^5.28.0",
-    "@types/webpack-dev-server": "^3.11.3",
-    "babel-loader": "^8.2.2",
-    "html-webpack-plugin": "^4.2.0",
-    "jest": "^26.6.3",
-    "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.10.3"
-  },
+  "name": "adv_routing_work",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.57",
+    "@reduxjs/toolkit": "^1.5.1",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "@types/jest": "^26.0.22",
     "@types/node": "^14.14.37",
     "@types/react": "^17.0.3",
     "@types/react-dom": "^17.0.3",
+    "@types/react-redux": "^7.1.16",
+    "@types/react-router-dom": "^5.1.7",
+    "@types/redux-persist": "^4.3.1",
     "chai": "^4.3.4",
+    "emailjs-com": "^2.6.4",
+    "firebase": "^8.3.2",
     "nyc": "^15.1.0",
     "react": "^17.0.2",
+    "react-alice-carousel": "^2.4.0",
     "react-dom": "^17.0.2",
+    "react-hook-form": "^7.0.6",
+    "react-redux": "^7.2.3",
+    "react-responsive-carousel": "^3.2.18",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.3",
+    "react-svg-loader": "^3.0.3",
     "react-test-renderer": "^17.0.2",
-    "typescript": "^4.2.3"
+    "react-top-loading-bar": "^2.0.1",
+    "redux": "^4.0.5",
+    "redux-persist": "^6.0.0",
+    "typescript": "^4.2.3",
+    "web-vitals": "^1.0.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
