@@ -1,3 +1,4 @@
+import React from 'react'
 import {  Grid, Box, Container } from '@material-ui/core'
 import InfoCard from './informationCards';
 import DashboardImg from '../../../assets/images/dashboard.png'

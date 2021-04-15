@@ -1,6 +1,5 @@
 import React from 'react'
 import { Typography, Box, Container, Grid } from '@material-ui/core'
-// import Benefits from "./benefits";
 import ImageContainer from './imageHolder';
 import A2PAPII from '../../../assets/images/ApplicationToPeermessaging.png'
 import CODE from '../../../assets/images/CODE2.PNG'

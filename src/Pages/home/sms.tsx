@@ -1,3 +1,4 @@
+import React from 'react'
 import { Typography, Grid, Container } from '@material-ui/core'
 import {ReactComponent as SMSManager} from '../../assets/images/SMSMarketing.svg'
 import { makeStyles, Theme } from '@material-ui/core/styles';

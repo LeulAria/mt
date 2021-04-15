@@ -1,3 +1,4 @@
+import React from 'react';
 import { Grid, Box, Container, Paper } from '@material-ui/core'
 import Robot from '../../../assets/icons/developers/Icon awesome-robot.svg'
 import Feather from '../../../assets/icons/developers/Icon feather-alert-circle.svg'

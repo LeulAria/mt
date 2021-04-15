@@ -1,3 +1,4 @@
+import React from 'react'
 import { Typography, Box, Divider } from '@material-ui/core'
 import Logo2 from '../../assets/logos/LOGO2svg.svg'
 import EtLogo2 from '../../assets/icons/footer/Ethiotelecom22.svg'

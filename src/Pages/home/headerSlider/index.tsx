@@ -1,3 +1,4 @@
+import React from 'react'
 import { Carousel } from 'react-responsive-carousel';
 import Header from "../../../assets/backgrounds/Background.png";
 import {  Box, Paper, Grid } from "@material-ui/core";
