@@ -5,10 +5,11 @@ import { Redirect, Route } from "react-router-dom";
 import { RootState } from "../app/store";
 import { UserRole } from "../features/auth/types";
 import {routes} from "./configs";
+import Loader from "../components/loader/index"
 export default function RouteSubRoute(route: any) {
     const auth = useSelector((state: RootState) => state.auth)
     return (
-        <Suspense fallback={<p>loading...</p>}>
+        <Suspense fallback={<Loader/>}>
             <Route
 				path={route.path}
 				render={(props) => {
