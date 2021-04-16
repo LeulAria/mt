@@ -150,9 +150,9 @@ export default function PageForm() {
 
                                         Central Bldg, 5th floor <br />
                                         Addis Ababa, Ethiopia <br />
-                                        <span style={{ color: 'white', fontWeight: 100, fontSize: '16px' }}>email : a2p@teklogix.et</span> <br/>
-                                        <a href="http://mywebsite.com/home.html"
-                                        style={{ color: 'white', textDecoration: 'none', fontWeight: 100, fontSize: '16px' }} 
+                                        <span style={{ color: 'white', fontWeight: 500, fontSize: '16px' }}>email : a2p@teklogix.et</span> <br/>
+                                        <a href="https://www.teklogixinc.com/"
+                                        style={{ color: 'white', textDecoration: 'none', fontWeight: 500, fontSize: '16px' }} 
                                         >www.teklogix.et</a>
                                     </Typography>
                                 </Box>
@@ -187,9 +187,9 @@ export default function PageForm() {
 
                                         Central Bldg, 5th floor <br />
                                         Addis Ababa, Ethiopia <br />
-                                        <span style={{ color: 'white', fontWeight: 100 , fontSize: '16px' }}>email : a2p@teklogix.et</span> <br/>
-                                        <a href="http://mywebsite.com/home.html"
-                                        style={{ color: 'white', textDecoration: 'none', fontWeight: 100 , fontSize: '16px' }} 
+                                        <span style={{ color: 'white', fontWeight: 500 , fontSize: '16px' }}>email : a2p@teklogix.et</span> <br/>
+                                        <a href="https://www.teklogixinc.com/"
+                                        style={{ color: 'white', textDecoration: 'none', fontWeight: 500 , fontSize: '16px' }} 
                                         >www.teklogix.et</a>
                                     </Typography>
                                 </Box>
