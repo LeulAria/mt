@@ -13,12 +13,14 @@ export const {
 	setLoadingProgress,
 	setCurrentUser,
 	setIsAuthenticated,
-	setLogOutUser
+	setLogOutUser,
+	setClients
 } = userSlice.actions;
 
 export const {
     createNewUser,
-	signInUser
+	signInUser,
+	getUser
 } = thunks;
 
 export default userSlice.reducer;
