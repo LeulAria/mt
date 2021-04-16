@@ -45,8 +45,8 @@ export default function SignIn() {
     const onSubmit = (data: any) => {
         dispatch(signInUser(data))
     };
-    if(auth.authenticated){
-        return <Redirect to="/redirecting"/>
+    if (auth.authenticated) {
+        return <Redirect to="/redirecting" />
     }
     return (
         <Container component="main" maxWidth="sm">
@@ -62,23 +62,26 @@ export default function SignIn() {
                     onSubmit={handleSubmit(onSubmit)}
                 >
                     {
-                        logInFields.map((value, index)=>(
-                            <Controller
-                                key={index}
-                                name={value.name}
-                                render={({ field }) => (
-                                    <TextComponent
-                                        label={value.label}
-                                        field={field}
-                                        errors={errors}
-                                        name={value.name}
-                                        type={value.type}
-                                        variant={value.variant}
-                                    />
-                                )}
-                                control={control}
-                                rules={value.rules}
-                            />
+                        logInFields.map((value, index) => (
+                            <div 
+                            key={index}
+                            style={{marginBottom: '1rem'}}>
+                                <Controller
+                                    name={value.name}
+                                    render={({ field }) => (
+                                        <TextComponent
+                                            label={value.label}
+                                            field={field}
+                                            errors={errors}
+                                            name={value.name}
+                                            type={value.type}
+                                            variant={value.variant}
+                                        />
+                                    )}
+                                    control={control}
+                                    rules={value.rules}
+                                />
+                            </div>
                         ))
                     }
                     <Button
