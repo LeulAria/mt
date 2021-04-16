@@ -42,14 +42,14 @@ export const items: any = {
     [UserRole.SALES_PERSON]: [
         {
             path: '/sales/verify',
-            title: 'Dashboard',
+            title: 'Verify Users',
             icon: function Dashboard(): JSX.Element {
                 return <VerifiedUserIcon />
             }
         },
         {
             path: '/sales/client',
-            title: 'Dashboard',
+            title: 'Users List',
             icon: function Dashboard(): JSX.Element {
                 return <PersonIcon />
             }

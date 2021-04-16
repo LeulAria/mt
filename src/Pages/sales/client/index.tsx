@@ -195,7 +195,7 @@ export default function User() {
 
     const stateClient = useSelector((state: RootState) => state.auth)
     console.log(stateClient.clients, '--cli');
-
+ 
 
     useEffect(() => {
         dispatch(getUser())

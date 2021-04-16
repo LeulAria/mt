@@ -35,6 +35,14 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     // necessary for content to be below app bar
     toolbar: theme.mixins.toolbar,
+    // toolbar: {
+    //   display: 'flex',
+    //   alignItems: 'center',
+    //   justifyContent: 'flex-end',
+    //   padding: theme.spacing(0, 1),
+    //   // necessary for content to be below app bar
+    //   ...theme.mixins.toolbar,
+    // },
     drawerPaper: {
       width: drawerWidth,
     },
@@ -49,9 +57,11 @@ export const App = () => {
   const classes = useStyles();
   const auth = useSelector((state: RootState) => state.auth)
   const [appState, setAppState] = useState<boolean>(false)
+  
   useEffect(() => {
     checkRoutes()
   }, [auth.authenticated])
+
   const routeDef: string[] = [
     '/login',
     '/'

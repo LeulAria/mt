@@ -14,7 +14,7 @@ export const DrawerADMIN = (): JSX.Element => {
   console.log(auth.currentUser.role);
   return (
     <div>
-      <List style={{ height: '100vh' }}>
+      <List>
         {
           auth.currentUser.role &&
           items[auth.currentUser.role].map((v: any, i: number) => (
@@ -25,8 +25,8 @@ export const DrawerADMIN = (): JSX.Element => {
                 component={Link}
                 to={v.path}
               >
-                <ListItemIcon><v.icon /></ListItemIcon>
-                <ListItemText primary={v.title} />
+                <ListItemIcon style={{color: 'white'}}><v.icon /></ListItemIcon>
+                <ListItemText style={{color: 'white'}} primary={v.title} />
               </ListItem>
               <Divider />
             </div>

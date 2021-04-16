@@ -16,7 +16,7 @@ export default function RouteSubRoute(route: any) {
 					if (route.path === '/redirecting') {
 						switch (auth.currentUser.role) {
 							case UserRole.ADMIN:
-								return <Redirect from="/redirecting" to="/home" />
+								return <Redirect from="/redirecting" to="/home/dashboard" />
 							case UserRole.SALES_PERSON:
 								return <Redirect from="/redirecting" to="/sales" />
 							case UserRole.TECH_SUPPORT:
