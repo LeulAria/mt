@@ -5,6 +5,7 @@ interface IAddress {
 }
 
 export interface IUser {
+  clientName?: string;
   companyName: string;
   companyUrl: string;
   email: string;
@@ -33,20 +34,25 @@ export enum UserStatus {
 
 export enum UserRole {
   ADMIN = "ADMIN",
-  SALES_PERSON = "SALES_PERSON",
+  SALES_PERSON = "SALES_SUPPORT",
   TECH_SUPPORT = "TECH_SUPPORT",
   USER = "USER",
   DEFAULT = "DEFAULT",
 }
 
+export interface IEmployee {
+  password?: string;
+  userName: string;
+  email: string;
+  role: string;
+  uid: string
+}
+
 export interface IInitState {
   isLoading: boolean;
   isFaliure: boolean;
-  user_name: string;
-  email: string;
-  uid: string;
-  role: UserRole;
-  profile?: string;
   client: IUser;
   clients: IUser[];
+  currentUser:IEmployee,
+  authenticated: boolean;
 }

@@ -14,6 +14,9 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { DrawerADMIN } from './listItems';
+import { setLogOutUser } from "../../features/auth";
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
 
 const drawerWidth = 240;
 
@@ -83,6 +86,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 export default function Dashboard(): JSX.Element {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const dispatch = useDispatch();
+  const auth = useSelector((state: RootState) => state.auth)
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -107,10 +112,14 @@ export default function Dashboard(): JSX.Element {
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             Dashboard
           </Typography>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
+          <IconButton color="inherit"
+            onClick={()=>{
+              dispatch(setLogOutUser())
+            }}
+          >
+            {/* <Badge badgeContent={4} color="secondary"> */}
               <NotificationsIcon />
-            </Badge>
+            {/* </Badge> */}
           </IconButton>
         </Toolbar>
       </AppBar>
@@ -127,7 +136,7 @@ export default function Dashboard(): JSX.Element {
           </IconButton>
         </div>
         <Divider />
-          <DrawerADMIN/>
+          {auth.authenticated && <DrawerADMIN/>}
         {/* <DrawerADMIN/> */}
       </Drawer>
     </div>

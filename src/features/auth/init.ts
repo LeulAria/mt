@@ -4,7 +4,7 @@ export const initialState: IInitState = {
   isFaliure: false,
   currentUser: {
     email: "",
-    role: "",
+    role: UserRole.DEFAULT,
     uid: "",
     userName: ""
   },

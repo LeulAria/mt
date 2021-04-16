@@ -7,56 +7,68 @@ export const routes = [
     {
         path: '/',
         exact: true,
-        component: lazy(()=> (import('../Pages/home/index'))),
+        component: lazy(() => (import('../Pages/home/index'))),
     },
     {
         path: '/login',
         // component: Login
         exact: false,
-        component: lazy(()=> import('../Pages/signup/login'))
+        component: lazy(() => import('../Pages/signup/login'))
     },
     {
         path: '/home',
         exact: false,
-        component: lazy(()=> import('../Pages/user/index')),
-        bars: <Dashboard/>,
+        component: lazy(() => import('../Pages/user/index')),
+        bars: <Dashboard />,
         isPrivate: true,
         permission: [UserRole.ADMIN],
-        routes:[
+        routes: [
             {
                 path: '/home/dashboard',
                 exact: false,
-                component: lazy(()=> import('../Pages/admin/dashboard'))
+                component: lazy(() => import('../Pages/admin/dashboard'))
             },
             {
                 path: '/home/users',
                 exact: false,
-                component: lazy(()=> import('../Pages/admin/users_list'))
+                component: lazy(() => import('../Pages/admin/users_list'))
             },
             {
                 path: '/home/assign',
                 exact: false,
-                component: lazy(()=> import('../Pages/admin/assign_users'))
+                component: lazy(() => import('../Pages/admin/assign_users'))
             },
             {
                 path: '/home/chat',
                 exact: false,
-                component: lazy(()=> import('../Pages/admin/chat'))
+                component: lazy(() => import('../Pages/admin/chat'))
             },
         ]
     },
     {
         path: '/sales',
         exact: false,
-        component: lazy(()=> (import('../Pages/user/sales'))),
+        component: lazy(() => (import('../Pages/user/index'))),
         // bar: <Appbar/>,
         isPrivate: true,
-        permission: [UserRole.USER]
+        permission: [UserRole.SALES_PERSON],
+        routes: [
+            {
+                path: '/sales/verify',
+                exact: false,
+                component: lazy(() => import('../Pages/sales/paymentStatus'))
+            },
+            {
+                path: '/sales/client',
+                exact: false,
+                component: lazy(() => import('../Pages/sales/client'))
+            },
+        ]
     },
     {
         path: '/tech',
         exact: false,
-        component: lazy(()=> (import('../Pages/user/tech'))),
+        component: lazy(() => (import('../Pages/user/tech'))),
         // bar: <Appbar/>,
         isPrivate: true,
         permission: [UserRole.TECH_SUPPORT]
@@ -64,4 +76,4 @@ export const routes = [
     {
         path: '/redirecting'
     }
-] 
+]

@@ -47,7 +47,7 @@ export const createNewEmployee = (user: any): AppThunk => async dispatch => {
 					uid: _.user.uid,
 					role: user.role
 				}
-				db.collection("users").doc(_.user.uid).set(new_user).then((user)=> {
+				db.collection("users").doc(_.user.uid).set(new_user).then(()=> {
 					dispatch(setCurrentUser(new_user))
 					dispatch(setLoadingProgress(false))
 				})
@@ -81,7 +81,6 @@ export const signInUser = (user: any): AppThunk => async dispatch => {
 
 export const getUser = (): AppThunk => async (dispatch) => {
   const db = firebase.firestore();
-
   try {
     firebase
       .firestore()
@@ -102,10 +101,10 @@ export const getUser = (): AppThunk => async (dispatch) => {
           .collection("paymentStatus")
           .get()
           .then((snapshots) => {
-            interface IPaymentIndex {
-              [index: string]: {};
-            }
-            let allPayment: any[] = [];
+            // interface IPaymentIndex {
+            //   [index: string]: {};
+            // }
+            const allPayment: any[] = [];
 
             snapshots.forEach((doc: any) => {
               allPayment[doc.id] = ({
@@ -140,7 +139,7 @@ export const getPayedUserInfo = (): AppThunk => async (dispatch) => {
       .collection("paymentStatus")
       .get()
       .then((querySnapshot) => {
-        let allData: IUser[] = [];
+        const allData: IUser[] = [];
         querySnapshot.forEach((doc) => {
           allData.push(({ ...doc.data(), id: doc.id } as unknown) as IUser);
           console.log(doc.data());
@@ -172,23 +171,9 @@ export const paymentOfUser = (data: any): AppThunk => async (dispatch) => {
   }
 };
 
-export const cronSchdule = () => {
-  //   firebase
-  //     .firestore()
-  //     .collection("paymentStatus")
-  //     .get()
-  //     .then((querySnapshot) => {
-  //       let allData: IUser[] = [];
-  //       querySnapshot.forEach((doc) => {
-  //         allData.push(({ ...doc.data(), id: doc.id } as unknown) as IUser);
-  //       });
-  //       console.log(allData, "snapshot");
-  //     });
-};
 
 export const sendVerification = (user: IUser): AppThunk => async (dispatch) => {
-  const auth = firebase.auth;
-  var actionCodeSettings = {
+  const actionCodeSettings = {
     url: "https://user-management-ee9c6.web.app/",
     handleCodeInApp: true,
   };
@@ -197,7 +182,7 @@ export const sendVerification = (user: IUser): AppThunk => async (dispatch) => {
     .collection("clients")
     .get()
     .then((querySnapshot) => {
-      let allData: IUser[] = [];
+      const allData: IUser[] = [];
       querySnapshot.forEach((doc) => {
         allData.push(({ ...doc.data(), id: doc.id } as unknown) as IUser);
       });
@@ -209,6 +194,6 @@ export const sendVerification = (user: IUser): AppThunk => async (dispatch) => {
       firebase
         .auth()
         .sendSignInLinkToEmail(selectedUser[0].email, actionCodeSettings)
-        .then((hello) => {});
+        .then(() => {console.log('')});
     });
 };

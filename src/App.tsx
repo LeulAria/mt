@@ -1,9 +1,12 @@
-import React from 'react'
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import React, { useEffect, useState } from 'react'
+import { BrowserRouter, Switch } from "react-router-dom";
 import { makeStyles, Theme, createStyles, ThemeProvider } from '@material-ui/core/styles';
 import { routes } from "./configRoute/configs";
 import Router from "./configRoute/routeSubRoute";
 import { theme } from "./app/theme"
+import Appbar from "./layouts/applayout/appbar";
+import { RootState } from './app/store';
+import { useSelector } from 'react-redux';
 
 const drawerWidth = 240;
 
@@ -44,28 +47,26 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const App = () => {
   const classes = useStyles();
+  const auth = useSelector((state: RootState) => state.auth)
+  const [appState, setAppState] = useState<boolean>(false)
+  useEffect(() => {
+    checkRoutes()
+  }, [auth.authenticated])
+  const routeDef: string[] = [
+    '/login',
+    '/'
+  ]
+  const checkRoutes = () => {
+     setAppState(routeDef.includes(location.pathname))
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <div className={classes.root}>
         <BrowserRouter>
-        {
-          routes[2].bars
-        }
-          <Switch>
-            {
-              routes.map((v, i) => (
-                <Route
-                  key={i}
-                  path={v.path}
-                  // children=
-                >  
-                {
-                   v.bars
-                }
-                </Route>
-              ))
-            }
-          </Switch>
+          {
+            !appState && <Appbar />
+          }
           <main className={classes.content}>
             <div className={classes.toolbar} />
             <Switch>

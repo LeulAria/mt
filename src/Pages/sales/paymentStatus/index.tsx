@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-import MUIDataTable from "mui-datatables";
+import MUIDataTable from 'mui-datatables'
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
-import EditIcon from "@material-ui/icons/Edit";
 import { useDispatch, useSelector } from "react-redux";
-import firebase from "../../../firebase/firebase";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -18,7 +16,7 @@ import {
   IconButton,
   Switch,
 } from "@material-ui/core";
-import { getUser, paymentOfUser, getPayedUserInfo  } from "../../../features/auth/actions";
+import { getUser, paymentOfUser } from "../../../features/auth/actions";
 import { RootState } from "../../../app/store";
 import { makeStyles } from "@material-ui/core/styles";
 import { useForm, Controller } from "react-hook-form";
@@ -83,7 +81,7 @@ export default function UserPayment() {
         sort: false,
       },
     },
-    
+
     {
       label: "UID",
       name: "uid",
@@ -92,16 +90,14 @@ export default function UserPayment() {
         display: false,
       },
     },
-    
+
     {
       label: "Payment Status",
       name: "paymentStat",
       options: {
         filter: true,
         sort: false,
-        customBodyRenderLite: (dataIndex: any, rowIndex: any) => {
-          console.log(dataIndex);
-
+        customBodyRenderLite: function customRender(dataIndex: any, rowIndex: any) {
           return (
             <FormControlLabel
               control={
@@ -119,7 +115,7 @@ export default function UserPayment() {
         },
       },
     },
-    
+
     {
       label: "Suspend User",
       name: "suspend",
@@ -127,9 +123,7 @@ export default function UserPayment() {
         filter: false,
         sort: false,
         empty: true,
-        customBodyRenderLite: (dataIndex: any, rowIndex: any) => {
-          console.log(dataIndex, 'index');
-
+        customBodyRenderLite: function customRender(dataIndex: any, rowIndex: any) {
           return (
             <IconButton>
               <PersonAddDisabledIcon />
@@ -155,7 +149,7 @@ export default function UserPayment() {
     dispatch(getUser());
   }, []);
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: any) => {
     data.clientName = rowData[0];
     data.email = rowData[2];
     data.id = rowData[3];
@@ -178,7 +172,11 @@ export default function UserPayment() {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        margin: '2rem'
+      }}
+    >
       <MUIDataTable
         title={"Client List"}
         data={stateClient.clients}
@@ -236,7 +234,7 @@ export default function UserPayment() {
           <form noValidate onSubmit={handleSubmit(onSubmit)}>
             <Grid container spacing={2}>
 
-               {/* <Grid item xs={12} sm={6}>
+              {/* <Grid item xs={12} sm={6}>
                     <Controller render={({field}) => (
                     <FormControl fullWidth variant="outlined">
                         <InputLabel htmlFor="outlined-adornment-amount">Amount Payed</InputLabel>
@@ -268,32 +266,32 @@ export default function UserPayment() {
                     control={control}
                     />
                 </Grid> */}
-                
-                <Grid item xs={12} sm={12}>
 
-                  <Controller render = {({field}) => (
-                         <FormControlLabel
-                         control={
-                          <Checkbox 
-                            // checked={state.checkedA} 
-                            onChange={handleChange} 
-                            {...field}
-                            value={state.checkedB}
-                            name="checkedA" 
-                            />
-                          }
-                         label="Grant Access for Tech Support"
-                       />
-                 
-                  )}
-                    
-                    name="techSupportAccess"
-                    control={control}
-                    
-                    />
-                </Grid>
+              <Grid item xs={12} sm={12}>
 
-            
+                <Controller render={({ field }) => (
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        // checked={state.checkedA} 
+                        // onChange={handleChange} 
+                        {...field}
+                        value={state.checkedB}
+                        name="checkedA"
+                      />
+                    }
+                    label="Grant Access for Tech Support"
+                  />
+
+                )}
+
+                  name="techSupportAccess"
+                  control={control}
+
+                />
+              </Grid>
+
+
               <Button
                 type="submit"
                 fullWidth

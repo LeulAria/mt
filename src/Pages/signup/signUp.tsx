@@ -62,6 +62,7 @@ export default function SignIn() {
                     {
                         signUpFields.map((value, index)=>(
                             <Controller
+                                key={index}
                                 name={value.name}
                                 render={({ field }) => (
                                     <TextComponent

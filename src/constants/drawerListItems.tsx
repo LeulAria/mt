@@ -5,6 +5,8 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import ChatIcon from '@material-ui/icons/Chat';
 import GroupIcon from '@material-ui/icons/Group';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
+import PersonIcon from '@material-ui/icons/Person';
+import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 
 export const items: any = {
     [UserRole.ADMIN]: [
@@ -36,6 +38,23 @@ export const items: any = {
                 return <ChatIcon />
             }
         },
+    ],
+    [UserRole.SALES_PERSON]: [
+        {
+            path: '/sales/verify',
+            title: 'Dashboard',
+            icon: function Dashboard(): JSX.Element {
+                return <VerifiedUserIcon />
+            }
+        },
+        {
+            path: '/sales/client',
+            title: 'Dashboard',
+            icon: function Dashboard(): JSX.Element {
+                return <PersonIcon />
+            }
+        },
+       
     ],
 
 }

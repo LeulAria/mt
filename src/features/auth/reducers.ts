@@ -1,7 +1,6 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { IEmployee, IInitState, IUser } from "./types";
 import { initialState } from "./init";
-// import { IInitState,   } from "./types";
 
 
 export default {
@@ -22,6 +21,6 @@ export default {
 		state.clients = action.payload
 	},
     getClient : (state: IInitState  , action: PayloadAction<string>) => {
-		state.email = action.payload
+		state.client.email = action.payload
 	},
 }

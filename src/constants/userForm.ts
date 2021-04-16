@@ -41,7 +41,7 @@ export const logInFields = [
     {
         name: "email",
         label: "Email Address",
-        variant: 'outlined',
+        variant: 'standard',
         type: "email",
         rules: {
             required: 'this field is required',
@@ -54,7 +54,7 @@ export const logInFields = [
     {
         name: "password",
         label: "Password",
-        variant: 'outlined',
+        variant: 'standard',
         type: "password",
         rules: {
             required: 'this field is required',
