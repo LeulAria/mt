@@ -6,7 +6,6 @@ export default function index({routes}: any) {
     console.log(routes);
     return (
         <div>
-            ADMIN
             <Switch>
                 {
                     routes.map((value: any, index: any)=>(

@@ -48,14 +48,20 @@ export const App = () => {
     <ThemeProvider theme={theme}>
       <div className={classes.root}>
         <BrowserRouter>
+        {
+          routes[2].bars
+        }
           <Switch>
             {
               routes.map((v, i) => (
                 <Route
                   key={i}
                   path={v.path}
-                >
-                  {v.bars}  
+                  // children=
+                >  
+                {
+                   v.bars
+                }
                 </Route>
               ))
             }

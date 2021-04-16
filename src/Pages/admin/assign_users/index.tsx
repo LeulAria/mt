@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function DashBoard() {
+export default function Chat() {
     return (
         <div>
-            Users
+            Chats
         </div>
     )
 }

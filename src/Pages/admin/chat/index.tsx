@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function DashBoard() {
+export default function AssignUsers() {
     return (
         <div>
-            Users
+            Assign Users
         </div>
     )
 }

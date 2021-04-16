@@ -24,14 +24,24 @@ export const routes = [
         permission: [UserRole.ADMIN],
         routes:[
             {
-                path: '/home/page1',
+                path: '/home/dashboard',
                 exact: false,
                 component: lazy(()=> import('../Pages/admin/dashboard'))
             },
             {
-                path: '/home/page2',
+                path: '/home/users',
                 exact: false,
                 component: lazy(()=> import('../Pages/admin/users_list'))
+            },
+            {
+                path: '/home/assign',
+                exact: false,
+                component: lazy(()=> import('../Pages/admin/assign_users'))
+            },
+            {
+                path: '/home/chat',
+                exact: false,
+                component: lazy(()=> import('../Pages/admin/chat'))
             },
         ]
     },
