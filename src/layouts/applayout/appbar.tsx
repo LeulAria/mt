@@ -57,10 +57,10 @@ const useStyles = makeStyles((theme: Theme) =>
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.enteringScreen,
             }),
-            backgroundColor: '#222943'
+            backgroundColor: '#F0F0F0'
         },
         drawerClose: {
-            backgroundColor: '#222943',
+            backgroundColor: '#F0F0F0',
             transition: theme.transitions.create('width', {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.leavingScreen,
@@ -70,6 +70,8 @@ const useStyles = makeStyles((theme: Theme) =>
             [theme.breakpoints.up('sm')]: {
                 width: theme.spacing(9) + 1,
             },
+            border: '0px',
+            elevation: '2'
         },
         toolbar: {
             display: 'flex',
@@ -149,6 +151,7 @@ export default function MiniDrawer() {
                 </Toolbar>
             </AppBar>
             <Drawer
+                elevation={3}
                 variant="permanent"
                 className={clsx(classes.drawer, {
                     [classes.drawerOpen]: open,

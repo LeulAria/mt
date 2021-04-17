@@ -75,7 +75,7 @@ export const App = () => {
       <div className={classes.root}>
         <BrowserRouter>
           {
-            !appState && <Appbar />
+            (!appState || auth.authenticated) && <Appbar />
           }
           <main className={classes.content}>
             <div className={classes.toolbar} />

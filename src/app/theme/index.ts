@@ -11,5 +11,8 @@ export const theme = createMuiTheme({
         secondary:{
             main: "#2F3A45",
         }
-    }
+    },
+    typography: {
+        fontFamily: 'Montserrat, sans-serif',
+    },
 })

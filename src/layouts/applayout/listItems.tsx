@@ -25,8 +25,8 @@ export const DrawerADMIN = (): JSX.Element => {
                 component={Link}
                 to={v.path}
               >
-                <ListItemIcon style={{color: 'white'}}><v.icon /></ListItemIcon>
-                <ListItemText style={{color: 'white'}} primary={v.title} />
+                <ListItemIcon style={{color: '#7367EF'}}><v.icon /></ListItemIcon>
+                <ListItemText style={{color: '#7367EF'}} primary={v.title} />
               </ListItem>
               <Divider />
             </div>
