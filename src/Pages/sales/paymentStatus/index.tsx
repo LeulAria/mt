@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import MUIDataTable from 'mui-datatables'
+import MUIDataTable from "mui-datatables";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,6 +8,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
+import date from "date-and-time";
 import { TransitionProps } from "@material-ui/core/transitions";
 import {
   Checkbox,
@@ -43,13 +44,11 @@ export default function UserPayment() {
   const classes = useStyles();
   const [rowData, getRowData] = useState([]);
   const [open, setOpen] = React.useState(false);
-  const [state, setState] = React.useState({
-    checkedB: false,
-  });
+  const [state, setState] = React.useState(false);
   const dispatch = useDispatch();
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
-  };
+  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setState({ ...state, [event.target.name]: event.target.checked });
+  // };
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -97,12 +96,15 @@ export default function UserPayment() {
       options: {
         filter: true,
         sort: false,
-        customBodyRenderLite: function customRender(dataIndex: any, rowIndex: any) {
+        customBodyRenderLite: function customRender(
+          dataIndex: any,
+          rowIndex: any
+        ) {
           return (
             <FormControlLabel
               control={
                 <Switch
-                  checked={state.checkedB}
+                  checked={state}
                   onChange={handleClickOpen}
                   name="checkedB"
                   value={state}
@@ -123,7 +125,10 @@ export default function UserPayment() {
         filter: false,
         sort: false,
         empty: true,
-        customBodyRenderLite: function customRender(dataIndex: any, rowIndex: any) {
+        customBodyRenderLite: function customRender(
+          dataIndex: any,
+          rowIndex: any
+        ) {
           return (
             <IconButton>
               <PersonAddDisabledIcon />
@@ -150,35 +155,26 @@ export default function UserPayment() {
   }, []);
 
   const onSubmit = (data: any) => {
+    const currentDate = new Date();
     data.clientName = rowData[0];
     data.email = rowData[2];
     data.id = rowData[3];
-
-    data.dateOfPayment = new Date().toLocaleString();
+    data.dateOfPayment = currentDate;
+    data.expiryDate = date.addDays(currentDate, 30);
+    data.reminderExpiryDate = date.addDays(currentDate, 28);
+    setState(true);
+    handleClose();
     dispatch(paymentOfUser(data));
-    // dispatch(cronSchdule())
-    // // alert(JSON.stringify(data));
-    // const updatedUser = {
-    //   ...data,
-    // };
-    // const db = firebase.firestore();
-    // db.collection("PaymentStatus")
-    //   .doc(rowData[6])
-    //   .update(updatedUser)
-    //   .then((_) => {});
-    // stateClient.clients;
-    // getStatus(data.verification_status);
-    console.log(data, "0000");
   };
 
   return (
     <div
       style={{
-        margin: '2rem'
+        margin: "2rem",
       }}
     >
       <MUIDataTable
-        title={"Client List"}
+        title={"Payment status"}
         data={stateClient.clients}
         columns={columns}
         options={options}
@@ -233,64 +229,20 @@ export default function UserPayment() {
           <br />
           <form noValidate onSubmit={handleSubmit(onSubmit)}>
             <Grid container spacing={2}>
-
-              {/* <Grid item xs={12} sm={6}>
-                    <Controller render={({field}) => (
-                    <FormControl fullWidth variant="outlined">
-                        <InputLabel htmlFor="outlined-adornment-amount">Amount Payed</InputLabel>
-                            <OutlinedInput
-                                id="outlined-adornment-amount"
-                                {...field}
-                                startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                                labelWidth={60}
-                                fullWidth
-                            />
-                    </FormControl>
-                    )}
-                    name="amount"
-                    control={control}
-                    />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                    <Controller render={({field}) => (
-                        <TextField
-                        required
-                        id="subscription"
-                        {...field}
-                        placeholder="Subscription"  
-                        variant='outlined'
-                        fullWidth
-                        />
-                    )}
-                    name="subscription"
-                    control={control}
-                    />
-                </Grid> */}
-
               <Grid item xs={12} sm={12}>
-
-                <Controller render={({ field }) => (
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        // checked={state.checkedA} 
-                        // onChange={handleChange} 
-                        {...field}
-                        value={state.checkedB}
-                        name="checkedA"
-                      />
-                    }
-                    label="Grant Access for Tech Support"
-                  />
-
-                )}
-
+                <Controller
+                  render={({ field }) => (
+                    <FormControlLabel
+                      control={
+                        <Checkbox {...field} value={state} name="checkedA" />
+                      }
+                      label="Grant Access for Tech Support"
+                    />
+                  )}
                   name="techSupportAccess"
                   control={control}
-
                 />
               </Grid>
-
 
               <Button
                 type="submit"
