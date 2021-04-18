@@ -40,18 +40,25 @@ export const items: any = {
     },
   ],
   [UserRole.SALES_PERSON]: [
-    {
-      path: "/sales/verify",
-      title: "Verify Users",
-      icon: function Dashboard(): JSX.Element {
-        return <VerifiedUserIcon />;
-      },
-    },
+    // {
+    //   path: "/sales/verify",
+    //   title: "Verify Users",
+    //   icon: function Dashboard(): JSX.Element {
+    //     return <VerifiedUserIcon />;
+    //   },
+    // },
     {
       path: "/sales/client",
       title: "Users List",
       icon: function Dashboard(): JSX.Element {
         return <PersonIcon />;
+      },
+    },
+    {
+      path: "/sales/subscriptionDate",
+      title: "Users List",
+      icon: function Dashboard(): JSX.Element {
+        return <VerifiedUserIcon />;
       },
     },
   ],

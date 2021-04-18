@@ -22,15 +22,35 @@ const Transition = React.forwardRef(function Transition(
 ) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-export default function ViewClient() {
+
+interface Item {
+  amount: string;
+  city: string;
+  companyName: string;
+  companyUrl: string;
+  country: string;
+  email: string;
+  isOnline: false;
+  paymentStat: string;
+  phoneNumber: string;
+  role: string;
+  service: string;
+  subCity: string;
+  subscription: string;
+  tinNumber: string;
+  verification_status: string;
+}
+interface ChildProps {
+  open: boolean;
+  selectedRow: Item[];
+}
+
+const ViewClient: React.FC<ChildProps> = (props) => {
   const [rowData, getRowData] = React.useState([]);
   const { control, handleSubmit } = useForm();
   const [open, setOpen] = React.useState(false);
   const [stat, getStatus] = useState("");
   const dispatch = useDispatch();
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
 
   const handleClose = () => {
     setOpen(false);
@@ -41,6 +61,7 @@ export default function ViewClient() {
   useEffect(() => {
     dispatch(getUser());
   }, []);
+  console.log(props, "propss");
 
   const onSubmit = (data: any) => {
     data.email = rowData[2];
@@ -65,7 +86,7 @@ export default function ViewClient() {
   return (
     <div>
       <Dialog
-        open={open}
+        open={props.open}
         TransitionComponent={Transition}
         keepMounted
         onClose={handleClose}
@@ -243,4 +264,6 @@ export default function ViewClient() {
       </Dialog>
     </div>
   );
-}
+};
+
+export default ViewClient;

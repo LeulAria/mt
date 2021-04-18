@@ -68,6 +68,7 @@ export default function EditClient() {
         open={open}
         TransitionComponent={Transition}
         keepMounted
+        fullScreen
         onClose={handleClose}
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
@@ -199,7 +200,7 @@ export default function EditClient() {
                   control={control}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12}>
                 <Controller
                   render={({ field }) => (
                     <FormControl
