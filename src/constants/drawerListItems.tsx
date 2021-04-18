@@ -55,4 +55,20 @@ export const items: any = {
       },
     },
   ],
+  [UserRole.USER]: [
+    {
+      path: "/user/chat",
+      title: "Chat",
+      icon: function Dashboard(): JSX.Element {
+        return <ChatIcon />;
+      },
+    },
+    {
+      path: "/user/profile",
+      title: "My Profile",
+      icon: function Dashboard(): JSX.Element {
+        return <PersonIcon />;
+      },
+    },
+  ],
 };
