@@ -74,14 +74,18 @@ export const signInUser = (user: any): AppThunk => async (dispatch) => {
   setLoadingProgress(true);
   auth.signInWithEmailAndPassword(user.email, user.password).then(
     (_: any) => {
-      db.collection("users")
-        .doc(_.user.uid)
-        .get()
-        .then((user: any) => {
-          dispatch(setCurrentUser(user.data()));
-          dispatch(setIsAuthenticated(true));
-          setLoadingProgress(false);
-        });
+      db.collection("users").doc(_.user.uid).update({
+        isOnline: true
+      }).then(()=>{
+        return db.collection("users")
+          .doc(_.user.uid)
+          .get()
+          .then((user: any) => {
+            dispatch(setCurrentUser(user.data()));
+            dispatch(setIsAuthenticated(true));
+            setLoadingProgress(false);
+          });
+      })
     },
     (err) => {
       setLoadingProgress(false);

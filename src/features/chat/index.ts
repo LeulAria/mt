@@ -28,7 +28,7 @@ export const {
     setUsersConveration,
     clearConverations,
     setIsActiveStatus,
-    setClients,
+    setClientsChat,
     resetClientsList,
     setClientMessageView
 } = userSlice.actions;

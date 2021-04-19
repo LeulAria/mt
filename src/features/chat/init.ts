@@ -2,6 +2,7 @@ import { IUsers } from "./types";
 
 export const initialState: IUsers = {
 	clients: [],
+	clientsChat: [],
 	conversations: [],
 	users_admin: [],
 	conversations_admin: [],

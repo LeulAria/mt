@@ -6,7 +6,7 @@ import { convertTimestamp } from "convert-firebase-timestamp";
 import Cookies from 'js-cookie';
 // import { Conversation, User } from "./types/index";
 // import { setGetRealTimeUser, setGetRealTimeUser_admin, setGetUser_admin, setMessageView, setRefreshUser, setRefreshUser_admin, setTempo } from '.';
-import { setClients, resetClientsList, setClientMessageView, setMessageView } from '.';
+import { setClientsChat, resetClientsList, setClientMessageView, setMessageView } from '.';
 import { Conversation } from './types';
 
 // export const setGTempo = (is: boolean): AppThunk => async dispatch => {
@@ -20,7 +20,6 @@ export const getSupportUser = (uid: string): AppThunk => async dispatch => {
         console.log(onSnapshot.val())
         console.log(onSnapshot.exists())
         if (onSnapshot.exists()) {
-            console.log('ESESESES')
             onSnapshot.forEach(message => {
                 if (message.val().user_uid_2 === uid) {
                     user.push(message.val().user_uid_1)
@@ -38,8 +37,9 @@ export const getSupportUser = (uid: string): AppThunk => async dispatch => {
 export const getUserFromCloud = (allUser: any[], current_uid: string): AppThunk => async dispatch => {
     const db = firebase.firestore();
     const users_list: any = [];
+	// dispatch(resetClientsList([]))
     allUser.forEach((uid: any, index: number) => {
-        db.collection("clients").doc(uid).get().then((user: any) => {
+        db.collection("users").doc(uid).get().then((user: any) => {
             if (user.exists) {
                 const client = {
                     uid: user.data().uid,
@@ -65,7 +65,7 @@ export const getUserFromCloud = (allUser: any[], current_uid: string): AppThunk 
                     return 0;
                 })
                 dispatch(resetClientsList([]))
-                dispatch(setClients(users_list))
+                dispatch(setClientsChat(users_list))
                 dispatch(getRealTimeMessageView(current_uid));
             }
         })
@@ -73,8 +73,9 @@ export const getUserFromCloud = (allUser: any[], current_uid: string): AppThunk 
 }
 
 export const getRealTimeMessageView = (uid: string): AppThunk => async (dispatch, getState: any) => {
-    const users = getState().chat.clients;
+    const users = getState().chat.clientsChat;
     const u = [...users];
+	console.log('asasas', u)
     const db = firebase.database();
     db.ref("conversations").orderByChild('createdAt').on('value', (snapshot) => {
         let views = 0;
@@ -127,10 +128,10 @@ export const updateViewStatus = (users: any[], uid: string): AppThunk => async d
 export const setIsTyping = (uid: string, is: boolean): AppThunk => async dispatch => {
 	if (Cookies.get('reciver')) {
 		const db = firebase.firestore();
-		db.collection("clients").doc(uid).get()
+		db.collection("users").doc(uid).get()
 			.then((user: any) => {
 				if (user.data().typing.isTyping === false && is) {
-					db.collection("clients").doc(uid).update({
+					db.collection("users").doc(uid).update({
 						typing: {
 							isTyping: is,
 							isTypingTo: Cookies.get('reciver')
@@ -138,7 +139,7 @@ export const setIsTyping = (uid: string, is: boolean): AppThunk => async dispatc
 					});
 				}
 				else if (user.data().typing.isTyping === true && is === false) {
-					db.collection("clients").doc(uid).update({
+					db.collection("users").doc(uid).update({
 						typing: {
 							isTyping: is,
 							isTypingTo: Cookies.get('reciver')
@@ -158,15 +159,16 @@ export const getRealTimeUserSupportProviders = (uid: string): AppThunk => async 
 				user.push({ ...doc.data(), view: 0 })
 			}
 		})
+		console.log(user)
 		dispatch(resetClientsList([]))
-		dispatch(setClients(user))
+		dispatch(setClientsChat(user))
 		dispatch(getRealTimeMessageView_USERS(uid));
 	})
 	return unsubscribe;
 }
 
 export const getRealTimeMessageView_USERS = (uid: string): AppThunk => async (dispatch, getState) => {
-	const users = getState().chat.clients;
+	const users = getState().chat.clientsChat;
 	const u = [...users];
 	const db = firebase.database();
 	db.ref("conversations").orderByChild('createdAt').on('value', (snapshot) => {
@@ -214,10 +216,10 @@ export const sendRealTimeUserMessage = (conversation: any): AppThunk => async di
 				reciver = allUsers_id[rand];
 				Cookies.set('reciver', reciver);
 			}
-			// console.log('object', Cookies.get('reciver'))
+			console.log('object', Cookies.get('reciver'))
 			if (allUsers_id.length > 0) {
 				const date = new Date()
-				db.collection("clients").doc(conversation.user_uid_1).update({
+				db.collection("users").doc(conversation.user_uid_1).update({
 					last_send: date
 				}).then(() => {
 					real_time.ref('conversations').push().set({

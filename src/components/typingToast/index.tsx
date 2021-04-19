@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { collection } from 'rxfire/firestore';
 import { map } from 'rxjs/operators';
 import firebase from "../../firebase/firebase";
-// import { ReactComponent as TypingLoad } from "public/chat_icons/typing.svg";
+import { ReactComponent as TypingLoad } from "../../assets/chat_icons/typing.svg";
 import { Box } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 // import { RootState } from 'app/store';
@@ -14,17 +14,17 @@ export default function Toast({uid}: any): JSX.Element {
     const state = useSelector((state: RootState) => state.chat.isTyping)
     useEffect(() => {
         const db = firebase.firestore();
-        const collectionRef = db.collection('clients');
+        const collectionRef = db.collection('users');
         const typing = collection(collectionRef)
-            .pipe(map(docs => {
+            .pipe(map((docs: any) => {
                 const data: any = [];
-                docs.map(d => {
+                docs.map((d: any) => {
                     if (d.data().uid === uid)
                         data.push(d.data())
                 })
                 return data;
             }))
-            .subscribe(users => {
+            .subscribe((users: any) => {
                 if (users.length > 0) {
                     dispatch(setTypingStatus(users[0].typing.isTyping))
                 }
@@ -39,7 +39,7 @@ export default function Toast({uid}: any): JSX.Element {
                 state ?
                     <Box display="flex" flexDirection="row" justifyContent="center" alignItems="center">
                         typing 
-                        {/* <TypingLoad width="2rem" height="2rem" /> */}
+                        <TypingLoad width="2rem" height="2rem" />
                     </Box>
                     :
                     null

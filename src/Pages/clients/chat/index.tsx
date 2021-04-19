@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Badge } from '@material-ui/core';
-// import { ReactComponent as MessageLogo } from '../../public/icons/icons8_message.svg';
-// import { ReactComponent as MessageLogo } from '../../public/chat_icons/icons_chat_start.svg';
-// import { ReactComponent as CloseMessage } from '../../public/icons/icons8_delete_sign_4.svg';
+// import { ReactComponent as MessageLogo } from '../../../assets/chat_icons/icons8_message.svg';
+import { ReactComponent as MessageLogo } from '../../../assets/chat_icons/icons_chat_start.svg';
+import { ReactComponent as CloseMessage } from '../../../assets/chat_icons/icons8_delete_sign_4.svg';
 import './chat.css';
 // import { RootState } from '../../app/store';
 import { useSelector, useDispatch } from 'react-redux';
@@ -19,7 +19,7 @@ const Chatbox = (): JSX.Element => {
     const dispatch = useDispatch()
     const openChatBox = useSelector((state: RootState) => state.chat.isActive)
     const messageView = useSelector((state: RootState) => state.chat.messageView)
-
+    console.log(messageView);
     useEffect(() => {
         dispatch(getRealTimeUserSupportProviders(auth.currentUser.uid));
     }, [])
@@ -55,7 +55,7 @@ const Chatbox = (): JSX.Element => {
                     className="chat-widget-button chat-close-button"
                     onClick={() => { endMessage() }}
                 >
-                    {/* <CloseMessage /> */}
+                    <CloseMessage />
                 </label>
                 {openChatBox && <Popup uid_1={auth.currentUser.uid} />}
                 {/* <!-- chat open button --> */}
@@ -64,8 +64,8 @@ const Chatbox = (): JSX.Element => {
                     htmlFor="chat-widget-toggle"
                     className="chat-widget-button chat-open-button chat-widget-toggle"
                 >
-                    <Badge badgeContent={messageView} color="secondary">
-                        {/* <MessageLogo width="4rem" height="4rem" /> */}
+                    <Badge badgeContent={messageView} color="primary">
+                        <MessageLogo width="4rem" height="4rem" />
                     </Badge>
                 </label>
             </div>

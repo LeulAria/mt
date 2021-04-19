@@ -21,6 +21,7 @@ import {
     Theme,
     createStyles,
     Badge,
+    Typography,
     Button,
     TextField,
     Hidden,
@@ -136,47 +137,42 @@ const ChatPage = (): JSX.Element => {
     }, []);
 
     const init_selected_user = (user: any) => {
-    setchatStart(false);
-    dispatch(setIsActiveStatus(false))
-    setCurrentUser({
-    	...currentUser,
-    	user_name: user.user_name,
-    	email: user.email,
-    	photo: user.photo,
-    	uid: user.uid,
-    });
-    setTimeout(() => {
-    	dispatch(setIsActiveStatus(true))
-    }, 1000);
-    setchatStart(true);
+        setchatStart(false);
+        dispatch(setIsActiveStatus(false))
+        setCurrentUser({
+            ...currentUser,
+            user_name: user.user_name,
+            email: user.email,
+            photo: user.photo,
+            uid: user.uid,
+        });
+        setTimeout(() => {
+            dispatch(setIsActiveStatus(true))
+        }, 1000);
+        setchatStart(true);
     };
 
 
     const handleSendMessage = (e: any): void => {
         e.preventDefault()
-        // if (message) {
-        const messageContent: Conversation = {
-            user_uid_1: state.currentUser.uid,
-            user_uid_2: 'ZKBTwY8M4EbmiDdoWVoi2cFfV9E2',
-            message: "hello there",
-            isView: false,
-            createdAt: new Date(),
-        };
-        console.log('CONTENT', messageContent);
-        const collectionName = state.currentUser.role === UserRole.USER ? 'clients' : 'users'        
-        dispatch(sendRealTimeMessage(messageContent, state.currentUser.role, collectionName));
-        setmessage('');
-        // }    
+        if (message) {
+            const messageContent: Conversation = {
+                user_uid_1: state.currentUser.uid,
+                user_uid_2: currentUser.uid,
+                message,
+                isView: false,
+                createdAt: new Date(),
+            };
+            const collectionName = state.currentUser.role === UserRole.USER ? 'clients' : 'users'
+            dispatch(sendRealTimeMessage(messageContent, state.currentUser.role, collectionName));
+            setmessage('');
+        }
     };
 
     const classes = useStyles();
     return (
         <Box className={classes.chatContainer}>
             <Container>
-                {/* <from onSubmit={handleSendMessage}> */}
-                {/* <input/> */}
-                {/* <button onClick={handleSendMessage}>send</button> */}
-                {/* </from> */}
                 <Grid container justify="flex-start" alignItems="center">
                     <Grid item lg={4} alignItems="center">
                         <Box
@@ -229,7 +225,7 @@ const ChatPage = (): JSX.Element => {
                                     <ListItemText primary="User name" secondary="user email" />
                                 )}
                             </Box>
-                            <Box display="flex" alignItems="flex-end" ml={5}>{activeChat && <Toast uid={currentUser.uid}/>}</Box>
+                            <Box display="flex" alignItems="flex-end" ml={5}>{activeChat && <Toast uid={currentUser.uid} />}</Box>
                         </Box>
                     </Grid>
                 </Grid>
@@ -250,7 +246,7 @@ const ChatPage = (): JSX.Element => {
 							</Box>
 						} */}
                         {clients &&
-                            clients.map((user: any, index) => {
+                            clients.map((user: any, index: number) => {
                                 return (
                                     <Card
                                         className={classes.root}

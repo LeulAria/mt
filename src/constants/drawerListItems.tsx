@@ -7,6 +7,7 @@ import GroupIcon from "@material-ui/icons/Group";
 import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
 import PersonIcon from "@material-ui/icons/Person";
 import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
+import { EmailOutlined } from "@material-ui/icons";
 
 export const items: any = {
   [UserRole.ADMIN]: [
@@ -52,6 +53,13 @@ export const items: any = {
       title: "Users List",
       icon: function Dashboard(): JSX.Element {
         return <PersonIcon />;
+      },
+    },
+    {
+      path: "/sales/chat",
+      title: "Users List",
+      icon: function Dashboard(): JSX.Element {
+        return <EmailOutlined />;
       },
     },
   ],

@@ -29,6 +29,7 @@ export interface Conversation {
 
 export interface IUsers {
 	clients: User[];
+	clientsChat: User[];
 	conversations: Conversation[];
 	users_admin: User[];
 	conversations_admin: Conversation[];
