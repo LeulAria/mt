@@ -1,5 +1,6 @@
 import { configureStore, ThunkAction, Action, getDefaultMiddleware } from '@reduxjs/toolkit';
 import authReducer from "../../features/auth";
+import chatReducer from "../../features/chat";
 import {
 	persistReducer,
 	FLUSH,
@@ -19,7 +20,8 @@ const persistConfig = {
 }
 
 const rootReducer = combineReducers({
-	auth: authReducer
+	auth: authReducer,
+	chat: chatReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

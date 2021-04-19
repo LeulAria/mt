@@ -88,6 +88,31 @@ export const routes = [
     permission: [UserRole.TECH_SUPPORT],
   },
   {
+    path: "/user",
+    exact: false,
+    component: lazy(() => import("../Pages/user/index")),
+    // bar: <Appbar/>,
+    isPrivate: true,
+    permission: [UserRole.USER],
+    routes:[
+      {
+        path: "/user/chat",
+        exact: false,
+        component: lazy(() => import("../Pages/clients/chat/index")),
+      },
+      {
+        path: "/user/profile",
+        exact: false,
+        component: lazy(() => import("../Pages/clients/profile/index")),
+      },
+      {
+        path: "/user/notifications",
+        exact: false,
+        component: lazy(() => import("../Pages/clients/notification/index")),
+      },
+    ]
+  },
+  {
     path: "/redirecting",
   },
 ];

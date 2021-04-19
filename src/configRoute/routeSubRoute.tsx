@@ -21,6 +21,8 @@ export default function RouteSubRoute(route: any) {
 								return <Redirect from="/redirecting" to="/sales" />
 							case UserRole.TECH_SUPPORT:
 								return <Redirect from="/redirecting" to="/tech" />
+							case UserRole.USER:
+								return <Redirect from="/redirecting" to="/user" />
 							default:
 								<Redirect from="/redirecting" to="/login" />;
 						}
