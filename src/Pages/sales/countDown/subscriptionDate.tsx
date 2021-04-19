@@ -157,13 +157,12 @@ export default function SubscriptionDate() {
         margin: "2rem",
       }}
     >
-      table
-      {/* <MUIDataTable
+      <MUIDataTable
         title={"Subscription List"}
         data={stateClient.clients}
         columns={columns}
         options={options}
-      /> */}
+      />
     </div>
   );
 }
