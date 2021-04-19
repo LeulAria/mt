@@ -16,7 +16,7 @@ import {
   IconButton,
   Tooltip,
 } from "@material-ui/core";
-import { getUser, sendVerification } from "../../../features/auth/actions";
+import { getUser, setUser } from "../../../features/auth";
 import { AppThunk, RootState } from "../../../app/store";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import VisibilityIcon from "@material-ui/icons/Visibility";
@@ -24,6 +24,10 @@ import { Chip } from "@material-ui/core";
 import { useForm, Controller } from "react-hook-form";
 import PersonAddDisabledIcon from "@material-ui/icons/PersonAddDisabled";
 import EditClient from "./editClient";
+import PaymentStat from "./paymentStat";
+import ViewClient from "./viewClient";
+import { IUser } from "../../../features/auth/types";
+import { RowingSharp } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -39,17 +43,33 @@ export default function User() {
   const [stat, getStatus] = useState("");
   const classes = useStyles();
   const [rowData, getRowData] = useState([]);
+  const [fullRowData, getFullRowData] = useState([]);
   const [index, getIndex] = useState(0);
   const [open, setOpen] = React.useState(false);
   const [openView, setOpenView] = React.useState(false);
+  const [openChip, setOpenChip] = React.useState(false);
+
+  // inetrface items{
+  //   open: Boolean;
+  // }
   const dispatch = useDispatch();
 
   const handleClickOpen = () => {
     setOpen(true);
   };
+  const handleClickOpenView = () => {
+    setOpenView(true);
+  };
 
   const handleClose = () => {
-    setOpen(false);
+    setOpenView(false);
+  };
+
+  const handleClickChip = () => {
+    setOpenChip(true);
+  };
+  const handleClickChipClose = () => {
+    setOpenChip(false);
   };
 
   const handleSuspend = (u: any) => {
@@ -101,9 +121,9 @@ export default function User() {
             <Chip
               variant="outlined"
               size="small"
-              label={stat ? stat : "loading"}
+              label={rowData[0]}
               color="secondary"
-              onClick={handleClickOpen}
+              onClick={handleClickChip}
             />
           );
         },
@@ -119,14 +139,14 @@ export default function User() {
         customBodyRenderLite: function custom(dataIndex: any, rowIndex: any) {
           return (
             <>
-              <Tooltip title="Edit Client">
+              {/* <Tooltip title="Edit Client">
                 <IconButton onClick={handleClickOpen}>
                   <EditIcon />
                 </IconButton>
-              </Tooltip>
+              </Tooltip> */}
               <Tooltip title="View Detail">
                 <IconButton>
-                  <VisibilityIcon />
+                  <VisibilityIcon onClick={handleClickOpenView} />
                 </IconButton>
               </Tooltip>
               <Tooltip title="Suspend User">
@@ -143,15 +163,21 @@ export default function User() {
 
   const options = {
     filter: true,
+    selectableRowsHideCheckboxes: false,
     onRowClick: (event: any, rowData: any) => {
-      console.log("eventtts", event, rowData, typeof rowData);
       getIndex(event);
       getRowData((rowData = event));
     },
   };
 
   const stateClient = useSelector((state: RootState) => state.auth);
-  console.log(stateClient.clients, rowData, "--cli");
+  const fullInfo = stateClient.clients.filter((u) => {
+    return rowData[3] == u.id;
+  });
+
+  if (openView == true) {
+    // dispatch(setUser(fullInfo));
+  }
 
   useEffect(() => {
     dispatch(getUser());
@@ -170,6 +196,12 @@ export default function User() {
         options={options}
       />
 
+      <PaymentStat
+        open={openChip}
+        selectedRow={rowData}
+        handleClickChip={handleClickChipClose}
+      />
+      <ViewClient open={openView} handleClose={handleClose} />
       <Dialog
         open={open}
         onClose={handleClose}

@@ -13,8 +13,12 @@ import { TransitionProps } from "@material-ui/core/transitions";
 import {
   Checkbox,
   Divider,
+  FormControl,
   FormControlLabel,
   IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
   Switch,
 } from "@material-ui/core";
 import { getUser, paymentOfUser } from "../../../features/auth/actions";
@@ -38,94 +42,30 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function UserPayment() {
+interface Item {
+  name: string;
+  email: string;
+}
+interface ChildProps {
+  open: boolean;
+  selectedRow: Item[];
+  handleClickChip: any;
+}
+
+const PaymentStat: React.FC<ChildProps> = (props) => {
   const { control, handleSubmit } = useForm();
-  // const [stat, getStatus] = useState("");
   const classes = useStyles();
   const [rowData, getRowData] = useState([]);
   const [open, setOpen] = React.useState(false);
   const [state, setState] = React.useState(false);
   const dispatch = useDispatch();
-  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setState({ ...state, [event.target.name]: event.target.checked });
-  // };
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
 
   const handleClose = () => {
     setOpen(false);
   };
 
-  const columns = [
-    {
-      label: "Company Name",
-      name: "companyName",
-      options: {
-        filter: true,
-      },
-    },
-    {
-      label: "Company URL",
-      name: "companyUrl",
-      options: {
-        filter: true,
-      },
-    },
-    {
-      label: "Email",
-      name: "email",
-      options: {
-        filter: true,
-        sort: false,
-      },
-    },
-
-    {
-      label: "UID",
-      name: "uid",
-      options: {
-        filter: true,
-        display: false,
-      },
-    },
-
-    {
-      label: "Payment Status",
-      name: "paymentStat",
-      options: {
-        filter: true,
-        sort: false,
-        customBodyRenderLite: function custom(dataIndex: any, rowIndex: any) {
-          return (
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={state}
-                  onChange={handleClickOpen}
-                  name="checkedB"
-                  value={state}
-                  color="secondary"
-                />
-              }
-              label="Payed"
-            />
-          );
-        },
-      },
-    },
-  ];
-
-  const options = {
-    filter: true,
-    onRowClick: (event: any, rowData: any) => {
-      console.log("eventtts", event, rowData, typeof rowData);
-      getRowData((rowData = event));
-    },
-  };
-
   const stateClient = useSelector((state: RootState) => state.auth);
-  console.log(stateClient.clients, "--cli");
+  console.log(stateClient.clients, props, "--cli");
 
   useEffect(() => {
     dispatch(getUser());
@@ -133,15 +73,16 @@ export default function UserPayment() {
 
   const onSubmit = (data: any) => {
     const currentDate = new Date();
-    data.clientName = rowData[0];
-    data.email = rowData[2];
-    data.id = rowData[3];
+    data.clientName = props.selectedRow[0];
+    data.email = props.selectedRow[1];
+    data.id = props.selectedRow[3];
     data.dateOfPayment = currentDate;
     data.expiryDate = date.addDays(currentDate, 30);
     data.reminderExpiryDate = date.addDays(currentDate, 28);
     setState(true);
     handleClose();
     dispatch(paymentOfUser(data));
+    props.handleClickChip();
   };
 
   return (
@@ -150,15 +91,8 @@ export default function UserPayment() {
         margin: "2rem",
       }}
     >
-      <MUIDataTable
-        title={"Payment status"}
-        data={stateClient.clients}
-        columns={columns}
-        options={options}
-      />
-
       <Dialog
-        open={open}
+        open={props.open}
         TransitionComponent={Transition}
         keepMounted
         onClose={handleClose}
@@ -166,36 +100,21 @@ export default function UserPayment() {
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogTitle id="alert-dialog-slide-title">
-          {"Edit Client Information"}
+          {"Verification"}
         </DialogTitle>
         <Divider />
         <Divider />
         <DialogContent>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={12}>
               <label>Company Name: </label>
 
               <TextField
                 required
-                value={rowData[0]}
+                value={props.selectedRow[0]}
                 disabled
                 variant="outlined"
                 placeholder="Company Name"
-                fullWidth
-              />
-            </Grid>
-
-            <Grid item xs={12} sm={6}>
-              <label>Email: </label>
-
-              <TextField
-                required
-                id="email"
-                name="email"
-                value={rowData[2]}
-                disabled
-                variant="outlined"
-                placeholder="Email"
                 fullWidth
               />
             </Grid>
@@ -209,6 +128,36 @@ export default function UserPayment() {
               <Grid item xs={12} sm={12}>
                 <Controller
                   render={({ field }) => (
+                    <FormControl
+                      variant="outlined"
+                      className={classes.formControl}
+                    >
+                      <InputLabel id="demo-simple-select-outlined-label">
+                        Verification
+                      </InputLabel>
+                      <Select
+                        style={{ backgroundColor: "#fff" }}
+                        {...field}
+                        labelId="demo-simple-select-outlined-label"
+                        id="demo-simple-select-outlined"
+                        label="Gender"
+                      >
+                        <MenuItem value={"pending"}>Pending</MenuItem>
+                        {/* <MenuItem value={"notVerified"}>Not Verified</MenuItem> */}
+                        <MenuItem value={"Verified"}>
+                          Payed and Verified
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
+                  )}
+                  name="verification"
+                  control={control}
+                  defaultValue=""
+                />
+              </Grid>
+              <Grid item xs={12} sm={12}>
+                <Controller
+                  render={({ field }) => (
                     <FormControlLabel
                       control={
                         <Checkbox {...field} value={state} name="checkedA" />
@@ -218,6 +167,7 @@ export default function UserPayment() {
                   )}
                   name="techSupportAccess"
                   control={control}
+                  defaultValue="false"
                 />
               </Grid>
 
@@ -236,4 +186,5 @@ export default function UserPayment() {
       </Dialog>
     </div>
   );
-}
+};
+export default PaymentStat;
