@@ -93,7 +93,6 @@ export default function MiniDrawer() {
     const [open, setOpen] = React.useState(false);
     const auth = useSelector((state: RootState) => state.auth)
     const dispatch = useDispatch();
-
     const handleDrawerOpen = () => {
         setOpen(true);
     };

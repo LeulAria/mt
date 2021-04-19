@@ -19,6 +19,9 @@ export interface IUser {
   country?: string;
   payments?: IPayemntInfo;
   id: string;
+  phoneNumber?: string;
+  last_send?: Date;
+  notificationMessage?: string
 }
 
 export interface IPayemntInfo {

@@ -20,7 +20,8 @@ export const {
 export const {
     createNewUser,
 	signInUser,
-	getUser
+	getUser,
+	sendNotification
 } = thunks;
 
 export default userSlice.reducer;

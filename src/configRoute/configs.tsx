@@ -70,6 +70,13 @@ export const routes = [
           () => import("../Pages/sales/countDown/subscriptionDate")
         ),
       },
+      {
+        path: "/sales/notifications",
+        exact: false,
+        component: lazy(
+          () => import("../Pages/sales/notifications/index")
+        ),
+      },
     ],
   },
   {
