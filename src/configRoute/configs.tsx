@@ -73,9 +73,12 @@ export const routes = [
       {
         path: "/sales/notifications",
         exact: false,
-        component: lazy(
-          () => import("../Pages/sales/notifications/index")
-        ),
+        component: lazy(() => import("../Pages/sales/notifications/index")),
+      },
+      {
+        path: "/sales/chat",
+        exact: false,
+        component: lazy(() => import("../Pages/sales/chat/index")),
       },
     ],
   },
@@ -94,7 +97,7 @@ export const routes = [
     // bar: <Appbar/>,
     isPrivate: true,
     permission: [UserRole.USER],
-    routes:[
+    routes: [
       {
         path: "/user/chat",
         exact: false,
@@ -110,7 +113,7 @@ export const routes = [
         exact: false,
         component: lazy(() => import("../Pages/clients/notification/index")),
       },
-    ]
+    ],
   },
   {
     path: "/redirecting",

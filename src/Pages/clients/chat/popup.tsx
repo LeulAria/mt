@@ -11,9 +11,10 @@ import { list } from 'rxfire/database';
 import { debounceTime, map, tap, distinctUntilChanged } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { UserRole } from '../../../features/auth/types';
+import SendIcon from '@material-ui/icons/Send';
 // import { UserRole } from '../../../features/user/types';
-// import { ReactComponent as SeenIcon } from "public/chat_icons/icons8_double_tick.svg";
-// import { ReactComponent as UnseenIcon } from "public/chat_icons/icons8_checkmark.svg";
+import { ReactComponent as SeenIcon } from "../../../assets/chat_icons/icons8_double_tick.svg";
+import { ReactComponent as UnseenIcon } from "../../../assets/chat_icons/icons8_checkmark.svg";
 
 interface IItems {
     date: Date;
@@ -40,7 +41,7 @@ const TextPaper = styled(Typography)({
 })
 
 const Chatbox = ({ uid_1 }: any): JSX.Element => {
-    const user = useSelector((state: RootState) => state.chat.clients)
+    const user = useSelector((state: RootState) => state.chat.clientsChat)
     const conversations = useSelector((state: RootState) => state.chat.conversations)
     const uid = useSelector((state: RootState) => state.auth.currentUser.uid)
     const dispatch = useDispatch();
@@ -48,7 +49,6 @@ const Chatbox = ({ uid_1 }: any): JSX.Element => {
     const [queryName, setQueryName] = useState("");
     const [debouncedName, setDebouncedName] = useState<any>("");
     const [onSearch$] = useState(() => new Subject());
-
     useEffect(() => {
         const subscription = onSearch$.pipe(
             debounceTime(1000),
@@ -74,7 +74,7 @@ const Chatbox = ({ uid_1 }: any): JSX.Element => {
 
     useEffect(() => {
         dispatch(clearConverations());
-        const ref = firebase.database().ref("convserations");
+        const ref = firebase.database().ref("conversations");
         const user_messages = list(ref)
             .pipe(
                 map((changes: any) => changes.map((c: any) => {
@@ -82,10 +82,9 @@ const Chatbox = ({ uid_1 }: any): JSX.Element => {
                 }),
                 ))
             .subscribe((data: any[]) => {
-                console.log('nul', data.length)
                 const filtered = data.filter((item) => {
                     return (item.user_uid_1 === uid || item.user_uid_2 === uid) &&
-                        (item.from === UserRole.SALES_PERSON || item.from === UserRole.TECH_SUPPORT)
+                        (item.from === UserRole.SALES_PERSON || item.from === UserRole.USER)
                 })
                 dispatch(clearConverations());
                 dispatch(setUsersConveration(filtered))
@@ -96,7 +95,7 @@ const Chatbox = ({ uid_1 }: any): JSX.Element => {
             user_messages.unsubscribe();
         }
     }, [])
-
+    console.log('convvooo'+conversations);
     const handleSendMessage = (e: any): void => {
         e.preventDefault()
         if (queryName) {
@@ -129,7 +128,7 @@ const Chatbox = ({ uid_1 }: any): JSX.Element => {
                         // subheader="September 14, 2016"
                         action={
                             <IconButton>
-                                {user && <Badge badgeContent={user.length} color="secondary">
+                                {user && <Badge badgeContent={user.length} color="primary">
                                     <SupervisedUserCircle style={{ width: '2rem', height: '2rem' }} />
                                 </Badge>}
                             </IconButton>
@@ -163,11 +162,11 @@ const Chatbox = ({ uid_1 }: any): JSX.Element => {
                                     <Box display="flex" flexDirection="row" justifyContent={message.user_uid_1 === uid ? "flex-end" : "flex-start"} >
                                         {
                                             message.user_uid_1 === uid_1 && message.isView ? <Box height="100%" display="flex" pb={1} alignSelf="flex-end">
-                                                {/* <SeenIcon width="1rem" height="1rem" /> */}
+                                                <SeenIcon width="1rem" height="1rem" />
                                             </Box> : 
                                             message.user_uid_1 === uid_1 && !message.isView ?
                                             <Box height="100%" display="flex" pb={1} alignSelf="flex-end">
-                                                {/* <UnseenIcon width="1rem" height="1rem" /> */}
+                                                <UnseenIcon width="1rem" height="1rem" />
                                             </Box> : null
                                         }
                                         <TextPaper style={{ background: message.user_uid_1 === uid_1 ? '#7B1FA2' : '#716BE4' }}>{message.message}</TextPaper>
@@ -183,11 +182,11 @@ const Chatbox = ({ uid_1 }: any): JSX.Element => {
                                 <Box display="flex" flexDirection="row" justifyContent={message.user_uid_1 === uid ? "flex-end" : "flex-start"} >
                                     {
                                         message.user_uid_1 === uid_1 && message.isView ? <Box height="100%" display="flex" pb={1} alignSelf="flex-end">
-                                            {/* <SeenIcon width="1rem" height="1rem" /> */}
+                                            <SeenIcon width="1rem" height="1rem" />
                                         </Box> :
                                         message.user_uid_1 === uid_1 && !message.isView ?
                                                     <Box height="100%" display="flex" pb={1} alignSelf="flex-end">
-                                                        {/* <UnseenIcon width="1rem" height="1rem" /> */}
+                                                        <UnseenIcon width="1rem" height="1rem" />
                                                     </Box> : null
                                     }
                                     <TextPaper style={{ background: message.user_uid_1 === uid_1 ? '#7B1FA2' : '#716BE4' }}>{message.message}</TextPaper>
@@ -216,7 +215,7 @@ const Chatbox = ({ uid_1 }: any): JSX.Element => {
                             title="send message"
                             type="submit"
                             className="chat-form-button">
-                            {/* <SendMessage /> */}
+                            <SendIcon />
                         </button>
                     </form>
                 </div>

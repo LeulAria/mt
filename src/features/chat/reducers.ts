@@ -3,14 +3,14 @@ import { initialState, Iuser } from "./init";
 import { Conversation, IUsers, User } from "./types";
 
 export default {
-    setClients: (state: IUsers, action: PayloadAction<User[]>) => {
-        state.clients.push(...action.payload)
+    setClientsChat: (state: IUsers, action: PayloadAction<User[]>) => {
+        state.clientsChat.push(...action.payload)
     },
     resetClientsList: (state: IUsers, action: PayloadAction<[]>) => {
-        state.clients = initialState.clients;
+        state.clientsChat = initialState.clientsChat;
     },
     setClientMessageView: (state: IUsers, action: PayloadAction<Iuser>) => {
-        state.clients.forEach((user) => {
+        state.clientsChat.forEach((user) => {
             if (user.uid === action.payload.uid)
                 user.view = action.payload.view
         })
