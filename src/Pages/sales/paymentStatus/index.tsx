@@ -96,10 +96,7 @@ export default function UserPayment() {
       options: {
         filter: true,
         sort: false,
-        customBodyRenderLite: function customRender(
-          dataIndex: any,
-          rowIndex: any
-        ) {
+        customBodyRenderLite: function custom(dataIndex: any, rowIndex: any) {
           return (
             <FormControlLabel
               control={
@@ -113,26 +110,6 @@ export default function UserPayment() {
               }
               label="Payed"
             />
-          );
-        },
-      },
-    },
-
-    {
-      label: "Suspend User",
-      name: "suspend",
-      options: {
-        filter: false,
-        sort: false,
-        empty: true,
-        customBodyRenderLite: function customRender(
-          dataIndex: any,
-          rowIndex: any
-        ) {
-          return (
-            <IconButton>
-              <PersonAddDisabledIcon />
-            </IconButton>
           );
         },
       },

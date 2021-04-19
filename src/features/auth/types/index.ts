@@ -9,7 +9,7 @@ export interface IUser {
   companyName: string;
   companyUrl: string;
   email: string;
-  phone: string;
+  phoneNumber: string;
   service: string;
   address?: IAddress;
   password?: string;
@@ -19,6 +19,12 @@ export interface IUser {
   country?: string;
   payments?: IPayemntInfo;
   id: string;
+  dateOfPayment?: any;
+  expiryDate?: any;
+  reminderExpiryDate?: any;
+  city: string;
+  subCity: string;
+  verification_status: string;
 }
 
 export interface IPayemntInfo {
@@ -45,7 +51,7 @@ export interface IEmployee {
   userName: string;
   email: string;
   role: string;
-  uid: string
+  uid: string;
 }
 
 export interface IInitState {
@@ -53,6 +59,7 @@ export interface IInitState {
   isFaliure: boolean;
   client: IUser;
   clients: IUser[];
-  currentUser:IEmployee,
+  currentUser: IEmployee;
   authenticated: boolean;
+  selectedUserData: IUser[];
 }

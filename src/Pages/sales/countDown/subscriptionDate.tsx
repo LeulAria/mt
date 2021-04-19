@@ -16,13 +16,18 @@ import {
   IconButton,
   Tooltip,
 } from "@material-ui/core";
-import { getUser, sendVerification } from "../../../features/auth/actions";
+import {
+  getPayedUserInfo,
+  getUser,
+  sendVerification,
+} from "../../../features/auth/actions";
 import { AppThunk, RootState } from "../../../app/store";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import { Chip } from "@material-ui/core";
 import { useForm, Controller } from "react-hook-form";
 import PersonAddDisabledIcon from "@material-ui/icons/PersonAddDisabled";
+import moment from "moment";
 const useStyles = makeStyles((theme) => ({
   formControl: {
     width: "100%",
@@ -41,7 +46,7 @@ export default function SubscriptionDate() {
   const [open, setOpen] = React.useState(false);
   const [openView, setOpenView] = React.useState(false);
   const [openChip, setOpenChip] = React.useState(false);
-
+  const SPACED_DATE_FORMAT = "DD MMM YYYY";
   // inetrface items{
   //   open: Boolean;
   // }
@@ -71,7 +76,7 @@ export default function SubscriptionDate() {
   const columns = [
     {
       label: "Company Name",
-      name: "companyName",
+      name: "clientName",
       options: {
         filter: true,
       },
@@ -85,68 +90,41 @@ export default function SubscriptionDate() {
       },
     },
     {
-      label: "Phone Number",
-      name: "phoneNumber",
+      label: "Date Of Payment",
+      name: "dateOfPayment",
+
       options: {
         filter: true,
         sort: false,
+        customBodyRender: (value: any) => moment(new Date(value)).format(),
       },
     },
+    {
+      label: "Expiry Date",
+      name: "expiryDate",
+      options: {
+        filter: true,
+        sort: false,
+        customBodyRender: (value: any) =>
+          moment(new Date(value)).format(SPACED_DATE_FORMAT),
+      },
+    },
+    {
+      label: "Reminder",
+      name: "reminderExpiryDate",
+      options: {
+        filter: true,
+        sort: false,
+        customBodyRender: (value: any) => moment(new Date(value)).fromNow(),
+      },
+    },
+
     {
       label: "UID",
       name: "uid",
       options: {
         filter: true,
         display: false,
-      },
-    },
-    {
-      label: "Verification Status",
-      name: "verification_status",
-      options: {
-        filter: true,
-        sort: false,
-        customBodyRenderLite: function custom(dataIndex: any, rowIndex: any) {
-          return (
-            <Chip
-              variant="outlined"
-              size="small"
-              label={rowData[0]}
-              color="secondary"
-              onClick={handleClickChip}
-            />
-          );
-        },
-      },
-    },
-    {
-      label: "Options",
-      name: "",
-      options: {
-        filter: false,
-        sort: false,
-        empty: true,
-        customBodyRenderLite: function custom(dataIndex: any, rowIndex: any) {
-          return (
-            <>
-              <Tooltip title="Edit Client">
-                <IconButton onClick={handleClickOpen}>
-                  <EditIcon />
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="View Detail">
-                <IconButton>
-                  <VisibilityIcon onClick={handleClickOpenView} />
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="Suspend User">
-                <IconButton onClick={handleClickOpen}>
-                  <PersonAddDisabledIcon />
-                </IconButton>
-              </Tooltip>
-            </>
-          );
-        },
       },
     },
   ];
@@ -162,10 +140,15 @@ export default function SubscriptionDate() {
   };
 
   const stateClient = useSelector((state: RootState) => state.auth);
-  console.log(stateClient.clients, rowData, "--cli");
+  console.log(
+    // moment(stateClient.clients[0].dateOfPayment.toDate()).fromNow(),
+    rowData,
+    stateClient.clients[0],
+    "--cl====i"
+  );
 
   useEffect(() => {
-    dispatch(getUser());
+    dispatch(getPayedUserInfo());
   }, []);
 
   return (
@@ -174,38 +157,13 @@ export default function SubscriptionDate() {
         margin: "2rem",
       }}
     >
-      <MUIDataTable
-        title={"Client List"}
+      table
+      {/* <MUIDataTable
+        title={"Subscription List"}
         data={stateClient.clients}
         columns={columns}
         options={options}
-      />
-
-      {/* <PaymentStat open={openChip} selectedRow={rowData} />
-      <ViewClient open={openView} /> */}
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        // PaperComponent={PaperComponent}
-        aria-labelledby="draggable-dialog-title"
-      >
-        <DialogTitle style={{ cursor: "move" }} id="draggable-dialog-title">
-          Subscribe
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Are you sure you want to suspend user {rowData[0]}?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={handleClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={() => handleSuspend(rowData)} color="primary">
-            Suspend
-          </Button>
-        </DialogActions>
-      </Dialog>
+      /> */}
     </div>
   );
 }

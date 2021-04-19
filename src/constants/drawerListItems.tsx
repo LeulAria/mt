@@ -55,7 +55,7 @@ export const items: any = {
       },
     },
     {
-      path: "/sales/subscriptionDate",
+      path: "/sales/subscription",
       title: "Users List",
       icon: function Dashboard(): JSX.Element {
         return <VerifiedUserIcon />;

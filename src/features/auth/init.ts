@@ -6,13 +6,13 @@ export const initialState: IInitState = {
     email: "",
     role: UserRole.DEFAULT,
     uid: "",
-    userName: ""
+    userName: "",
   },
   authenticated: false,
   client: {
     companyName: "",
     companyUrl: "",
-    phone: "",
+    phoneNumber: "",
     email: "",
     tinNumber: "",
     id: "",
@@ -21,6 +21,10 @@ export const initialState: IInitState = {
     business: "",
     password: "",
     role: "",
+    city: "",
+    subCity: "",
+    verification_status: "",
   },
   clients: [],
+  selectedUserData: [],
 };

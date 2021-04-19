@@ -49,6 +49,7 @@ interface Item {
 interface ChildProps {
   open: boolean;
   selectedRow: Item[];
+  handleClickChip: any;
 }
 
 const PaymentStat: React.FC<ChildProps> = (props) => {
@@ -72,15 +73,16 @@ const PaymentStat: React.FC<ChildProps> = (props) => {
 
   const onSubmit = (data: any) => {
     const currentDate = new Date();
-    data.clientName = rowData[0];
-    data.email = rowData[2];
-    data.id = rowData[3];
+    data.clientName = props.selectedRow[0];
+    data.email = props.selectedRow[1];
+    data.id = props.selectedRow[3];
     data.dateOfPayment = currentDate;
     data.expiryDate = date.addDays(currentDate, 30);
     data.reminderExpiryDate = date.addDays(currentDate, 28);
     setState(true);
     handleClose();
     dispatch(paymentOfUser(data));
+    props.handleClickChip();
   };
 
   return (
@@ -165,6 +167,7 @@ const PaymentStat: React.FC<ChildProps> = (props) => {
                   )}
                   name="techSupportAccess"
                   control={control}
+                  defaultValue="false"
                 />
               </Grid>
 

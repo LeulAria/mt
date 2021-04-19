@@ -16,7 +16,7 @@ import {
   IconButton,
   Tooltip,
 } from "@material-ui/core";
-import { getUser, sendVerification } from "../../../features/auth/actions";
+import { getUser, setUser } from "../../../features/auth";
 import { AppThunk, RootState } from "../../../app/store";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import VisibilityIcon from "@material-ui/icons/Visibility";
@@ -62,11 +62,14 @@ export default function User() {
   };
 
   const handleClose = () => {
-    setOpen(false);
+    setOpenView(false);
   };
 
   const handleClickChip = () => {
     setOpenChip(true);
+  };
+  const handleClickChipClose = () => {
+    setOpenChip(false);
   };
 
   const handleSuspend = (u: any) => {
@@ -136,11 +139,11 @@ export default function User() {
         customBodyRenderLite: function custom(dataIndex: any, rowIndex: any) {
           return (
             <>
-              <Tooltip title="Edit Client">
+              {/* <Tooltip title="Edit Client">
                 <IconButton onClick={handleClickOpen}>
                   <EditIcon />
                 </IconButton>
-              </Tooltip>
+              </Tooltip> */}
               <Tooltip title="View Detail">
                 <IconButton>
                   <VisibilityIcon onClick={handleClickOpenView} />
@@ -169,18 +172,12 @@ export default function User() {
 
   const stateClient = useSelector((state: RootState) => state.auth);
   const fullInfo = stateClient.clients.filter((u) => {
-    console.log(rowData[3], "uuu");
-
     return rowData[3] == u.id;
   });
 
-  console.log(
-    stateClient.clients,
-    rowData,
-    fullInfo,
-    typeof fullInfo,
-    "--OOOOOOOOO--"
-  );
+  if (openView == true) {
+    // dispatch(setUser(fullInfo));
+  }
 
   useEffect(() => {
     dispatch(getUser());
@@ -199,8 +196,12 @@ export default function User() {
         options={options}
       />
 
-      <PaymentStat open={openChip} selectedRow={rowData} />
-      <ViewClient open={openView} selectedRow={rowData} />
+      <PaymentStat
+        open={openChip}
+        selectedRow={rowData}
+        handleClickChip={handleClickChipClose}
+      />
+      <ViewClient open={openView} handleClose={handleClose} />
       <Dialog
         open={open}
         onClose={handleClose}
