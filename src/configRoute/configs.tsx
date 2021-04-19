@@ -98,6 +98,11 @@ export const routes = [
         exact: false,
         component: lazy(() => import("../Pages/clients/profile/index")),
       },
+      {
+        path: "/user/notifications",
+        exact: false,
+        component: lazy(() => import("../Pages/clients/notification/index")),
+      },
     ]
   },
   {

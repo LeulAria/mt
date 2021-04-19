@@ -207,3 +207,32 @@ export const sendVerification = (user: IUser): AppThunk => async (dispatch) => {
         });
     });
 };
+
+export const getNotification = (user: IUser): AppThunk => async (dispatch) => {
+  const actionCodeSettings = {
+    url: "https://user-management-ee9c6.web.app/",
+    handleCodeInApp: true,
+  };
+  firebase
+    .firestore()
+    .collection("clients")
+    .get()
+    .then((querySnapshot) => {
+      const allData: IUser[] = [];
+      querySnapshot.forEach((doc) => {
+        allData.push(({ ...doc.data(), id: doc.id } as unknown) as IUser);
+      });
+      const selectedUser = allData.filter((u) => {
+        return u.email == user.email;
+      });
+      console.log(selectedUser[0].email, "user selected", firebase.auth);
+
+      firebase
+        .auth()
+        .sendSignInLinkToEmail(selectedUser[0].email, actionCodeSettings)
+        .then(() => {
+          console.log("");
+        });
+    });
+};
+

@@ -7,6 +7,7 @@ import GroupIcon from "@material-ui/icons/Group";
 import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
 import PersonIcon from "@material-ui/icons/Person";
 import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
+import EmailIcon from '@material-ui/icons/Email';
 
 export const items: any = {
   [UserRole.ADMIN]: [
@@ -68,6 +69,13 @@ export const items: any = {
       title: "My Profile",
       icon: function Dashboard(): JSX.Element {
         return <PersonIcon />;
+      },
+    },
+    {
+      path: "/user/notifications",
+      title: "Notification",
+      icon: function Dashboard(): JSX.Element {
+        return <EmailIcon />;
       },
     },
   ],
