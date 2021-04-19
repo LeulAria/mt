@@ -208,32 +208,41 @@ export const sendVerification = (user: IUser): AppThunk => async (dispatch) => {
     });
 };
 
-export const sendNotification = (users: IUser): AppThunk => async (dispatch, getState) => {
+export const sendNotification = (users: IUser): AppThunk => async (
+  dispatch,
+  getState
+) => {
   const db = firebase.firestore();
-  db.collection('notifications').doc(users.id).get()
-    .then((user) => { 
-      if(user.exists)
-      db.collection('notifications').doc(users.id).update({
-          notification: firebase.firestore.FieldValue.arrayUnion({
-            message: users.notificationMessage,
-            createdAt: new Date(),
-            uid: users.id,
-            from: getState().auth.currentUser.role
-          })
-      })
+  db.collection("notifications")
+    .doc(users.id)
+    .get()
+    .then((user) => {
+      if (user.exists)
+        db.collection("notifications")
+          .doc("L8Dnz0HPqMQg0TLAVCM8qK9tf6L2")
+          .update({
+            notification: firebase.firestore.FieldValue.arrayUnion({
+              message: users.notificationMessage,
+              createdAt: new Date(),
+              uid: "L8Dnz0HPqMQg0TLAVCM8qK9tf6L2",
+              from: getState().auth.currentUser.role,
+            }),
+          });
       else
-      db.collection('notifications').doc(users.id).set({
-        notification: [
-          { 
-            message: users.notificationMessage,
-            createdAt: new Date(),
-            uid: users.id,
-            from: getState().auth.currentUser.role
-          }
-        ]
-      })
+        db.collection("notifications")
+          .doc("L8Dnz0HPqMQg0TLAVCM8qK9tf6L2")
+          .set({
+            notification: [
+              {
+                message: users.notificationMessage,
+                createdAt: new Date(),
+                uid: "L8Dnz0HPqMQg0TLAVCM8qK9tf6L2",
+                from: getState().auth.currentUser.role,
+              },
+            ],
+          });
     })
-    .catch((err) => console.log(err.message))
+    .catch((err) => console.log(err.message));
 };
 export const getNotification = (user: IUser): AppThunk => async (dispatch) => {
   const actionCodeSettings = {
@@ -262,4 +271,3 @@ export const getNotification = (user: IUser): AppThunk => async (dispatch) => {
         });
     });
 };
-
