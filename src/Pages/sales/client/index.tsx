@@ -73,7 +73,6 @@ export default function User() {
   };
 
   const handleSuspend = (u: any) => {
-    console.log(u, "----");
     u.flaged = true;
     setOpen(false);
   };
@@ -116,12 +115,12 @@ export default function User() {
       options: {
         filter: true,
         sort: false,
-        customBodyRenderLite: function custom(dataIndex: any, rowIndex: any) {
+        customBodyRender: function custom(value: any, rowIndex: any) {
           return (
             <Chip
               variant="outlined"
               size="small"
-              label={rowData[0]}
+              label={value}
               color="secondary"
               onClick={handleClickChip}
             />
@@ -139,11 +138,6 @@ export default function User() {
         customBodyRenderLite: function custom(dataIndex: any, rowIndex: any) {
           return (
             <>
-              {/* <Tooltip title="Edit Client">
-                <IconButton onClick={handleClickOpen}>
-                  <EditIcon />
-                </IconButton>
-              </Tooltip> */}
               <Tooltip title="View Detail">
                 <IconButton>
                   <VisibilityIcon onClick={handleClickOpenView} />
@@ -174,6 +168,7 @@ export default function User() {
   const fullInfo = stateClient.clients.filter((u) => {
     return rowData[3] == u.id;
   });
+  console.log(stateClient, "client");
 
   if (openView == true) {
     // dispatch(setUser(fullInfo));
