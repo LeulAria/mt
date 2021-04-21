@@ -23,7 +23,6 @@ import VisibilityIcon from "@material-ui/icons/Visibility";
 import { Chip } from "@material-ui/core";
 import { useForm, Controller } from "react-hook-form";
 import PersonAddDisabledIcon from "@material-ui/icons/PersonAddDisabled";
-import EditClient from "./editClient";
 import PaymentStat from "./paymentStat";
 import ViewClient from "./viewClient";
 import { IUser } from "../../../features/auth/types";
@@ -49,9 +48,6 @@ export default function User() {
   const [openView, setOpenView] = React.useState(false);
   const [openChip, setOpenChip] = React.useState(false);
 
-  // inetrface items{
-  //   open: Boolean;
-  // }
   const dispatch = useDispatch();
 
   const handleClickOpen = () => {
@@ -73,7 +69,6 @@ export default function User() {
   };
 
   const handleSuspend = (u: any) => {
-    console.log(u, "----");
     u.flaged = true;
     setOpen(false);
   };
@@ -116,12 +111,12 @@ export default function User() {
       options: {
         filter: true,
         sort: false,
-        customBodyRenderLite: function custom(dataIndex: any, rowIndex: any) {
+        customBodyRender: function custom(value: any, rowIndex: any) {
           return (
             <Chip
               variant="outlined"
               size="small"
-              label={rowData[0]}
+              label={value}
               color="secondary"
               onClick={handleClickChip}
             />
@@ -139,11 +134,6 @@ export default function User() {
         customBodyRenderLite: function custom(dataIndex: any, rowIndex: any) {
           return (
             <>
-              {/* <Tooltip title="Edit Client">
-                <IconButton onClick={handleClickOpen}>
-                  <EditIcon />
-                </IconButton>
-              </Tooltip> */}
               <Tooltip title="View Detail">
                 <IconButton>
                   <VisibilityIcon onClick={handleClickOpenView} />
@@ -163,7 +153,7 @@ export default function User() {
 
   const options = {
     filter: true,
-    selectableRowsHideCheckboxes: false,
+    selectableRowsHideCheckboxes: true,
     onRowClick: (event: any, rowData: any) => {
       getIndex(event);
       getRowData((rowData = event));
@@ -171,9 +161,6 @@ export default function User() {
   };
 
   const stateClient = useSelector((state: RootState) => state.auth);
-  const fullInfo = stateClient.clients.filter((u) => {
-    return rowData[3] == u.id;
-  });
 
   if (openView == true) {
     // dispatch(setUser(fullInfo));
@@ -201,7 +188,12 @@ export default function User() {
         selectedRow={rowData}
         handleClickChip={handleClickChipClose}
       />
-      <ViewClient open={openView} handleClose={handleClose} />
+
+      <ViewClient
+        open={openView}
+        selectedRow={rowData}
+        handleClose={handleClose}
+      />
       <Dialog
         open={open}
         onClose={handleClose}

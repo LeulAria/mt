@@ -105,6 +105,7 @@ export const getUser = (): AppThunk => async (dispatch) => {
 
         querySnapshot.forEach((doc) => {
           console.log(doc.data());
+
           allData.push(({
             ...doc.data(),
             id: doc.id,

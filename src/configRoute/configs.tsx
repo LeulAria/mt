@@ -89,6 +89,25 @@ export const routes = [
     // bar: <Appbar/>,
     isPrivate: true,
     permission: [UserRole.TECH_SUPPORT],
+    routes: [
+      {
+        path: "/tech/chat",
+        exact: false,
+        component: lazy(() => import("../Pages/tech/chat/index")),
+      },
+      {
+        path: "/tech/notification",
+        exact: false,
+        component: lazy(
+          () => import("../Pages/tech/notification/notification")
+        ),
+      },
+      // {
+      //   path: "/user/notifications",
+      //   exact: false,
+      //   component: lazy(() => import("../Pages/clients/notification/index")),
+      // },
+    ],
   },
   {
     path: "/user",

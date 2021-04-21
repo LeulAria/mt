@@ -3,11 +3,12 @@ import React from "react";
 import { UserRole } from "../features/auth/types";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import ChatIcon from "@material-ui/icons/Chat";
+import EmailIcon from "@material-ui/icons/Email";
+import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import GroupIcon from "@material-ui/icons/Group";
 import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
 import PersonIcon from "@material-ui/icons/Person";
 import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
-import EmailIcon from "@material-ui/icons/Email";
 import { EmailOutlined } from "@material-ui/icons";
 
 export const items: any = {
@@ -79,13 +80,6 @@ export const items: any = {
     },
   ],
   [UserRole.USER]: [
-    // {
-    //   path: "/user/chat",
-    //   title: "Chat",
-    //   icon: function Dashboard(): JSX.Element {
-    //     return <ChatIcon />;
-    //   },
-    // },
     {
       path: "/user/profile",
       title: "My Profile",
@@ -95,6 +89,22 @@ export const items: any = {
     },
     {
       path: "/user/notifications",
+      title: "Notification",
+      icon: function Dashboard(): JSX.Element {
+        return <EmailIcon />;
+      },
+    },
+  ],
+  [UserRole.TECH_SUPPORT]: [
+    {
+      path: "/tech/chat",
+      title: "Chat",
+      icon: function Dashboard(): JSX.Element {
+        return <PersonIcon />;
+      },
+    },
+    {
+      path: "/tech/notification",
       title: "Notification",
       icon: function Dashboard(): JSX.Element {
         return <EmailIcon />;

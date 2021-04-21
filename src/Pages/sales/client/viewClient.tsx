@@ -37,29 +37,15 @@ const Transition = React.forwardRef(function Transition(
 });
 
 interface Item extends IUser {
-  // name: string;
-  // email: string;
-  amount: string;
-  city: string;
-  companyName: string;
-  companyUrl: string;
-  country: string;
+  name: string;
   email: string;
-  isOnline: false;
-  paymentStat: string;
-  phoneNumber: string;
-  role: string;
-  service: string;
-  subCity: string;
-  subscription: string;
-  tinNumber: string;
-  verification_status: string;
+  id: string;
 }
 
 interface ChildProps {
   open: boolean;
   handleClose: any;
-  // selectedRow: Item;
+  selectedRow: Item[];
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -86,26 +72,21 @@ const ViewClient: React.FC<ChildProps> = (props: any) => {
   const [stat, getStatus] = useState("");
   const dispatch = useDispatch();
 
-  // const handleClose = () => {
-  //   // window.close();
-  //   props.open = false;
-  // };
-
   const handleEditInfo = () => {
     getEditInfo(true);
   };
   const stateClient = useSelector((state: RootState) => state.auth);
-  // stateClient.selectedUserData
-  console.log(stateClient.selectedUserData[0], "ooo");
 
   useEffect(() => {
     dispatch(getUser());
   }, []);
-
-  console.log(props, "propss");
+  const fullInfo = stateClient.clients.filter((u) => {
+    return props.selectedRow[3] == u.id;
+  });
+  console.log(stateClient.clients, "view CLi");
 
   const onSubmit = (data: any) => {
-    data.email = stateClient.selectedUserData[0].email;
+    data.email = fullInfo[0].email;
     console.log(data, rowData, "data");
 
     dispatch(sendVerification(data));
@@ -115,7 +96,7 @@ const ViewClient: React.FC<ChildProps> = (props: any) => {
     };
     const db = firebase.firestore();
     db.collection("clients")
-      .doc(stateClient.selectedUserData[0].id)
+      .doc(fullInfo[0].id)
       .update(updatedUser)
       .then((_) => {
         console.log("");
@@ -147,7 +128,7 @@ const ViewClient: React.FC<ChildProps> = (props: any) => {
               <CloseIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
-              {stateClient.selectedUserData[0].companyName} Detail Information
+              {fullInfo[0] ? fullInfo[0].companyName : null} Detail Information
             </Typography>
             <Tooltip title="Edit Detail">
               <IconButton autoFocus color="inherit" onClick={handleEditInfo}>
@@ -165,7 +146,7 @@ const ViewClient: React.FC<ChildProps> = (props: any) => {
 
               <TextField
                 required
-                value={stateClient.selectedUserData[0].companyName}
+                value={fullInfo[0] ? fullInfo[0].companyName : ""}
                 disabled
                 variant="outlined"
                 placeholder="Company Name"
@@ -180,7 +161,7 @@ const ViewClient: React.FC<ChildProps> = (props: any) => {
                 required
                 id="email"
                 name="email"
-                value={stateClient.selectedUserData[0].email}
+                value={fullInfo[0] ? fullInfo[0].email : ""}
                 disabled
                 variant="outlined"
                 placeholder="Email"
@@ -192,7 +173,7 @@ const ViewClient: React.FC<ChildProps> = (props: any) => {
 
               <TextField
                 required
-                value={stateClient.selectedUserData[0].companyUrl}
+                value={fullInfo[0] ? fullInfo[0].companyUrl : null}
                 disabled
                 variant="outlined"
                 placeholder="Company Name"
@@ -207,7 +188,7 @@ const ViewClient: React.FC<ChildProps> = (props: any) => {
                 required
                 id="email"
                 name="email"
-                value={stateClient.selectedUserData[0].service}
+                value={fullInfo[0] ? fullInfo[0].service : ""}
                 disabled
                 variant="outlined"
                 placeholder="Email"
@@ -219,7 +200,7 @@ const ViewClient: React.FC<ChildProps> = (props: any) => {
 
               <TextField
                 required
-                value={stateClient.selectedUserData[0].business}
+                value={fullInfo[0] ? fullInfo[0].business : ""}
                 disabled
                 variant="outlined"
                 fullWidth
@@ -232,7 +213,7 @@ const ViewClient: React.FC<ChildProps> = (props: any) => {
               <TextField
                 required
                 id="email"
-                value={stateClient.selectedUserData[0].phoneNumber}
+                value={fullInfo[0] ? fullInfo[0].phoneNumber : ""}
                 disabled
                 variant="outlined"
                 fullWidth
@@ -324,7 +305,7 @@ const ViewClient: React.FC<ChildProps> = (props: any) => {
                   />
                 </Grid>
 
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={12}>
                   <Controller
                     render={({ field }) => (
                       <TextField
@@ -340,40 +321,6 @@ const ViewClient: React.FC<ChildProps> = (props: any) => {
                     defaultValue=""
                     name="tinNumber"
                     control={control}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Controller
-                    render={({ field }) => (
-                      <FormControl
-                        variant="outlined"
-                        className={classes.formControl}
-                      >
-                        <InputLabel id="demo-simple-select-outlined-label">
-                          Verification Status
-                        </InputLabel>
-                        <Select
-                          style={{ backgroundColor: "#fff" }}
-                          {...field}
-                          labelId="demo-simple-select-outlined-label"
-                          id="demo-simple-select-outlined"
-                          // label="Gender"
-                          // value={
-                          //   stateClient.selectedUserData[0].verification_status
-                          // }
-                        >
-                          <MenuItem value={"NOT_VERIFIED"}>
-                            Not Verified
-                          </MenuItem>
-                          <MenuItem value={"PENDING"}>Pending</MenuItem>
-                          <MenuItem value={"VERIFIED"}>Verified</MenuItem>
-                        </Select>
-                      </FormControl>
-                    )}
-                    // rules={{ required: true }}
-                    name="verification_status"
-                    control={control}
-                    defaultValue="NOT_VERIFIED"
                   />
                 </Grid>
 
