@@ -1,169 +1,92 @@
 import React, { useEffect, useState } from "react";
-import MUIDataTable from "mui-datatables";
-import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
-import EditIcon from "@material-ui/icons/Edit";
-import { useDispatch, useSelector } from "react-redux";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
 import {
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
+  Box,
+  Card,
+  CardHeader,
   Divider,
-  FormControl,
-  IconButton,
-  Tooltip,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
 } from "@material-ui/core";
-import {
-  getPayedUserInfo,
-  getUser,
-  sendVerification,
-} from "../../../features/auth/actions";
-import { AppThunk, RootState } from "../../../app/store";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
-import VisibilityIcon from "@material-ui/icons/Visibility";
-import { Chip } from "@material-ui/core";
-import { useForm, Controller } from "react-hook-form";
-import PersonAddDisabledIcon from "@material-ui/icons/PersonAddDisabled";
+import { collection } from "rxfire/firestore";
+import { map } from "rxjs/operators";
+import firebase from "../../../firebase/firebase";
 import moment from "moment";
-const useStyles = makeStyles((theme) => ({
-  formControl: {
-    width: "100%",
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
+import { convertTimestamp } from "convert-firebase-timestamp";
 
-export default function SubscriptionDate() {
-  const { control, handleSubmit } = useForm();
-  const [stat, getStatus] = useState("");
-  const classes = useStyles();
-  const [rowData, getRowData] = useState([]);
-  const [index, getIndex] = useState(0);
-  const [open, setOpen] = React.useState(false);
-  const [openView, setOpenView] = React.useState(false);
-  const [openChip, setOpenChip] = React.useState(false);
+const Subscription = (props: any) => {
+  const [user, setUser] = useState<any>([]);
+
   const SPACED_DATE_FORMAT = "DD MMM YYYY";
-  // inetrface items{
-  //   open: Boolean;
-  // }
-  const dispatch = useDispatch();
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClickOpenView = () => {
-    setOpenView(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleClickChip = () => {
-    setOpenChip(true);
-  };
-
-  const handleSuspend = (u: any) => {
-    console.log(u, "----");
-    u.flaged = true;
-    setOpen(false);
-  };
-
-  const columns = [
-    {
-      label: "Company Name",
-      name: "clientName",
-      options: {
-        filter: true,
-      },
-    },
-    {
-      label: "Email",
-      name: "email",
-      options: {
-        filter: true,
-        sort: false,
-      },
-    },
-    {
-      label: "Date Of Payment",
-      name: "dateOfPayment",
-
-      options: {
-        filter: true,
-        sort: false,
-        customBodyRender: (value: any) => moment(new Date(value)).format(),
-      },
-    },
-    {
-      label: "Expiry Date",
-      name: "expiryDate",
-      options: {
-        filter: true,
-        sort: false,
-        customBodyRender: (value: any) =>
-          moment(new Date(value)).format(SPACED_DATE_FORMAT),
-      },
-    },
-    {
-      label: "Reminder",
-      name: "reminderExpiryDate",
-      options: {
-        filter: true,
-        sort: false,
-        customBodyRender: (value: any) => moment(new Date(value)).fromNow(),
-      },
-    },
-
-    {
-      label: "UID",
-      name: "uid",
-      options: {
-        filter: true,
-        display: false,
-      },
-    },
-  ];
-
-  const options = {
-    filter: true,
-    selectableRowsHideCheckboxes: false,
-    onRowClick: (event: any, rowData: any) => {
-      console.log("eventtts", event, rowData, typeof rowData);
-      getIndex(event);
-      getRowData((rowData = event));
-    },
-  };
-
-  const stateClient = useSelector((state: RootState) => state.auth);
-  console.log(
-    // moment(stateClient.clients[0].dateOfPayment.toDate()).fromNow(),
-    rowData,
-    stateClient.clients[0],
-    "--cl====i"
-  );
 
   useEffect(() => {
-    dispatch(getPayedUserInfo());
-  }, []);
+    const db = firebase.firestore();
+    const collectionRef = db.collection("paymentStatus");
 
+    collection(collectionRef)
+      .pipe(map((docs) => docs.map((d) => d.data())))
+      .subscribe((users: any) => {
+        setUser([...users]);
+      });
+  }, []);
   return (
-    <div
-      style={{
-        margin: "2rem",
-      }}
-    >
-      table
-      {/* <MUIDataTable
-        title={"Subscription List"}
-        data={stateClient.clients}
-        columns={columns}
-        options={options}
-      /> */}
+    <div>
+      <Card
+        {...props}
+        style={{
+          margin: "2rem",
+        }}
+      >
+        <CardHeader title="Clients List" />
+        <Divider />
+        {/* <PerfectScrollbar> */}
+        <Box style={{ minWidth: 800 }}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Client Name</TableCell>
+                <TableCell>Date of payment</TableCell>
+                <TableCell sortDirection="desc">Expiry Date</TableCell>
+                <TableCell>Reminder</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {user &&
+                user.map((client: any, index: number) => (
+                  <TableRow hover key={index}>
+                    <TableCell>{client.clientName}</TableCell>
+                    <TableCell>
+                      {moment(
+                        `${convertTimestamp(client.dateOfPayment)}`
+                      ).format(SPACED_DATE_FORMAT)}
+                    </TableCell>
+                    <TableCell>
+                      {moment(`${convertTimestamp(client.expiryDate)}`).format(
+                        SPACED_DATE_FORMAT
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      {moment(
+                        `${convertTimestamp(client.reminderExpiryDate)}`
+                      ).fromNow()}
+                    </TableCell>
+                  </TableRow>
+                ))}
+            </TableBody>
+          </Table>
+        </Box>
+        <Box
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            padding: 2,
+          }}
+        ></Box>
+      </Card>
     </div>
   );
-}
+};
+
+export default Subscription;

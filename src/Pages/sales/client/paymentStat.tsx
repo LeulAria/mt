@@ -142,11 +142,9 @@ const PaymentStat: React.FC<ChildProps> = (props) => {
                         id="demo-simple-select-outlined"
                         label="Gender"
                       >
-                        <MenuItem value={"pending"}>Pending</MenuItem>
-                        {/* <MenuItem value={"notVerified"}>Not Verified</MenuItem> */}
-                        <MenuItem value={"Verified"}>
-                          Payed and Verified
-                        </MenuItem>
+                        <MenuItem value={"NOT_VERIFIED"}>Not Verified</MenuItem>
+                        <MenuItem value={"PENDING"}>Pending</MenuItem>
+                        <MenuItem value={"VERIFIED"}>Verified</MenuItem>
                       </Select>
                     </FormControl>
                   )}
