@@ -85,12 +85,12 @@ body {
   position: absolute;
   z-index: -1;
   bottom: 10px;
-  right: 15px;
+  left: 15px;
 }
 
 .chat-widget-toggle:checked ~ .chat-open-button {
   opacity: 0;
-  transform: translateX(200px);
+  transform: translatex(-200px);
   transition: all 400ms ease;
 }
 
@@ -109,20 +109,20 @@ body {
 
 .chat-box {
   position: fixed;
-  z-index: var(--chat-zIndex);
-  right: 15px;
+  z-index: 10;
+  left: 15px;
   bottom: 15px;
   display: flex;
   flex-flow: column;
-  width: 320px;
+  width: 450px;
   height: calc(100% - 95px);
   max-height: var(--chat-max-height);
   min-height: var(--chat-min-height);
-  border-radius: 15px;
-  background: var(--chat-color-main);
+  border-radius: 10px;
+  background: #fff;
   box-shadow: var(--chat-default-shadow);
-  opacity: 0;
-  transform: translateX(100%);
+  opacity: 10;
+  transform: translateX(-200%);
   transition: all 350ms ease;
 }
 
@@ -199,6 +199,7 @@ body {
   width: 100%;
   height: 100%;
   overflow: hidden;
+  margin: 0;
 }
 
 .chat-messages {
@@ -313,7 +314,7 @@ body {
 }
 
 .chat-close-button {
-  right: 350px;
+  left: 470px;
   bottom: 20px;
   width: 35px;
   height: 35px;

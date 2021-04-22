@@ -33,8 +33,8 @@ export default function SimpleSelect(user: any) {
           placeholder="Services"
         >
           <MenuItem value={"ADMIN"}>ADMIN</MenuItem>
-          <MenuItem value={"TECH SUPPORT"}>TECH SUPPORT</MenuItem>
-          <MenuItem value={"SALES SUPPORT"}>SALES SUPPORT</MenuItem>
+          <MenuItem value={"TECH_SUPPORT"}>TECH SUPPORT</MenuItem>
+          <MenuItem value={"SALES_SUPPORT"}>SALES SUPPORT</MenuItem>
         </Select>
       </FormControl>
     </div>

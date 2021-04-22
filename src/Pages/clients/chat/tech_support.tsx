@@ -12,22 +12,17 @@ import { debounceTime, map, tap, distinctUntilChanged } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { UserRole } from '../../../features/auth/types';
 import SendIcon from '@material-ui/icons/Send';
-// import { UserRole } from '../../../features/user/types';
 import { ReactComponent as SeenIcon } from "../../../assets/chat_icons/icons8_double_tick.svg";
 import { ReactComponent as UnseenIcon } from "../../../assets/chat_icons/icons8_checkmark.svg";
+import Tab from './tab'
 
-interface IItems {
-    date: Date;
-    message: string;
-    sender: string;
-    to: string;
-}
 
 const PaperList = styled(Paper)({
-    height: '22rem',
+    height: '20rem',
     overflowY: 'scroll',
     position: 'relative',
-    paddingBottom: '1rem'
+    paddingBottom: '1rem',
+    margin: 0
 })
 
 const TextPaper = styled(Typography)({
@@ -41,7 +36,6 @@ const TextPaper = styled(Typography)({
 })
 
 const Chatbox = ({ uid_1 }: any): JSX.Element => {
-    const user = useSelector((state: RootState) => state.chat.clientsChat)
     const conversations = useSelector((state: RootState) => state.chat.conversations)
     const uid = useSelector((state: RootState) => state.auth.currentUser.uid)
     const dispatch = useDispatch();
@@ -84,7 +78,8 @@ const Chatbox = ({ uid_1 }: any): JSX.Element => {
             .subscribe((data: any[]) => {
                 const filtered = data.filter((item) => {
                     return (item.user_uid_1 === uid || item.user_uid_2 === uid) &&
-                        (item.from === UserRole.SALES_PERSON || item.from === UserRole.USER)
+                        (item.from === UserRole.TECH_SUPPORT || item.from === UserRole.USER) &&
+                        (item.to === UserRole.TECH_SUPPORT || item.to === UserRole.USER) 
                 })
                 dispatch(clearConverations());
                 dispatch(setUsersConveration(filtered))
@@ -95,7 +90,6 @@ const Chatbox = ({ uid_1 }: any): JSX.Element => {
             user_messages.unsubscribe();
         }
     }, [])
-    console.log('convvooo'+conversations);
     const handleSendMessage = (e: any): void => {
         e.preventDefault()
         if (queryName) {
@@ -105,7 +99,7 @@ const Chatbox = ({ uid_1 }: any): JSX.Element => {
                 isView: false,
                 createdAt: new Date()
             }
-            dispatch(sendRealTimeUserMessage(messageContent))
+            dispatch(sendRealTimeUserMessage(messageContent, UserRole.TECH_SUPPORT))
             setQueryName("");
         }
     }
@@ -117,26 +111,9 @@ const Chatbox = ({ uid_1 }: any): JSX.Element => {
     };
 
     return (
-        <div className="chat-box">
-            {/* <!-- chat user info     --> */}
-
+        // <div className="chat-box">
             <div className="chat-message-box">
                 {/* <!--  chat header --> */}
-                <Card>
-                    <CardHeader
-                        title="Customer support service"
-                        // subheader="September 14, 2016"
-                        action={
-                            <IconButton>
-                                {user && <Badge badgeContent={user.length} color="primary">
-                                    <SupervisedUserCircle style={{ width: '2rem', height: '2rem' }} />
-                                </Badge>}
-                            </IconButton>
-                        }
-                    />
-                </Card>
-
-
                 {/* <!--   chat message  --> */}
                 <PaperList>
                     {
@@ -197,7 +174,7 @@ const Chatbox = ({ uid_1 }: any): JSX.Element => {
                 </PaperList>
 
                 {/* <!-- chat input box  --> */}
-                <div className="chat-form-box">
+                    <div className="chat-form-box">
                     <form
                         className="chat-form"
                         id="chat-form"
@@ -220,7 +197,8 @@ const Chatbox = ({ uid_1 }: any): JSX.Element => {
                     </form>
                 </div>
             </div>
-        </div>
+            
+        // </div>
     );
 };
 

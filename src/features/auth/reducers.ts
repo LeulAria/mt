@@ -1,5 +1,5 @@
 import { PayloadAction } from "@reduxjs/toolkit";
-import { IEmployee, IInitState, IUser } from "./types";
+import { ICurrentUser, IInitState, INotification, IUser } from "./types";
 import { initialState } from "./init";
 
 export default {
@@ -9,7 +9,7 @@ export default {
   setIsAuthenticated: (state: IInitState, action: PayloadAction<boolean>) => {
     state.authenticated = action.payload;
   },
-  setCurrentUser: (state: IInitState, action: PayloadAction<IEmployee>) => {
+  setCurrentUser: (state: IInitState, action: PayloadAction<ICurrentUser>) => {
     state.currentUser = action.payload;
   },
   setLogOutUser: (state: IInitState) => {
@@ -24,5 +24,11 @@ export default {
   },
   setUser: (state: IInitState, action: PayloadAction<IUser[]>) => {
     state.selectedUserData = action.payload;
+  },
+  setCurrentUserProfile:(state: IInitState, action: PayloadAction<IUser>) => {
+    state.user = action.payload;
+  },
+  setNotifications:(state: IInitState, action: PayloadAction<INotification[]>) => {
+    state.notifications = action.payload;
   },
 };

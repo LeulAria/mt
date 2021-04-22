@@ -16,13 +16,13 @@ export default function RouteSubRoute(route: any) {
 					if (route.path === '/redirecting') {
 						switch (auth.currentUser.role) {
 							case UserRole.ADMIN:
-								return <Redirect from="/redirecting" to="/home/dashboard" />
+								return <Redirect to="/home/dashboard" />
 							case UserRole.SALES_PERSON:
-								return <Redirect from="/redirecting" to="/sales" />
+								return <Redirect to="/sales" />
 							case UserRole.TECH_SUPPORT:
-								return <Redirect from="/redirecting" to="/tech" />
+								return <Redirect to="/tech" />
 							case UserRole.USER:
-								return <Redirect from="/redirecting" to="/user" />
+								return <Redirect to="/user" />
 							default:
 								<Redirect from="/redirecting" to="/login" />;
 						}
@@ -49,6 +49,10 @@ export default function RouteSubRoute(route: any) {
 								return <Redirect to="/login" />
 							}
 						}else{
+							if(auth.authenticated)
+								if(route.path === '/'){
+									return <Redirect to="/login"/>
+								}
 							return <route.component {...props} />
 						}
 					}

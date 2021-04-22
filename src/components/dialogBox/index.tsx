@@ -7,6 +7,10 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { Controller } from "react-hook-form";
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import { FormHelperText, InputLabel } from '@material-ui/core';
 
 export default function FormDialog({
     handleClickOpen,
@@ -50,14 +54,46 @@ export default function FormDialog({
                                 }
                             }
                         />
+                        <Controller
+                            name="messageType"
+                            render={({ field }) => (
+                                <FormControl fullWidth>
+                                    <InputLabel>Message Type</InputLabel>
+                                    <Select
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        {...field}
+                                        name="solutions"
+                                        required
+                                        variant="standard"
+                                        placeholder="Services"
+                                        error={errors.messageType}
+                                    >
+                                        <MenuItem value={"info"}>Information</MenuItem>
+                                        <MenuItem value={"warning"}>Warning</MenuItem>
+                                        <MenuItem value={"success"}>Succuss</MenuItem>
+                                        <MenuItem value={"error"}>Error</MenuItem>
+                                    </Select>
+                                    <FormHelperText style={{color: 'red'}}>
+                                        {errors.messageType ? errors.messageType.message : null}
+                                    </FormHelperText>
+                                </FormControl>
+                            )}
+                            control={control}
+                            rules={
+                                {
+                                    required: 'this field is required'
+                                }
+                            }
+                        />
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={handleClose} color="primary">
                             Cancel
                         </Button>
-                        <Button 
-                        onClick={handleSubmit(sendNotifications)}
-                        color="primary" type="submit">
+                        <Button
+                            onClick={handleSubmit(sendNotifications)}
+                            color="primary" type="submit">
                             Send
                         </Button>
                     </DialogActions>

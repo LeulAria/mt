@@ -16,6 +16,8 @@ export const {
   setLogOutUser,
   setClients,
   setUser,
+  setCurrentUserProfile,
+  setNotifications
 } = userSlice.actions;
 
 export const { createNewUser, signInUser, getUser, sendNotification } = thunks;

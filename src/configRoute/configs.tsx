@@ -16,6 +16,12 @@ export const routes = [
     component: lazy(() => import("../Pages/signup/login")),
   },
   {
+    path: "/signup",
+    // component: Login
+    exact: false,
+    component: lazy(() => import("../Pages/signup/signUp")),
+  },
+  {
     path: "/home",
     exact: false,
     component: lazy(() => import("../Pages/user/index")),
@@ -42,6 +48,11 @@ export const routes = [
         path: "/home/chat",
         exact: false,
         component: lazy(() => import("../Pages/admin/chat")),
+      },
+      {
+        path: "/home/*",
+        exact: false,
+        component: lazy(() => import("../components/not_found/index")),
       },
     ],
   },
@@ -80,6 +91,11 @@ export const routes = [
         exact: false,
         component: lazy(() => import("../Pages/sales/chat/index")),
       },
+      {
+        path: "/sales/*",
+        exact: false,
+        component: lazy(() => import("../components/not_found/index")),
+      },
     ],
   },
   {
@@ -113,9 +129,19 @@ export const routes = [
         exact: false,
         component: lazy(() => import("../Pages/clients/notification/index")),
       },
+      {
+        path: "/user/*",
+        exact: false,
+        component: lazy(() => import("../components/not_found/index")),
+      },
     ],
   },
   {
     path: "/redirecting",
+  },
+  {
+    path: "*",
+    exact: false,
+    component: lazy(() => import("../components/not_found/index")),
   },
 ];

@@ -9,7 +9,7 @@ export interface IUser {
   companyName: string;
   companyUrl: string;
   email: string;
-  service: string;
+  service?: string;
   address?: IAddress;
   password?: string;
   business?: string;
@@ -17,16 +17,45 @@ export interface IUser {
   role?: string;
   country?: string;
   payments?: IPayemntInfo;
-  id: string;
+  id?: string;
   phoneNumber?: string;
   last_send?: Date;
   notificationMessage?: string;
   dateOfPayment?: any;
   expiryDate?: any;
   reminderExpiryDate?: any;
-  city: string;
-  subCity: string;
-  verification_status: string;
+  city?: string;
+  subCity?: string;
+  verification_status?: string;
+  messageType?: string;
+  uid?: string;
+}
+
+export interface ICurrentUser {
+  userName?: string; 
+  clientName?: string;
+  companyName: string;
+  companyUrl: string;
+  email: string;
+  service?: string;
+  address?: IAddress;
+  password?: string;
+  business?: string;
+  tinNumber?: string;
+  role: string;
+  country?: string;
+  payments?: IPayemntInfo;
+  id?: string;
+  uid: string;
+  phoneNumber?: string;
+  last_send?: Date;
+  notificationMessage?: string;
+  dateOfPayment?: any;
+  expiryDate?: any;
+  reminderExpiryDate?: any;
+  city?: string;
+  subCity?: string;
+  verification_status?: string;
 }
 
 export interface IPayemntInfo {
@@ -56,12 +85,22 @@ export interface IEmployee {
   uid: string;
 }
 
+export interface INotification {
+  from: string;
+  message: string;
+  messageType: string;
+  uid: string;
+  createdAt: Date;
+}
+
 export interface IInitState {
   isLoading: boolean;
   isFaliure: boolean;
   client: IUser;
   clients: IUser[];
-  currentUser: IEmployee;
+  currentUser: ICurrentUser;
   authenticated: boolean;
   selectedUserData: IUser[];
+  user: IUser;
+  notifications: INotification[];
 }
