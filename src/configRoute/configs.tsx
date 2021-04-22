@@ -101,7 +101,7 @@ export const routes = [
   {
     path: "/tech",
     exact: false,
-    component: lazy(() => import("../Pages/user/tech")),
+    component: lazy(() => import("../Pages/user/index")),
     // bar: <Appbar/>,
     isPrivate: true,
     permission: [UserRole.TECH_SUPPORT],
