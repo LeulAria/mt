@@ -17,6 +17,7 @@ import { RootState } from '../../app/store';
 import { setLogOutUser } from "../../features/auth";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { Box } from '@material-ui/core';
+import { UserRole } from '../../features/auth/types';
 
 const drawerWidth = 240;
 
@@ -100,7 +101,6 @@ export default function MiniDrawer() {
     const handleDrawerClose = () => {
         setOpen(false);
     };
-
     return (
         <div
         // className={classes.root}
@@ -113,7 +113,7 @@ export default function MiniDrawer() {
                 })}
             >
                 <Toolbar>
-                    <IconButton
+                    {auth.currentUser.role !== UserRole.USER && <IconButton
                         color="inherit"
                         aria-label="open drawer"
                         onClick={handleDrawerOpen}
@@ -123,7 +123,7 @@ export default function MiniDrawer() {
                         })}
                     >
                         <MenuIcon />
-                    </IconButton>
+                    </IconButton>}
                     <Box
                         width="20%"
                     >
@@ -149,7 +149,7 @@ export default function MiniDrawer() {
                     </Box>
                 </Toolbar>
             </AppBar>
-            <Drawer
+            {auth.currentUser.role !== UserRole.USER && <Drawer
                 elevation={3}
                 variant="permanent"
                 className={clsx(classes.drawer, {
@@ -169,8 +169,8 @@ export default function MiniDrawer() {
                     </IconButton>
                 </div>
                 <Divider />
-                {auth.authenticated && <DrawerADMIN/>}
-            </Drawer>
+                {auth.authenticated &&  <DrawerADMIN/>}
+            </Drawer>}
         </div>
     );
 }

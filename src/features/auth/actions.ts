@@ -1,5 +1,5 @@
 import { AppThunk } from "../../app/store";
-import { IUser, UserRole, IPayemntInfo } from "./types/index";
+import { IUser, UserRole, IPayemntInfo, ICurrentUser } from "./types/index";
 import firebase from "../../firebase/firebase";
 import { UserStatus } from "./types";
 import {
@@ -7,6 +7,7 @@ import {
   setCurrentUser,
   setIsAuthenticated,
   setClients,
+  setCurrentUserProfile,
 } from ".";
 
 // create new user
@@ -52,7 +53,7 @@ export const createNewEmployee = (user: any): AppThunk => async (dispatch) => {
         uid: _.user.uid,
         role: user.role,
       };
-      db.collection("users")
+      db.collection("clients")
         .doc(_.user.uid)
         .set(new_user)
         .then(() => {
@@ -74,10 +75,10 @@ export const signInUser = (user: any): AppThunk => async (dispatch) => {
   setLoadingProgress(true);
   auth.signInWithEmailAndPassword(user.email, user.password).then(
     (_: any) => {
-      db.collection("users").doc(_.user.uid).update({
+      db.collection("clients").doc(_.user.uid).update({
         isOnline: true
-      }).then(()=>{
-        return db.collection("users")
+      }).then(() => {
+        return db.collection("clients")
           .doc(_.user.uid)
           .get()
           .then((user: any) => {
@@ -219,30 +220,32 @@ export const sendNotification = (users: IUser): AppThunk => async (
 ) => {
   const db = firebase.firestore();
   db.collection("notifications")
-    .doc(users.id)
+    .doc(`${users.uid}`)
     .get()
     .then((user) => {
       if (user.exists)
         db.collection("notifications")
-          .doc("L8Dnz0HPqMQg0TLAVCM8qK9tf6L2")
+          .doc(`${users.uid}`)
           .update({
             notification: firebase.firestore.FieldValue.arrayUnion({
               message: users.notificationMessage,
               createdAt: new Date(),
-              uid: "L8Dnz0HPqMQg0TLAVCM8qK9tf6L2",
+              uid: users.uid,
               from: getState().auth.currentUser.role,
+              messageType: users.messageType
             }),
           });
       else
         db.collection("notifications")
-          .doc("L8Dnz0HPqMQg0TLAVCM8qK9tf6L2")
+          .doc(`${users.uid}`)
           .set({
             notification: [
               {
                 message: users.notificationMessage,
                 createdAt: new Date(),
-                uid: "L8Dnz0HPqMQg0TLAVCM8qK9tf6L2",
+                uid: `${users.uid}`,
                 from: getState().auth.currentUser.role,
+                messageType: users.messageType
               },
             ],
           });
@@ -275,4 +278,44 @@ export const getNotification = (user: IUser): AppThunk => async (dispatch) => {
           console.log("");
         });
     });
+};
+
+export const updateStore = (): AppThunk => async (dispatch, getState) => {
+  firebase
+    .firestore()
+    .collection("clients")
+    .doc(`${getState().auth.currentUser.uid}`)
+    .get()
+    .then((user: any) => {
+      dispatch(setCurrentUser(user.data()));
+      dispatch(setIsAuthenticated(true));
+      setLoadingProgress(false);
+    })
+    .catch(e => dispatch(setLoadingProgress(false)))
+};
+
+export const updadteUserProfile = (user: IUser): AppThunk => async (dispatch, getState) => {
+  dispatch(setLoadingProgress(true))
+  try {
+    firebase
+      .firestore()
+      .collection("clients")
+      .doc(`${getState().auth.currentUser.uid}`)
+      .update({
+        companyName: user.companyName,
+        companyUrl: user.companyUrl,
+        email: user.email,
+        phoneNumber: user.phoneNumber,
+        city: user.city,
+        subCity: user.subCity
+      })
+      .then(() => {
+        dispatch(updateStore())
+        dispatch(setLoadingProgress(false))
+      })
+      .catch(e => {
+        dispatch(setLoadingProgress(false))
+        throw new Error("Error");
+      })
+  } catch (err) { }
 };

@@ -10,7 +10,7 @@ import {
     getRealTimeUserSupportProviders, 
     setIsActiveStatus
 } from "../../../features/chat";
-import Popup from './popup';
+import Popup from './tab';
 import { RootState } from '../../../app/store';
 
 
@@ -37,7 +37,9 @@ const Chatbox = (): JSX.Element => {
 
     return (
         <Container>
-            <div className="message"></div>
+            <div className="message"
+            style={{zIndex: 1}}
+            ></div>
 
             <div className="chat-widget" id="chatWidget">
                 {/* <!-- chat toggle --> */}
@@ -57,6 +59,7 @@ const Chatbox = (): JSX.Element => {
                 >
                     <CloseMessage />
                 </label>
+                {/* {openChatBox && <Popup uid_1={auth.currentUser.uid} />} */}
                 {openChatBox && <Popup uid_1={auth.currentUser.uid} />}
                 {/* <!-- chat open button --> */}
                 <label

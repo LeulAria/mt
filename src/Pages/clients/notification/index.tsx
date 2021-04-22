@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Container, Grid } from '@material-ui/core'
 import NotificationCard from "../../../components/notificationCard";
-import ReactMaterialUiNotifications from "react-materialui-notifications";
 import moment from 'moment'
-import { Message } from '@material-ui/icons';
 import firebase from '../../../firebase/firebase'
-import DashBoard from '../../admin/users_list';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../app/store';
-// import {deepOrange500} from '@material-ui/styles/colors'
 
 export default function Notification() {
     const [data, setData] = useState([]);

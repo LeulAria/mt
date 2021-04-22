@@ -168,7 +168,6 @@ const ChatPage = (): JSX.Element => {
             setmessage('');
         }
     };
-
     const classes = useStyles();
     return (
         <Box className={classes.chatContainer}>
