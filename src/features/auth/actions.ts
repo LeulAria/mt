@@ -30,6 +30,12 @@ export const createNewUser = (user: IUser): AppThunk => async (dispatch) => {
           uid: _.user.uid,
           service: user.service,
           role: UserRole.USER,
+          isOnline: false,
+          typing: {
+            isTyping: false,
+            isTypingTo: "",
+          },
+          last_send: "",
         })
         .then((user) => dispatch(setLoadingProgress(false)));
     },
@@ -52,6 +58,12 @@ export const createNewEmployee = (user: any): AppThunk => async (dispatch) => {
         email: user.email,
         uid: _.user.uid,
         role: user.role,
+        isOnline: false,
+        typing: {
+          isTyping: false,
+          isTypingTo: "",
+        },
+        last_send: "",
       };
       db.collection("clients")
         .doc(_.user.uid)
@@ -75,18 +87,22 @@ export const signInUser = (user: any): AppThunk => async (dispatch) => {
   setLoadingProgress(true);
   auth.signInWithEmailAndPassword(user.email, user.password).then(
     (_: any) => {
-      db.collection("clients").doc(_.user.uid).update({
-        isOnline: true
-      }).then(() => {
-        return db.collection("clients")
-          .doc(_.user.uid)
-          .get()
-          .then((user: any) => {
-            dispatch(setCurrentUser(user.data()));
-            dispatch(setIsAuthenticated(true));
-            setLoadingProgress(false);
-          });
-      })
+      db.collection("clients")
+        .doc(_.user.uid)
+        .update({
+          isOnline: true,
+        })
+        .then(() => {
+          return db
+            .collection("clients")
+            .doc(_.user.uid)
+            .get()
+            .then((user: any) => {
+              dispatch(setCurrentUser(user.data()));
+              dispatch(setIsAuthenticated(true));
+              setLoadingProgress(false);
+            });
+        });
     },
     (err) => {
       setLoadingProgress(false);
@@ -232,7 +248,7 @@ export const sendNotification = (users: IUser): AppThunk => async (
               createdAt: new Date(),
               uid: users.uid,
               from: getState().auth.currentUser.role,
-              messageType: users.messageType
+              messageType: users.messageType,
             }),
           });
       else
@@ -245,7 +261,7 @@ export const sendNotification = (users: IUser): AppThunk => async (
                 createdAt: new Date(),
                 uid: `${users.uid}`,
                 from: getState().auth.currentUser.role,
-                messageType: users.messageType
+                messageType: users.messageType,
               },
             ],
           });
@@ -291,11 +307,14 @@ export const updateStore = (): AppThunk => async (dispatch, getState) => {
       dispatch(setIsAuthenticated(true));
       setLoadingProgress(false);
     })
-    .catch(e => dispatch(setLoadingProgress(false)))
+    .catch((e) => dispatch(setLoadingProgress(false)));
 };
 
-export const updadteUserProfile = (user: IUser): AppThunk => async (dispatch, getState) => {
-  dispatch(setLoadingProgress(true))
+export const updadteUserProfile = (user: IUser): AppThunk => async (
+  dispatch,
+  getState
+) => {
+  dispatch(setLoadingProgress(true));
   try {
     firebase
       .firestore()
@@ -307,15 +326,16 @@ export const updadteUserProfile = (user: IUser): AppThunk => async (dispatch, ge
         email: user.email,
         phoneNumber: user.phoneNumber,
         city: user.city,
-        subCity: user.subCity
+        subCity: user.subCity,
+        password: user.password,
       })
       .then(() => {
-        dispatch(updateStore())
-        dispatch(setLoadingProgress(false))
+        dispatch(updateStore());
+        dispatch(setLoadingProgress(false));
       })
-      .catch(e => {
-        dispatch(setLoadingProgress(false))
+      .catch((e) => {
+        dispatch(setLoadingProgress(false));
         throw new Error("Error");
-      })
-  } catch (err) { }
+      });
+  } catch (err) {}
 };

@@ -7,9 +7,16 @@ import {
   CardContent,
   CardHeader,
   Divider,
+  FormControl,
   Grid,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
   TextField,
 } from "@material-ui/core";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { useForm, Controller } from "react-hook-form";
 import { RootState } from "../../app/store";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,6 +32,7 @@ const AccountProfileDetails = (props: any) => {
     phoneNumber: user.currentUser.phoneNumber,
     city: user.currentUser.city,
     subCity: user.currentUser.subCity,
+    password: user.currentUser.password,
   };
   const {
     control,
@@ -201,6 +209,32 @@ const AccountProfileDetails = (props: any) => {
                     type="tel"
                     variant="outlined"
                     disabled={disabled}
+                    // defaultValue={user.isLoading ? 'loading' : user.user.subCity}
+                  />
+                )}
+                control={control}
+                rules={{
+                  required: "this field is required",
+                }}
+              />
+            </Grid>
+            <Grid item md={12} xs={12}>
+              <Controller
+                name="password"
+                render={({ field }) => (
+                  <TextField
+                    label="Password"
+                    {...field}
+                    fullWidth
+                    type="text"
+                    focused={!disabled}
+                    error={errors.password ? true : false}
+                    helperText={
+                      errors.password ? errors.password.message : null
+                    }
+                    variant="outlined"
+                    disabled={disabled}
+
                     // defaultValue={user.isLoading ? 'loading' : user.user.subCity}
                   />
                 )}

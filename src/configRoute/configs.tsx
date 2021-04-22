@@ -129,7 +129,6 @@ export const routes = [
     path: "/user",
     exact: false,
     component: lazy(() => import("../Pages/user/index")),
-    // bar: <Appbar/>,
     isPrivate: true,
     permission: [UserRole.USER],
     routes: [
