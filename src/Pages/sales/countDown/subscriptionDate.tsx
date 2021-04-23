@@ -28,6 +28,8 @@ const Subscription = (props: any) => {
     collection(collectionRef)
       .pipe(map((docs) => docs.map((d) => d.data())))
       .subscribe((users: any) => {
+        console.log(users, "heyy");
+
         setUser([...users]);
       });
   }, []);
@@ -39,7 +41,7 @@ const Subscription = (props: any) => {
           margin: "2rem",
         }}
       >
-        <CardHeader title="Clients List" />
+        <CardHeader title="Subscription" />
         <Divider />
         <Box style={{ minWidth: 800 }}>
           <Table>
