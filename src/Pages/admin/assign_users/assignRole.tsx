@@ -128,11 +128,6 @@ const ViewClient: React.FC<ChildProps> = (props: any) => {
               {/* {fullInfo[0] ? fullInfo[0].companyName : null} Detail Information */}
               Edit Role
             </Typography>
-            <Tooltip title="Edit Detail">
-              <IconButton autoFocus color="inherit" onClick={handleEditInfo}>
-                <EditIcon />
-              </IconButton>
-            </Tooltip>
           </Toolbar>
         </AppBar>
         <Divider />
@@ -176,12 +171,18 @@ const ViewClient: React.FC<ChildProps> = (props: any) => {
                         // label="Gender"
                       >
                         {Object.keys(UserRole).map((role, key) => {
-                          console.log(props.selectedRow[4], "userr");
-                          return (
-                            <MenuItem value={UserRole[role]} key={key}>
-                              {UserRole[role]}
-                            </MenuItem>
-                          );
+                          if (
+                            UserRole[role] != "ADMIN" &&
+                            UserRole[role] != "USER"
+                          ) {
+                            console.log(UserRole[role], "afraid");
+
+                            return (
+                              <MenuItem value={UserRole[role]} key={key}>
+                                {UserRole[role]}
+                              </MenuItem>
+                            );
+                          }
                         })}
                       </Select>
                     </FormControl>

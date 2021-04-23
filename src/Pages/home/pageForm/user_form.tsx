@@ -5,7 +5,7 @@ import "./style.css";
 import { ReactComponent as Safe } from "../../../assets/icons/registration/Wekeepyourdatasafe.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../app/store";
-import { setLoadingProgress } from "../../../features/auth";
+import { createNewUser, setLoadingProgress } from "../../../features/auth";
 import emailjs from "emailjs-com";
 import Snackbar from "../../../components/snackbar/index";
 import { useForm, Controller } from "react-hook-form";
@@ -95,7 +95,7 @@ export default function PageForm() {
 
   const sendEmail = (data: any, e: any) => {
     console.log(data, e, "landing page"), dispatch(setLoadingProgress(true));
-
+    // dispatch(createNewUser(data));
     // emailjs
     //   .sendForm(
     //     "service_ksd1yt9",
