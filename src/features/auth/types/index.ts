@@ -32,7 +32,7 @@ export interface IUser {
 }
 
 export interface ICurrentUser {
-  userName?: string; 
+  userName?: string;
   clientName?: string;
   companyName: string;
   companyUrl: string;
@@ -74,7 +74,7 @@ export enum UserRole {
   SALES_PERSON = "SALES_SUPPORT",
   TECH_SUPPORT = "TECH_SUPPORT",
   USER = "USER",
-  DEFAULT = "DEFAULT",
+  // DEFAULT = "DEFAULT",
 }
 
 export interface IEmployee {

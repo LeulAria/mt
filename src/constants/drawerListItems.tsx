@@ -4,7 +4,8 @@ import { UserRole } from "../features/auth/types";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import ChatIcon from "@material-ui/icons/Chat";
 import EmailIcon from "@material-ui/icons/Email";
-import MailOutlineIcon from "@material-ui/icons/MailOutline";
+import AddAlertIcon from "@material-ui/icons/AddAlert";
+import NotificationsActiveIcon from "@material-ui/icons/NotificationsActive";
 import GroupIcon from "@material-ui/icons/Group";
 import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
 import PersonIcon from "@material-ui/icons/Person";
@@ -41,15 +42,15 @@ export const items: any = {
         return <ChatIcon />;
       },
     },
+    {
+      path: "/home/notification",
+      title: "Send Notificaitons",
+      icon: function Dashboard(): JSX.Element {
+        return <AddAlertIcon />;
+      },
+    },
   ],
   [UserRole.SALES_PERSON]: [
-    // {
-    //   path: "/sales/verify",
-    //   title: "Verify Users",
-    //   icon: function Dashboard(): JSX.Element {
-    //     return <VerifiedUserIcon />;
-    //   },
-    // },
     {
       path: "/sales/client",
       title: "Users List",
@@ -68,7 +69,7 @@ export const items: any = {
       path: "/sales/notifications",
       title: "Send Notificaitons",
       icon: function Dashboard(): JSX.Element {
-        return <EmailIcon />;
+        return <AddAlertIcon />;
       },
     },
     {
@@ -107,7 +108,7 @@ export const items: any = {
       path: "/tech/notification",
       title: "Notification",
       icon: function Dashboard(): JSX.Element {
-        return <EmailIcon />;
+        return <NotificationsActiveIcon />;
       },
     },
   ],

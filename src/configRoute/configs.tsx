@@ -50,6 +50,11 @@ export const routes = [
         component: lazy(() => import("../Pages/admin/chat")),
       },
       {
+        path: "/home/notification",
+        exact: false,
+        component: lazy(() => import("../Pages/admin/notification")),
+      },
+      {
         path: "/home/*",
         exact: false,
         component: lazy(() => import("../components/not_found/index")),
