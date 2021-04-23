@@ -27,6 +27,7 @@ import PaymentStat from "./paymentStat";
 import ViewClient from "./viewClient";
 import { IUser } from "../../../features/auth/types";
 import { RowingSharp } from "@material-ui/icons";
+import Users from "../../admin/dashboard";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -162,9 +163,9 @@ export default function User() {
 
   const stateClient = useSelector((state: RootState) => state.auth);
 
-  if (openView == true) {
-    // dispatch(setUser(fullInfo));
-  }
+  const data = stateClient.clients.filter((user) => {
+    return user.role == "USER";
+  });
 
   useEffect(() => {
     dispatch(getUser());
@@ -178,7 +179,7 @@ export default function User() {
     >
       <MUIDataTable
         title={"Client List"}
-        data={stateClient.clients}
+        data={data}
         columns={columns}
         options={options}
       />
