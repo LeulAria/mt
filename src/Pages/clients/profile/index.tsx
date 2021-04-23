@@ -7,6 +7,8 @@ import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
+import { UserRole } from "../../../features/auth/types";
+import Chat from "../../clients/chat/index";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -14,6 +16,8 @@ import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
 import AccManager from "../../../components/acc_manager";
 import Notification from "./notification";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../app/store";
 
 const drawerWidth = 440;
 
@@ -37,18 +41,21 @@ const useStyles = makeStyles((theme: Theme) =>
     // necessary for content to be below app bar
     toolbar: theme.mixins.toolbar,
     content: {
+      maxWidth: window.innerWidth - 450,
       flexGrow: 1,
       backgroundColor: theme.palette.background.default,
-      padding: theme.spacing(1),
+      // padding: theme.spacing(1),
     },
   })
 );
 
 export default function PermanentDrawerRight() {
   const classes = useStyles();
+  const role = useSelector((state: RootState) => state.auth.currentUser.role);
 
   return (
-    <div className={classes.root}>
+    // <div className={classes.root}>
+    <>
       <CssBaseline />
       <main className={classes.content}>
         <div className={classes.toolbar} />
@@ -66,6 +73,8 @@ export default function PermanentDrawerRight() {
         <Divider />
         <Notification />
       </Drawer>
-    </div>
+      {role === UserRole.USER ? <Chat /> : null}
+    </>
+    // </div>
   );
 }

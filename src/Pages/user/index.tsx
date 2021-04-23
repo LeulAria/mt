@@ -15,7 +15,7 @@ export default function Index({ routes }: any): JSX.Element {
           <Router key={index} {...value} />
         ))}
       </Switch>
-      {role === UserRole.USER ? <Chat/> : null}
+      {role === UserRole.USER ? <Chat /> : null}
     </div>
   );
 }

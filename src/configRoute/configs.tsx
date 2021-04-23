@@ -128,7 +128,7 @@ export const routes = [
   {
     path: "/user",
     exact: false,
-    component: lazy(() => import("../Pages/user/index")),
+    component: lazy(() => import("../Pages/clients/profile/index")),
     isPrivate: true,
     permission: [UserRole.USER],
     routes: [

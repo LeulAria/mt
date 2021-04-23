@@ -26,6 +26,9 @@ const LatestOrders = (props: any) => {
   const [currentUser, setCurrentUser] = useState({});
   const dispatch = useDispatch();
   const clients = useSelector((state: RootState) => state.auth.clients);
+  const data = clients.filter((user) => {
+    return user.role == "USER";
+  });
   const {
     control,
     formState: { errors },
@@ -80,7 +83,7 @@ const LatestOrders = (props: any) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {clients.map((client) => (
+                {data.map((client) => (
                   <TableRow hover key={client.id}>
                     <TableCell>{client.companyName}</TableCell>
                     <TableCell>{client.companyUrl}</TableCell>

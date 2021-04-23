@@ -10,6 +10,7 @@ import {
   FormControl,
   Grid,
   IconButton,
+  Input,
   InputAdornment,
   InputLabel,
   OutlinedInput,
@@ -24,6 +25,7 @@ import { updadteUserProfile } from "../../features/auth/actions";
 
 const AccountProfileDetails = (props: any) => {
   const [disabled, setDisabled] = useState(true);
+  const [visible, setVisible] = useState("");
   const user = useSelector((state: RootState) => state.auth);
   const current = {
     companyName: user.currentUser.companyName,
@@ -41,6 +43,10 @@ const AccountProfileDetails = (props: any) => {
   } = useForm({
     defaultValues: current,
   });
+
+  const handleClickShowPassword = () => {
+    setVisible("text");
+  };
   const dispatch = useDispatch();
 
   const onsubmit = (data: any) => {
@@ -219,6 +225,37 @@ const AccountProfileDetails = (props: any) => {
               />
             </Grid>
             <Grid item md={12} xs={12}>
+              {/* <Controller
+                name="password"
+                render={({ field }) => (
+                  <FormControl
+                    variant="outlined"
+                    focused={!disabled}\
+                  >
+                    <InputLabel>PassWord</InputLabel>
+                    <Input
+                      type={visible}
+                      {...field}
+                      disabled={disabled}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                          >
+                            {visible ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                    />
+                  </FormControl>
+                )}
+                control={control}
+                rules={{
+                  required: "this field is required",
+                }}
+              /> */}
+
               <Controller
                 name="password"
                 render={({ field }) => (
