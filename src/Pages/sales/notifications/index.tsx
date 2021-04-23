@@ -93,7 +93,7 @@ const LatestOrders = (props: any) => {
           margin: "2rem",
         }}
       >
-        <CardHeader title="Clients" />
+        <CardHeader title="Notify Client" />
         <Divider />
         <PerfectScrollbar>
           <Box style={{ minWidth: 800 }}>
