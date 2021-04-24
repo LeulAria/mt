@@ -23,11 +23,10 @@ build:
     - echo "Build successfully!"
 
   artifacts:
-    expire_in: 1 hour
+    expire_in: 2 hour
     paths:
       - build
-      - node:15.14.0-alpine3.10 _modules/
-
+      - node_modules/
 test_feature_branch:
   stage: test
   image: node:15.14.0-alpine3.10
