@@ -1,5 +1,5 @@
 default:
-  image: node:15.14.0-alpine3.10 
+  image: node:15.14.0-alpine3.10
 
 stages:
   - build
@@ -12,7 +12,7 @@ variables:
   TAG_COMMIT: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:$CI_COMMIT_SHORT_SHA
 build:
   stage: build
-  image: node:15.14.0-alpine3.10 
+  image: node:15.14.0-alpine3.10
   tags:
     - gitlab-react
 
@@ -30,7 +30,7 @@ build:
 
 test_feature_branch:
   stage: test
-  image: node:15.14.0-alpine3.10 
+  image: node:15.14.0-alpine3.10
   only:
     - /^feature-.*$/
   script:
@@ -41,13 +41,13 @@ test_feature_branch:
 
 test_master_branch:
   stage: test
-  image: node:15.14.0-alpine3.10 
+  image: node:15.14.0-alpine3.10
   tags:
     - gitlab-react
 
   script:
     - echo "Testing App"
-    - CI=false yarn test -- -u
+    - CI=false yarn test
     - yarn coverage
     - echo "Test successfully!"
 
