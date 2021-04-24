@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useState } from "react";
 import {
   Box,
@@ -7,7 +7,6 @@ import {
   CardContent,
   CardHeader,
   Divider,
-  FormControl,
   Grid,
   IconButton,
   Input,
@@ -16,8 +15,6 @@ import {
   OutlinedInput,
   TextField,
 } from "@material-ui/core";
-import Visibility from "@material-ui/icons/Visibility";
-import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { useForm, Controller } from "react-hook-form";
 import { RootState } from "../../app/store";
 import { useDispatch, useSelector } from "react-redux";
