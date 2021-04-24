@@ -74,7 +74,7 @@ deploy-firebase:
   stage: deploy
   tags:
     - gitlab-react
-  image: node:15.14.0-alpine3.10 :latest
+  image: node:15.14.0-alpine3.10
   before_script:
     - echo "deploying app to firebase"
 
