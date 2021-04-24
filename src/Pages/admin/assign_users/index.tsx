@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   margin: {
     margin: theme.spacing(2),
     float: "right",
-    marginTop: "9rem",
+    marginTop: "6rem",
   },
 }));
 

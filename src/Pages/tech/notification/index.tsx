@@ -50,7 +50,6 @@ export default function PermanentDrawerRight() {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <p>hrhhhhrh</p>
       <Drawer
         className={classes.drawer}
         variant="permanent"
