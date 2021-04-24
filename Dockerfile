@@ -4,7 +4,7 @@ COPY package.json ./
 RUN npm install
 COPY . /app/
 
-RUN npm run build
+RUN yarn build
 
 
 # Prepare nginx

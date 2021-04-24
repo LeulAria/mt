@@ -27,17 +27,30 @@ build:
     paths:
       - build
       - node_modules/
+
+test_feature_branch:
+  stage: test
+  image: node
+  only:
+    - /^feature-.*$/
+  script:
+    - echo "Testing App"
+    - CI=false yarn test
+    - yarn coverage
+    - echo "Test successfully!"
+
 test_master_branch:
   stage: test
   image: node
   tags:
-  - gitlab-react
-  
+    - gitlab-react
+
   script:
     - echo "Testing App"
-    - CI=false npm test -- -u
+    - CI=false yarn test -- -u
+    - yarn coverage
     - echo "Test successfully!"
-    
+
 docker-build:
   stage: docker-build
   image: docker:latest
@@ -52,6 +65,8 @@ docker-build:
     - docker build -t $TAG_COMMIT -t $TAG_LATEST .
     - docker push $TAG_COMMIT
     - docker push $TAG_LATEST
+    - docker rmi $TAG_COMMIT
+
   only:
     refs:
       - master
