@@ -25,9 +25,8 @@ import { useForm, Controller } from "react-hook-form";
 import PersonAddDisabledIcon from "@material-ui/icons/PersonAddDisabled";
 import PaymentStat from "./paymentStat";
 import ViewClient from "./viewClient";
-import { IUser } from "../../../features/auth/types";
-import { RowingSharp } from "@material-ui/icons";
-import Users from "../../admin/dashboard";
+import firebase from "../../../firebase/firebase";
+import { red } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -36,14 +35,24 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  chip: {
+    color: "red",
+    width: "70%",
+  },
+  chipPending: {
+    color: "orange",
+    width: "70%",
+  },
+  chipVerified: {
+    color: "blue",
+    width: "70%",
+  },
 }));
 
 export default function User() {
-  const { control, handleSubmit } = useForm();
   const [stat, getStatus] = useState("");
   const classes = useStyles();
   const [rowData, getRowData] = useState([]);
-  const [fullRowData, getFullRowData] = useState([]);
   const [index, getIndex] = useState(0);
   const [open, setOpen] = React.useState(false);
   const [openView, setOpenView] = React.useState(false);
@@ -70,7 +79,19 @@ export default function User() {
   };
 
   const handleSuspend = (u: any) => {
-    u.flaged = true;
+    const flagged = {
+      suspended: true,
+    };
+
+    console.log(u, "uuuu");
+
+    const db = firebase.firestore();
+    db.collection("clients")
+      .doc(u[3])
+      .update(flagged)
+      .then((_) => {
+        console.log("");
+      });
     setOpen(false);
   };
 
@@ -113,15 +134,38 @@ export default function User() {
         filter: true,
         sort: false,
         customBodyRender: function custom(value: any, rowIndex: any) {
-          return (
-            <Chip
-              variant="outlined"
-              size="small"
-              label={value}
-              color="secondary"
-              onClick={handleClickChip}
-            />
-          );
+          if (value === "NOT_VERIFIED") {
+            return (
+              <Chip
+                variant="outlined"
+                size="small"
+                label={value}
+                className={classes.chip}
+                onClick={handleClickChip}
+              />
+            );
+          } else if (value === "PENDING") {
+            return (
+              <Chip
+                variant="outlined"
+                size="small"
+                label={value}
+                className={classes.chipPending}
+                onClick={handleClickChip}
+              />
+            );
+          } else {
+            return (
+              <Chip
+                variant="outlined"
+                size="small"
+                label={value}
+                className={classes.chipVerified}
+                color="primary"
+                onClick={handleClickChip}
+              />
+            );
+          }
         },
       },
     },
@@ -153,7 +197,8 @@ export default function User() {
   ];
 
   const options = {
-    filter: true,
+    filter: false,
+    print: false,
     selectableRowsHideCheckboxes: true,
     onRowClick: (event: any, rowData: any) => {
       getIndex(event);
@@ -164,7 +209,7 @@ export default function User() {
   const stateClient = useSelector((state: RootState) => state.auth);
 
   const data = stateClient.clients.filter((user) => {
-    return user.role == "USER";
+    return user.role == "USER" && user.suspended != true;
   });
 
   useEffect(() => {

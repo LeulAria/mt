@@ -98,6 +98,11 @@ export const signInUser = (user: any): AppThunk => async (dispatch) => {
             .doc(_.user.uid)
             .get()
             .then((user: any) => {
+              // if () {
+
+              // } else {
+
+              // }
               dispatch(setCurrentUser(user.data()));
               dispatch(setIsAuthenticated(true));
               setLoadingProgress(false);

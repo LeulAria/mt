@@ -70,7 +70,7 @@ const LatestOrders = (props: any) => {
         map((docs) => {
           const current: any = [];
           docs.map((d: any) => {
-            if (d.data().role === "USER") {
+            if (d.data().role === "USER" && d.data().suspended != true) {
               current.push(d.data());
             }
           });

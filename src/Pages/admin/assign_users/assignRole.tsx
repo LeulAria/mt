@@ -16,17 +16,12 @@ import { useForm, Controller } from "react-hook-form";
 import Slide from "@material-ui/core/Slide";
 import firebase from "../../../firebase/firebase";
 import { useDispatch, useSelector } from "react-redux";
-import { AppThunk, RootState } from "../../../app/store";
-import EditIcon from "@material-ui/icons/Edit";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
+import { RootState } from "../../../app/store";
 import { TransitionProps } from "@material-ui/core/transitions";
-import { sendVerification, getUser } from "../../../features/auth/actions";
+import { getUser } from "../../../features/auth/actions";
 import { FormControl } from "@material-ui/core";
-import { InputLabel } from "@material-ui/core";
 import Select from "@material-ui/core/Select";
 import { IUser, UserRole } from "../../../features/auth/types";
-import CloseIcon from "@material-ui/icons/Close";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 
 const Transition = React.forwardRef(function Transition(

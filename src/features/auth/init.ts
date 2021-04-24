@@ -8,6 +8,7 @@ export const initialState: IInitState = {
     companyUrl: "",
     phoneNumber: "",
     email: "",
+    suspended: false,
     tinNumber: "",
     uid: "",
     service: "",
@@ -26,6 +27,7 @@ export const initialState: IInitState = {
     phoneNumber: "",
     email: "",
     tinNumber: "",
+    suspended: false,
     id: "",
     service: "",
     address: { country: "", city: "", subCity: "" },
@@ -35,7 +37,7 @@ export const initialState: IInitState = {
     city: "",
     subCity: "",
     verification_status: "",
-    uid: ""
+    uid: "",
   },
   clients: [],
   selectedUserData: [],
@@ -45,6 +47,7 @@ export const initialState: IInitState = {
     phoneNumber: "",
     email: "",
     tinNumber: "",
+    suspended: false,
     id: "",
     service: "",
     address: { country: "", city: "", subCity: "" },
@@ -55,5 +58,5 @@ export const initialState: IInitState = {
     subCity: "",
     verification_status: "",
   },
-  notifications: []
+  notifications: [],
 };

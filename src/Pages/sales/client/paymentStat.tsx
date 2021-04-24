@@ -25,7 +25,7 @@ import { getUser, paymentOfUser } from "../../../features/auth/actions";
 import { RootState } from "../../../app/store";
 import { makeStyles } from "@material-ui/core/styles";
 import { useForm, Controller } from "react-hook-form";
-import PersonAddDisabledIcon from "@material-ui/icons/PersonAddDisabled";
+import firebase from "../../../firebase/firebase";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -72,6 +72,11 @@ const PaymentStat: React.FC<ChildProps> = (props) => {
   }, []);
 
   const onSubmit = (data: any) => {
+    console.log(data, props, "dattttaa");
+    const flagged = {
+      verification_status: data.verification,
+    };
+
     const currentDate = new Date();
     data.clientName = props.selectedRow[0];
     data.email = props.selectedRow[1];
@@ -80,6 +85,13 @@ const PaymentStat: React.FC<ChildProps> = (props) => {
     data.expiryDate = date.addDays(currentDate, 30);
     data.reminderExpiryDate = date.addDays(currentDate, 28);
     setState(true);
+    const db = firebase.firestore();
+    db.collection("clients")
+      .doc(data.id)
+      .update(flagged)
+      .then((_) => {
+        console.log("");
+      });
     handleClose();
     dispatch(paymentOfUser(data));
     props.handleClickChip();
@@ -150,7 +162,7 @@ const PaymentStat: React.FC<ChildProps> = (props) => {
                   )}
                   name="verification"
                   control={control}
-                  defaultValue=""
+                  defaultValue="PENDING"
                 />
               </Grid>
               <Grid item xs={12} sm={12}>

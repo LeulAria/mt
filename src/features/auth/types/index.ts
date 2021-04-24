@@ -20,6 +20,7 @@ export interface IUser {
   id?: string;
   phoneNumber?: string;
   last_send?: Date;
+  suspended?: boolean;
   notificationMessage?: string;
   dateOfPayment?: any;
   expiryDate?: any;
@@ -39,6 +40,7 @@ export interface ICurrentUser {
   email: string;
   service?: string;
   address?: IAddress;
+  suspended?: boolean;
   password?: string;
   business?: string;
   tinNumber?: string;
