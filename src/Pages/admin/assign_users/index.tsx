@@ -66,13 +66,6 @@ export default function Role() {
 
   const columns = [
     {
-      label: "Employe Name",
-      name: "companyName",
-      options: {
-        filter: true,
-      },
-    },
-    {
       label: "Email",
       name: "email",
       options: {
@@ -80,14 +73,7 @@ export default function Role() {
         sort: false,
       },
     },
-    {
-      label: "Phone Number",
-      name: "phoneNumber",
-      options: {
-        filter: true,
-        sort: false,
-      },
-    },
+
     {
       label: "UID",
       name: "uid",

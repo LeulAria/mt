@@ -60,6 +60,9 @@ const useStyles = makeStyles((theme: Theme) =>
     formControl: {
       width: "100%",
     },
+    submit: {
+      margin: "3% 2%",
+    },
   })
 );
 
@@ -81,12 +84,9 @@ const ViewClient: React.FC<ChildProps> = (props: any) => {
     dispatch(getUser());
   }, []);
   const fullInfo = stateClient.clients.filter((u) => {
-    return props.selectedRow[3] == u.id;
+    return props.selectedRow[1] == u.id;
   });
-  console.log(stateClient.clients, "view CLi");
-
   const onSubmit = (data: any) => {
-    data.email = fullInfo[0].email;
     console.log(data, fullInfo[0], stat, "data");
 
     const updatedUser = {
@@ -114,35 +114,20 @@ const ViewClient: React.FC<ChildProps> = (props: any) => {
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >
-        <AppBar className={classes.appBar}>
-          <Toolbar>
-            <IconButton
-              edge="start"
-              color="inherit"
-              onClick={props.handleClose}
-              aria-label="close"
-            >
-              <CloseIcon />
-            </IconButton>
-            <Typography variant="h6" className={classes.title}>
-              {/* {fullInfo[0] ? fullInfo[0].companyName : null} Detail Information */}
-              Edit Role
-            </Typography>
-          </Toolbar>
-        </AppBar>
+        <DialogTitle id="simple-dialog-title"> Edit Role </DialogTitle>
+
         <Divider />
         <Divider />
         <DialogContent>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12}>
-              <label>Company Name: </label>
-
+              <label>Email: </label>
               <TextField
                 required
-                value={fullInfo[0] ? fullInfo[0].companyName : ""}
+                value={fullInfo[0] ? fullInfo[0].email : ""}
                 disabled
                 variant="outlined"
-                placeholder="Company Name"
+                placeholder="Email"
                 fullWidth
               />
             </Grid>
@@ -189,7 +174,7 @@ const ViewClient: React.FC<ChildProps> = (props: any) => {
                   )}
                   name="role"
                   control={control}
-                  defaultValue={`${props.selectedRow[4]}`}
+                  defaultValue="SALES_SUPPORT"
                 />
                 {/* <Controller
                   render={({ field }) => (
@@ -213,7 +198,7 @@ const ViewClient: React.FC<ChildProps> = (props: any) => {
                 fullWidth
                 variant="contained"
                 color="secondary"
-                // className={classes.submit}
+                className={classes.submit}
               >
                 Update
               </Button>

@@ -50,26 +50,26 @@ export const createNewUser = (user: IUser): AppThunk => async (dispatch) => {
 export const createNewEmployee = (user: any): AppThunk => async (dispatch) => {
   const auth = firebase.auth();
   const db = firebase.firestore();
+  const password = `2F123456`;
   dispatch(setLoadingProgress(true));
-  auth.createUserWithEmailAndPassword(user.email, user.password).then(
+  auth.createUserWithEmailAndPassword(user.email, password).then(
     (_: any) => {
-      const new_user: any = {
-        userName: user.userName,
-        email: user.email,
-        uid: _.user.uid,
-        role: user.role,
-        isOnline: false,
-        typing: {
-          isTyping: false,
-          isTypingTo: "",
-        },
-        last_send: "",
-      };
       db.collection("clients")
-        .doc(_.user.uid)
-        .set(new_user)
+        // .doc(_.user.uid)
+        .add({
+          userName: user.userName,
+          email: user.email,
+          uid: _.user.uid,
+          role: user.role,
+          isOnline: false,
+          typing: {
+            isTyping: false,
+            isTypingTo: "",
+          },
+          last_send: "",
+        })
         .then(() => {
-          dispatch(setCurrentUser(new_user));
+          // dispatch(setCurrentUser(new_user));
           dispatch(setLoadingProgress(false));
         });
     },

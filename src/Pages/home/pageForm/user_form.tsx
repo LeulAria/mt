@@ -95,29 +95,8 @@ export default function PageForm() {
 
   const sendEmail = (data: any, e: any) => {
     console.log(data, e, "landing page"), dispatch(setLoadingProgress(true));
-    // dispatch(createNewUser(data));
-    // emailjs
-    //   .sendForm(
-    //     "service_ksd1yt9",
-    //     "template_v1h99b8",
-    //     e.target,
-    //     "user_KPnW8Osdn6iqUibLu4tVP"
-    //   )
-
-    //   .then(
-    //     (result) => {
-    //       dispatch(setLoadingProgress(false));
-    //       setType("success");
-    //       setMessage("Information sent successfully");
-    //       setOpen(true);
-    //     },
-    //     (error) => {
-    //       dispatch(setLoadingProgress(false));
-    //       setType("error");
-    //       setMessage("Something went wrong pleas try again");
-    //       setOpen(true);
-    //     }
-    //   );
+    const datas = { ...data };
+    dispatch(createNewUser(datas));
     reset();
   };
   return (
@@ -158,7 +137,7 @@ export default function PageForm() {
               ))}
               <Box px={7} py={1}>
                 <Controller
-                  name="solutions"
+                  name="service"
                   render={({ field }) => (
                     <Solutions field={field} errors={errors} />
                   )}
@@ -181,16 +160,16 @@ export default function PageForm() {
                     fullWidth
                     size="large"
                     type="submit"
-                    disabled={auth.isLoading ? true : false}
+                    // disabled={auth.isLoading ? true : false}
                   >
                     Register
                   </Button>
-                  {auth.isLoading && (
+                  {/* {auth.isLoading && (
                     <CircularProgress
                       size={24}
                       className={classes.buttonProgress}
                     />
-                  )}
+                  )} */}
                 </div>
               </Box>
               <Box

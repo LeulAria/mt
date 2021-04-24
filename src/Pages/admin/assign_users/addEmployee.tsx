@@ -21,13 +21,19 @@ import EditIcon from "@material-ui/icons/Edit";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { TransitionProps } from "@material-ui/core/transitions";
-import { sendVerification, getUser } from "../../../features/auth/actions";
+import {
+  sendVerification,
+  getUser,
+  createNewEmployee,
+  createNewUser,
+} from "../../../features/auth/actions";
 import { FormControl } from "@material-ui/core";
 import { InputLabel } from "@material-ui/core";
 import Select from "@material-ui/core/Select";
-import { IUser } from "../../../features/auth/types";
+import { IUser, UserRole } from "../../../features/auth/types";
 import CloseIcon from "@material-ui/icons/Close";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import CustomizedSnackbars from "../../../components/snackbar";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & { children?: React.ReactElement<any, any> },
@@ -60,49 +66,51 @@ const useStyles = makeStyles((theme: Theme) =>
     formControl: {
       width: "100%",
     },
+    submit: {
+      marginBottom: "2%",
+      marginTop: "2%",
+      maxWidth: "40%",
+      marginRight: "auto",
+      marginLeft: "auto",
+      display: "flex",
+    },
   })
 );
 
 const AddEmployee: React.FC<ChildProps> = (props: any) => {
   const [rowData, getRowData] = React.useState([]);
   const classes = useStyles();
+  const [open, setOpen] = useState(false);
+  const [type, setType] = useState("");
   const [editInfo, getEditInfo] = useState(false);
   const { control, handleSubmit } = useForm();
   // const [open, setOpen] = React.useState(false);
   const [stat, getStatus] = useState("");
   const dispatch = useDispatch();
 
-  const handleEditInfo = () => {
-    getEditInfo(true);
+  const handleClick = () => {
+    setOpen(true);
   };
+
+  const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+
   const stateClient = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
     dispatch(getUser());
   }, []);
-  const fullInfo = stateClient.clients.filter((u) => {
-    return props.selectedRow[3] == u.id;
-  });
-  console.log(stateClient.clients, "view CLi");
 
   const onSubmit = (data: any) => {
-    data.email = fullInfo[0].email;
-    console.log(data, rowData, "data");
+    console.log(data, createNewEmployee(data), "data");
 
-    dispatch(sendVerification(data));
+    dispatch(createNewEmployee(data));
 
-    const updatedUser = {
-      ...data,
-    };
-    const db = firebase.firestore();
-    db.collection("clients")
-      .doc(fullInfo[0].id)
-      .update(updatedUser)
-      .then((_) => {
-        console.log("");
-      });
-    stateClient.clients;
-    getStatus(data.verification_status);
     props.handleClose();
   };
 
@@ -127,218 +135,151 @@ const AddEmployee: React.FC<ChildProps> = (props: any) => {
               <CloseIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
-              {fullInfo[0] ? fullInfo[0].companyName : null} Detail Information
+              Add Employee
             </Typography>
-            <Tooltip title="Edit Detail">
-              <IconButton autoFocus color="inherit" onClick={handleEditInfo}>
-                <EditIcon />
-              </IconButton>
-            </Tooltip>
           </Toolbar>
         </AppBar>
         <Divider />
         <Divider />
         <DialogContent>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <label>Company Name: </label>
-
-              <TextField
-                required
-                value={fullInfo[0] ? fullInfo[0].companyName : ""}
-                disabled
-                variant="outlined"
-                placeholder="Company Name"
-                fullWidth
-              />
-            </Grid>
-
-            <Grid item xs={12} sm={6}>
-              <label>Email: </label>
-
-              <TextField
-                required
-                id="email"
-                name="email"
-                value={fullInfo[0] ? fullInfo[0].email : ""}
-                disabled
-                variant="outlined"
-                placeholder="Email"
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <label>Company Url: </label>
-
-              <TextField
-                required
-                value={fullInfo[0] ? fullInfo[0].companyUrl : null}
-                disabled
-                variant="outlined"
-                placeholder="Company Name"
-                fullWidth
-              />
-            </Grid>
-
-            <Grid item xs={12} sm={6}>
-              <label>Service: </label>
-
-              <TextField
-                required
-                id="email"
-                name="email"
-                value={fullInfo[0] ? fullInfo[0].service : ""}
-                disabled
-                variant="outlined"
-                placeholder="Email"
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <label>Business: </label>
-
-              <TextField
-                required
-                value={fullInfo[0] ? fullInfo[0].business : ""}
-                disabled
-                variant="outlined"
-                fullWidth
-              />
-            </Grid>
-
-            <Grid item xs={12} sm={6}>
-              <label>Phone No: </label>
-
-              <TextField
-                required
-                id="email"
-                value={fullInfo[0] ? fullInfo[0].phoneNumber : ""}
-                disabled
-                variant="outlined"
-                fullWidth
-              />
-            </Grid>
-          </Grid>
           <br />
-          <Divider />
-          <Divider />
-          <br />
-          {editInfo == true ? (
-            <form noValidate onSubmit={handleSubmit(onSubmit)}>
-              <Grid container spacing={2}>
-                {/* <Grid container direction='row' spacing={1}> */}
-
-                <Grid item xs={12} sm={6}>
-                  <Controller
-                    render={({ field }) => (
-                      <TextField
-                        id="country"
-                        {...field}
-                        placeholder="Country"
-                        variant="outlined"
-                        // value={stateClient.selectedUserData[0].country}
-                        fullWidth
-                      />
-                    )}
-                    // rules={{ required: true }}
-                    defaultValue=""
-                    name="country"
-                    control={control}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Controller
-                    render={({ field }) => (
-                      <TextField
-                        id="city"
-                        {...field}
-                        // value={stateClient.selectedUserData[0].city}
-                        placeholder="City"
-                        variant="outlined"
-                        fullWidth
-                      />
-                    )}
-                    // rules={{ required: true }}
-                    defaultValue=""
-                    name="city"
-                    control={control}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Controller
-                    render={({ field }) => (
-                      <TextField
-                        id="subCity"
-                        {...field}
-                        // value={stateClient.selectedUserData[0].subCity}
-                        placeholder="Sub-City"
-                        variant="outlined"
-                        fullWidth
-                      />
-                    )}
-                    // rules={{ required: true }}
-                    defaultValue=""
-                    name="subCity"
-                    control={control}
-                  />
-                </Grid>
-                {/* </Grid> */}
-
-                {/* <label>Payment</label> */}
-                <Grid item xs={12} sm={6}>
-                  <Controller
-                    render={({ field }) => (
-                      <TextField
-                        id="paymentStat"
-                        {...field}
-                        placeholder="Payment Status"
-                        variant="outlined"
-                        // value={stateClient.selectedUserData[0].paymentStat}
-                        fullWidth
-                      />
-                    )}
-                    // rules={{ required: true }}
-                    defaultValue=""
-                    name="paymentStat"
-                    control={control}
-                  />
-                </Grid>
-
-                <Grid item xs={12} sm={12}>
-                  <Controller
-                    render={({ field }) => (
-                      <TextField
-                        id="tinNumber"
-                        {...field}
-                        placeholder="Tin Number"
-                        variant="outlined"
-                        // value={stateClient.selectedUserData[0].tinNumber}
-                        fullWidth
-                      />
-                    )}
-                    // rules={{ required: true }}
-                    defaultValue=""
-                    name="tinNumber"
-                    control={control}
-                  />
-                </Grid>
-
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  color="secondary"
-                  // className={classes.submit}
-                >
-                  Update
-                </Button>
+          {/* {editInfo == true ? ( */}
+          <form noValidate onSubmit={handleSubmit(onSubmit)}>
+            <Grid container spacing={2}>
+              {/* <Grid container direction='row' spacing={1}> */}
+              <Grid item xs={12} sm={6}>
+                <Controller
+                  render={({ field }) => (
+                    <TextField
+                      id="firstName"
+                      {...field}
+                      placeholder="First Name"
+                      variant="outlined"
+                      fullWidth
+                    />
+                  )}
+                  // rules={{ required: true }}
+                  defaultValue=""
+                  name="firstName"
+                  control={control}
+                />
               </Grid>
-            </form>
-          ) : (
+              <Grid item xs={12} sm={6}>
+                <Controller
+                  render={({ field }) => (
+                    <TextField
+                      id="lastName"
+                      {...field}
+                      // value={stateClient.selectedUserData[0].city}
+                      placeholder="Last Name"
+                      variant="outlined"
+                      fullWidth
+                    />
+                  )}
+                  // rules={{ required: true }}
+                  defaultValue=""
+                  name="lastName"
+                  control={control}
+                />
+              </Grid>
+              <Grid item xs={12} sm={12}>
+                <Controller
+                  render={({ field }) => (
+                    <TextField
+                      id="userName"
+                      {...field}
+                      // value={stateClient.selectedUserData[0].city}
+                      placeholder="User Name"
+                      variant="outlined"
+                      fullWidth
+                    />
+                  )}
+                  rules={{ required: true }}
+                  defaultValue=""
+                  name="userName"
+                  control={control}
+                />
+              </Grid>
+              <Grid item xs={12} sm={12}>
+                <Controller
+                  render={({ field }) => (
+                    <TextField
+                      id="email"
+                      {...field}
+                      placeholder="Email"
+                      variant="outlined"
+                      fullWidth
+                    />
+                  )}
+                  defaultValue=""
+                  name="email"
+                  control={control}
+                />
+              </Grid>
+
+              <Divider />
+              <Divider />
+              <Grid item xs={12} sm={12}>
+                <Controller
+                  render={({ field }) => (
+                    <FormControl
+                      variant="outlined"
+                      className={classes.formControl}
+                    >
+                      <InputLabel>Role</InputLabel>
+                      <Select
+                        style={{ backgroundColor: "#fff" }}
+                        {...field}
+                        labelId="demo-simple-select-outlined-label"
+                        id="demo-simple-select-outlined"
+                        // label="Gender"
+                      >
+                        {Object.keys(UserRole).map((role, key) => {
+                          if (
+                            UserRole[role] != "ADMIN" &&
+                            UserRole[role] != "USER"
+                          ) {
+                            console.log(UserRole[role], "afraid");
+
+                            return (
+                              <MenuItem value={UserRole[role]} key={key}>
+                                {UserRole[role]}
+                              </MenuItem>
+                            );
+                          }
+                        })}
+                      </Select>
+                    </FormControl>
+                  )}
+                  name="role"
+                  control={control}
+                  defaultValue="TECH_SUPPORT"
+                />
+              </Grid>
+
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="secondary"
+                className={classes.submit}
+              >
+                Update
+              </Button>
+            </Grid>
+          </form>
+          {/* ) : (
             ""
-          )}
+          )} */}
         </DialogContent>
       </Dialog>
+      <CustomizedSnackbars
+        open={open}
+        handleClick={handleClick}
+        handleClose={handleClose}
+        type={type}
+        message="Successfully Registered"
+      />
     </div>
   );
 };
