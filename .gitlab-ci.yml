@@ -30,6 +30,9 @@ build:
 test_feature_branch:
   stage: test
   image: node:15.14.0-alpine3.10
+  tags:
+    - gitlab-react
+
   only:
     - /^feature-.*$/
   script:
